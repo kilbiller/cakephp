@@ -17,6 +17,7 @@ namespace Cake\Error\Middleware;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
+use Cake\Error\ExceptionRenderer;
 use Cake\Http\ResponseTransformer;
 use Cake\Log\Log;
 use Exception;
@@ -53,6 +54,13 @@ class ErrorHandlerMiddleware
     ];
 
     /**
+     * Exception render.
+     *
+     * @var \Cake\Error\ExceptionRenderer|string|null
+     */
+    protected $renderer;
+
+    /**
      * Constructor
      *
      * @param string|callable|null $renderer The renderer or class name
@@ -63,11 +71,10 @@ class ErrorHandlerMiddleware
      */
     public function __construct($renderer = null, array $config = [])
     {
-        if ($renderer === null) {
-            $renderer = Configure::read('Error.exceptionRenderer');
+        if ($renderer) {
+            $this->renderer = $renderer;
         }
 
-        $this->renderer = $renderer ?: 'Cake\Error\ExceptionRenderer';
         $config = $config ?: Configure::read('Error');
         $this->config($config);
     }
@@ -126,6 +133,10 @@ class ErrorHandlerMiddleware
      */
     protected function getRenderer($exception)
     {
+        if (!$this->renderer) {
+            $this->renderer = $this->config('exceptionRender') ?: ExceptionRenderer::class;
+        }
+
         if (is_string($this->renderer)) {
             $class = App::className($this->renderer, 'Error');
             if (!$class) {
