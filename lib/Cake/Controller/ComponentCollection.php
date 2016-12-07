@@ -16,10 +16,11 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller;
 
-App::uses('ObjectCollection', 'Utility');
-App::uses('Component', 'Controller');
-App::uses('CakeEventListener', 'Event');
+use Cake\Utility\ObjectCollection;
+use Cake\Controller\Component;
+use Cake\Event\CakeEventListener;
 
 /**
  * Components collection is used as a registry for loaded components and handles loading
@@ -106,9 +107,23 @@ class ComponentCollection extends ObjectCollection implements CakeEventListener 
 			return $this->_loaded[$alias];
 		}
 		$componentClass = $name . 'Component';
-		App::uses($componentClass, $plugin . 'Controller/Component');
+
+		$componentClass = '\\Controller\\Component\\' . $componentClass;
+
+		if (!in_array($name, ['Paginator', 'Acl', 'Auth', 'Cookie', 'Email', 'Flash', 'RequestHandler', 'Security', 'Session'])) :
+			$namespace = 'Invityou';
+
+			if (!empty($plugin)) {
+				$namespace = substr($plugin, 0, -1);
+			}
+
+			$componentClass = '\\' . $namespace . $componentClass;
+		else :
+			$componentClass = '\\' . 'Cake' . $componentClass;
+		endif;
+
 		if (!class_exists($componentClass)) {
-			throw new MissingComponentException(array(
+			throw new \MissingComponentException(array(
 				'class' => $componentClass,
 				'plugin' => substr($plugin, 0, -1)
 			));

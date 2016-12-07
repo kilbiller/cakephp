@@ -15,6 +15,13 @@
  * @since         CakePHP(tm) v 0.10.5.1790
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model\Datasource;
+
+use Cake\Core\CakeObject;
+use Cake\Model\Model;
+use Cake\Model\ConnectionManager;
+use Cake\Cache\Cache;
+use Cake\Utility\Inflector;
 
 /**
  * DataSource base class

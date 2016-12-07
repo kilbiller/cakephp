@@ -584,7 +584,7 @@ XML;
 					)
 				)
 			)),
-			array(new DateTime())
+			array(new \DateTime())
 		);
 	}
 
@@ -1153,7 +1153,7 @@ XML;
  */
 	public static function invalidToArrayDataProvider() {
 		return array(
-			array(new DateTime()),
+			array(new \DateTime()),
 			array(array())
 		);
 	}

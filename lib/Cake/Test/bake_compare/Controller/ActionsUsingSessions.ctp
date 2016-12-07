@@ -18,7 +18,7 @@
  */
 	public function view($id = null) {
 		if (!$this->BakeArticle->exists($id)) {
-			throw new NotFoundException(__('Invalid bake article'));
+			throw new \NotFoundException(__('Invalid bake article'));
 		}
 		$options = array('conditions' => array('BakeArticle.' . $this->BakeArticle->primaryKey => $id));
 		$this->set('bakeArticle', $this->BakeArticle->find('first', $options));
@@ -52,7 +52,7 @@
  */
 	public function edit($id = null) {
 		if (!$this->BakeArticle->exists($id)) {
-			throw new NotFoundException(__('Invalid bake article'));
+			throw new \NotFoundException(__('Invalid bake article'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->BakeArticle->save($this->request->data)) {
@@ -79,7 +79,7 @@
 	public function delete($id = null) {
 		$this->BakeArticle->id = $id;
 		if (!$this->BakeArticle->exists()) {
-			throw new NotFoundException(__('Invalid bake article'));
+			throw new \NotFoundException(__('Invalid bake article'));
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->BakeArticle->delete()) {

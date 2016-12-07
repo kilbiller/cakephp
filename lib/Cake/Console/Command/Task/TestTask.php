@@ -319,7 +319,7 @@ class TestTask extends BakeTask {
 	public function mapType($type, $plugin) {
 		$type = ucfirst($type);
 		if (empty($this->classTypes[$type])) {
-			throw new CakeException(__d('cake_dev', 'Invalid object type.'));
+			throw new \CakeException(__d('cake_dev', 'Invalid object type.'));
 		}
 		$real = $this->classTypes[$type];
 		if ($plugin) {
@@ -338,7 +338,7 @@ class TestTask extends BakeTask {
  */
 	public function getBaseType($type) {
 		if (empty($this->baseTypes[$type])) {
-			throw new CakeException(__d('cake_dev', 'Invalid type name'));
+			throw new \CakeException(__d('cake_dev', 'Invalid type name'));
 		}
 		return $this->baseTypes[$type];
 	}

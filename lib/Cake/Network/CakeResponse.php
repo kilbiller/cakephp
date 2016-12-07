@@ -15,8 +15,10 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Network;
 
-App::uses('File', 'Utility');
+use Cake\Utility\File;
+use Cake\Core\Configure;
 
 /**
  * CakeResponse is responsible for managing the response text, status and headers of a HTTP response.
@@ -640,7 +642,7 @@ class CakeResponse {
 			return $this->_status;
 		}
 		if (!isset($this->_statusCodes[$code])) {
-			throw new CakeException(__d('cake_dev', 'Unknown status code'));
+			throw new \CakeException(__d('cake_dev', 'Unknown status code'));
 		}
 		return $this->_status = $code;
 	}
@@ -684,7 +686,7 @@ class CakeResponse {
 			$codes = array_keys($code);
 			$min = min($codes);
 			if (!is_int($min) || $min < 100 || max($codes) > 999) {
-				throw new CakeException(__d('cake_dev', 'Invalid status code'));
+				throw new \CakeException(__d('cake_dev', 'Invalid status code'));
 			}
 			$this->_statusCodes = $code + $this->_statusCodes;
 			return true;
@@ -1071,14 +1073,14 @@ class CakeResponse {
  * @return DateTime
  */
 	protected function _getUTCDate($time = null) {
-		if ($time instanceof DateTime) {
+		if ($time instanceof \DateTime) {
 			$result = clone $time;
 		} elseif (is_int($time)) {
-			$result = new DateTime(date('Y-m-d H:i:s', $time));
+			$result = new \DateTime(date('Y-m-d H:i:s', $time));
 		} else {
-			$result = new DateTime($time);
+			$result = new \DateTime($time);
 		}
-		$result->setTimeZone(new DateTimeZone('UTC'));
+		$result->setTimeZone(new \DateTimeZone('UTC'));
 		return $result;
 	}
 
@@ -1347,7 +1349,7 @@ class CakeResponse {
 		);
 
 		if (strpos($path, '../') !== false || strpos($path, '..\\') !== false) {
-			throw new NotFoundException(__d(
+			throw new \NotFoundException(__d(
 				'cake_dev',
 				'The requested file contains `..` and will not be read.'
 			));
@@ -1360,9 +1362,9 @@ class CakeResponse {
 		$file = new File($path);
 		if (!$file->exists() || !$file->readable()) {
 			if (Configure::read('debug')) {
-				throw new NotFoundException(__d('cake_dev', 'The requested file %s was not found or not readable', $path));
+				throw new \NotFoundException(__d('cake_dev', 'The requested file %s was not found or not readable', $path));
 			}
-			throw new NotFoundException(__d('cake', 'The requested file was not found'));
+			throw new \NotFoundException(__d('cake', 'The requested file was not found'));
 		}
 
 		$extension = strtolower($file->ext());

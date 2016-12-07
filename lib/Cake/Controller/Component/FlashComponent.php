@@ -15,10 +15,15 @@
  * @since         CakePHP(tm) v 2.7.0-dev
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component;
 
-App::uses('Component', 'Controller');
-App::uses('Inflector', 'Utility');
-App::uses('CakeSession', 'Model/Datasource');
+use Cake\Controller\Component;
+use Cake\Utility\Inflector;
+use Cake\Model\Datasource\CakeSession;
+use Cake\Controller\ComponentCollection;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\Utility\Hash;
 
 /**
  * The CakePHP FlashComponent provides a way for you to write a flash variable
@@ -71,7 +76,7 @@ class FlashComponent extends Component {
 	public function set($message, $options = array()) {
 		$options += $this->_defaultConfig;
 
-		if ($message instanceof Exception) {
+		if ($message instanceof \Exception) {
 			$options['params'] += array('code' => $message->getCode());
 			$message = $message->getMessage();
 		}
@@ -106,7 +111,7 @@ class FlashComponent extends Component {
 		$options = array('element' => Inflector::underscore($name));
 
 		if (count($args) < 1) {
-			throw new InternalErrorException('Flash message missing.');
+			throw new \InternalErrorException('Flash message missing.');
 		}
 
 		if (!empty($args[1])) {

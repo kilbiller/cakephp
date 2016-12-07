@@ -441,7 +441,7 @@ class SchemaShell extends AppShell {
 					$error = null;
 					try {
 						$db->execute($sql);
-					} catch (PDOException $e) {
+					} catch (\PDOException $e) {
 						$error = $table . ': ' . $e->getMessage();
 					}
 

@@ -16,7 +16,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('ObjectCollection', 'Utility');
+namespace Cake\Console;
+
+use Cake\Utility\ObjectCollection;
 
 /**
  * Collection object for Tasks. Provides features
@@ -85,7 +87,7 @@ class TaskCollection extends ObjectCollection {
 
 		$exists = class_exists($taskClass);
 		if (!$exists) {
-			throw new MissingTaskException(array(
+			throw new \MissingTaskException(array(
 				'class' => $taskClass,
 				'plugin' => substr($plugin, 0, -1)
 			));

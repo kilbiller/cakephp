@@ -12,7 +12,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('BaseAuthorize', 'Controller/Component/Auth');
+namespace Cake\Controller\Component\Auth;
+
+use Cake\Network\CakeRequest;
 
 /**
  * An authorization adapter for AuthComponent. Provides the ability to authorize using the AclComponent,

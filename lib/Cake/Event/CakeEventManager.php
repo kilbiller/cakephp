@@ -13,8 +13,7 @@
  * @since		  CakePHP(tm) v 2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
-App::uses('CakeEventListener', 'Event');
+namespace Cake\Event;
 
 /**
  * The event manager is responsible for keeping track of event listeners, passing the correct
@@ -99,7 +98,7 @@ class CakeEventManager {
  */
 	public function attach($callable, $eventKey = null, $options = array()) {
 		if (!$eventKey && !($callable instanceof CakeEventListener)) {
-			throw new InvalidArgumentException(__d('cake_dev', 'The eventKey variable is required'));
+			throw new \InvalidArgumentException(__d('cake_dev', 'The eventKey variable is required'));
 		}
 		if ($callable instanceof CakeEventListener) {
 			$this->_attachSubscriber($callable);
@@ -249,6 +248,7 @@ class CakeEventManager {
 				$event->result = $result;
 			}
 		}
+
 		return $event;
 	}
 

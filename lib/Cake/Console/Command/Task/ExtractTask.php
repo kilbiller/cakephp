@@ -15,10 +15,17 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppShell', 'Console/Command');
-App::uses('File', 'Utility');
-App::uses('Folder', 'Utility');
-App::uses('Hash', 'Utility');
+
+namespace Cake\Console\Command\Task;
+
+use Cake\Console\Command\AppShell;
+use Cake\Core\CakePlugin;
+use Cake\Utility\File;
+use Cake\Utility\Folder;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Cake\Console\Shell;
+use Cake\Core\App;
 
 /**
  * Language string extractor
@@ -487,20 +494,21 @@ class ExtractTask extends AppShell {
  * @return void
  */
 	protected function _extractPluginValidationMessages($plugin = null) {
-		App::uses('AppModel', 'Model');
+		$namespace = '\\Invityou\\Model\\';
 		if (!empty($plugin)) {
 			if (!CakePlugin::loaded($plugin)) {
 				return;
 			}
-			App::uses($plugin . 'AppModel', $plugin . '.Model');
+			$namespace = '\\' . $plugin . '\\Model\\';
 			$plugin = $plugin . '.';
 		}
 		$models = App::objects($plugin . 'Model', null, false);
 
 		foreach ($models as $model) {
-			App::uses($model, $plugin . 'Model');
-			$reflection = new ReflectionClass($model);
-			if (!$reflection->isSubClassOf('Model')) {
+			$model = $namespace . $model;
+
+			$reflection = new \ReflectionClass($model);
+			if (!$reflection->isSubClassOf('\\Cake\\Model\\Model')) {
 				continue;
 			}
 			$properties = $reflection->getDefaultProperties();

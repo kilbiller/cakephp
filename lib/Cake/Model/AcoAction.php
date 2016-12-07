@@ -14,7 +14,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppModel', 'Model');
+namespace Cake\Model;
+
+use Invityou\Model\AppModel;
 
 /**
  * Action for Access Control Object

@@ -15,11 +15,15 @@
  * @since         CakePHP(tm) v 1.2.0.4116
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\I18n;
 
-App::uses('CakePlugin', 'Core');
-App::uses('L10n', 'I18n');
-App::uses('Multibyte', 'I18n');
-App::uses('CakeSession', 'Model/Datasource');
+use Cake\Core\App;
+use Cake\Core\CakePlugin;
+use Cake\Core\Configure;
+use Cake\Cache\Cache;
+use Cake\Model\Datasource\CakeSession;
+use Cake\Utility\Inflector;
+use Cake\Utility\Hash;
 
 /**
  * I18n handles translation of Text and time format strings.
@@ -226,7 +230,7 @@ class I18n {
 			$domain = static::$defaultDomain;
 		}
 		if ($domain === '') {
-			throw new CakeException(__d('cake_dev', 'You cannot use "" as a domain.'));
+			throw new \CakeException(__d('cake_dev', 'You cannot use "" as a domain.'));
 		}
 
 		$_this->domain = $domain . '_' . $_this->l10n->lang;

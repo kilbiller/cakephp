@@ -12,7 +12,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('BaseAuthenticate', 'Controller/Component/Auth');
+namespace Cake\Controller\Component\Auth;
+
+use Cake\Utility\Security;
+use Cake\Utility\Hash;
+use Cake\Event\CakeEventListener;
 
 /**
  * Basic Authentication adapter for AuthComponent.
@@ -100,7 +104,7 @@ class BasicAuthenticate extends BaseAuthenticate {
  * @throws UnauthorizedException
  */
 	public function unauthenticated(CakeRequest $request, CakeResponse $response) {
-		$Exception = new UnauthorizedException();
+		$Exception = new \UnauthorizedException();
 		$Exception->responseHeader(array($this->loginHeaders()));
 		throw $Exception;
 	}

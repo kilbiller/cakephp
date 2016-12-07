@@ -44,7 +44,7 @@ class PagesController extends AppController {
 			return $this->redirect('/');
 		}
 		if (in_array('..', $path, true) || in_array('.', $path, true)) {
-			throw new ForbiddenException();
+			throw new \ForbiddenException();
 		}
 		$page = $subpage = $title_for_layout = null;
 
@@ -61,11 +61,11 @@ class PagesController extends AppController {
 
 		try {
 			$this->render(implode('/', $path));
-		} catch (MissingViewException $e) {
+		} catch (\MissingViewException $e) {
 			if (Configure::read('debug')) {
 				throw $e;
 			}
-			throw new NotFoundException();
+			throw new \NotFoundException();
 		}
 	}
 }

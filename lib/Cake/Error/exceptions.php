@@ -22,7 +22,7 @@
  *
  * @package       Cake.Error
  */
-class CakeBaseException extends RuntimeException {
+class CakeBaseException extends \RuntimeException {
 
 /**
  * Array of headers to be passed to CakeResponse::header()
@@ -56,7 +56,7 @@ class CakeBaseException extends RuntimeException {
 if (!class_exists('HttpException', false)) {
 /**
  * Parent class for all of the HTTP related exceptions in CakePHP.
- * 
+ *
  * All HTTP status/error related exceptions should extend this class so
  * catch blocks can be specifically typed.
  *

@@ -14,7 +14,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppHelper', 'View/Helper');
+namespace Cake\View\Helper;
+
+use Invityou\View\Helper\AppHelper;
+use Cake\I18n\Multibyte;
+use Cake\Routing\Router;
 
 /**
  * JsEngineBaseClass

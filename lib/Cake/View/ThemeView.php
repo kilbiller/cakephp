@@ -16,7 +16,10 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('View', 'View');
+namespace Cake\View;
+
+use Cake\View\View;
+use Cake\Network\CakeRequest;
 
 /**
  * Theme view class

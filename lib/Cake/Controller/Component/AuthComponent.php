@@ -17,16 +17,20 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component;
 
-App::uses('Component', 'Controller');
-App::uses('Router', 'Routing');
-App::uses('Security', 'Utility');
-App::uses('Debugger', 'Utility');
-App::uses('Hash', 'Utility');
-App::uses('CakeSession', 'Model/Datasource');
-App::uses('BaseAuthorize', 'Controller/Component/Auth');
-App::uses('BaseAuthenticate', 'Controller/Component/Auth');
-App::uses('CakeEvent', 'Event');
+use Cake\Controller\Component;
+use Cake\Routing\Router;
+use Cake\Utility\Security;
+use Cake\Utility\Debugger;
+use Cake\Utility\Hash;
+use Cake\Model\Datasource\CakeSession;
+use Cake\Controller\Component\Auth\BaseAuthorize;
+use Cake\Controller\Component\Auth\BaseAuthenticate;
+use Cake\Event\CakeEvent;
+use Cake\Controller\ComponentCollection;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
 
 /**
  * Authentication control component class
@@ -406,7 +410,7 @@ class AuthComponent extends Component {
  */
 	protected function _unauthorized(Controller $controller) {
 		if ($this->unauthorizedRedirect === false) {
-			throw new ForbiddenException($this->authError);
+			throw new \ForbiddenException($this->authError);
 		}
 
 		$this->flash($this->authError);
@@ -493,12 +497,15 @@ class AuthComponent extends Component {
 		foreach ($config as $class => $settings) {
 			list($plugin, $class) = pluginSplit($class, true);
 			$className = $class . 'Authorize';
-			App::uses($className, $plugin . 'Controller/Component/Auth');
+
+			$namespace = '\\Cake\\Controller\\Component\\Auth\\';
+			$className = $namespace . $className;
+
 			if (!class_exists($className)) {
-				throw new CakeException(__d('cake_dev', 'Authorization adapter "%s" was not found.', $class));
+				throw new \CakeException(__d('cake_dev', 'Authorization adapter "%s" was not found.', $class));
 			}
 			if (!method_exists($className, 'authorize')) {
-				throw new CakeException(__d('cake_dev', 'Authorization objects must implement an %s method.', 'authorize()'));
+				throw new \CakeException(__d('cake_dev', 'Authorization objects must implement an %s method.', 'authorize()'));
 			}
 			$settings = array_merge($global, (array)$settings);
 			$this->_authorizeObjects[] = new $className($this->_Collection, $settings);
@@ -799,12 +806,14 @@ class AuthComponent extends Component {
 			}
 			list($plugin, $class) = pluginSplit($class, true);
 			$className = $class . 'Authenticate';
-			App::uses($className, $plugin . 'Controller/Component/Auth');
+
+			$namespace = '\\Cake\\Controller\\Component\\Auth\\';
+			$className = $namespace . $className;
 			if (!class_exists($className)) {
-				throw new CakeException(__d('cake_dev', 'Authentication adapter "%s" was not found.', $class));
+				throw new \CakeException(__d('cake_dev', 'Authentication adapter "%s" was not found.', $class));
 			}
 			if (!method_exists($className, 'authenticate')) {
-				throw new CakeException(__d('cake_dev', 'Authentication objects must implement an %s method.', 'authenticate()'));
+				throw new \CakeException(__d('cake_dev', 'Authentication objects must implement an %s method.', 'authenticate()'));
 			}
 			$settings = array_merge($global, (array)$settings);
 			$auth = new $className($this->_Collection, $settings);

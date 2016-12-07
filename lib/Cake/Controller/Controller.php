@@ -13,14 +13,20 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller;
 
-App::uses('CakeResponse', 'Network');
-App::uses('ClassRegistry', 'Utility');
-App::uses('ComponentCollection', 'Controller');
-App::uses('View', 'View');
-App::uses('CakeEvent', 'Event');
-App::uses('CakeEventListener', 'Event');
-App::uses('CakeEventManager', 'Event');
+use Cake\Core\CakeObject;
+use Cake\Utility\ClassRegistry;
+use Cake\Controller\ComponentCollection;
+use Cake\View\View;
+use Cake\Event\CakeEvent;
+use Cake\Event\CakeEventListener;
+use Cake\Event\CakeEventManager;
+use Cake\Utility\Inflector;
+use Cake\Utility\Hash;
+use Cake\Network\CakeRequest;
+use Cake\Network\CakeResponse;
+use Cake\Routing\Router;
 
 /**
  * Application controller class for organization of business logic.
@@ -197,7 +203,7 @@ class Controller extends CakeObject implements CakeEventListener {
  *
  * @var string
  */
-	public $viewClass = 'View';
+	public $viewClass = '\\Cake\\View\\View';
 
 /**
  * Instance of the View created during rendering. Won't be set until after
@@ -299,7 +305,7 @@ class Controller extends CakeObject implements CakeEventListener {
  *
  * @var string
  */
-	protected $_mergeParent = 'AppController';
+	protected $_mergeParent = '\\Invityou\\Controller\\AppController';
 
 /**
  * Instance of the CakeEventManager this controller is using
@@ -318,7 +324,9 @@ class Controller extends CakeObject implements CakeEventListener {
  */
 	public function __construct($request = null, $response = null) {
 		if ($this->name === null) {
-			$this->name = substr(get_class($this), 0, -10);
+			$name = explode('\\', substr(get_class($this), 0, -10));
+			$name = array_pop($name);
+			$this->name = $name;
 		}
 
 		if (!$this->viewPath) {
@@ -330,7 +338,7 @@ class Controller extends CakeObject implements CakeEventListener {
 		$this->Components = new ComponentCollection();
 
 		$childMethods = get_class_methods($this);
-		$parentMethods = get_class_methods('Controller');
+		$parentMethods = get_class_methods('\\Cake\\Controller\\Controller');
 
 		$this->methods = array_diff($childMethods, $parentMethods);
 
@@ -480,21 +488,22 @@ class Controller extends CakeObject implements CakeEventListener {
  */
 	public function invokeAction(CakeRequest $request) {
 		try {
-			$method = new ReflectionMethod($this, $request->params['action']);
+			$method = new \ReflectionMethod($this, $request->params['action']);
 
 			if ($this->_isPrivateAction($method, $request)) {
-				throw new PrivateActionException(array(
+				throw new \PrivateActionException(array(
 					'controller' => $this->name . "Controller",
 					'action' => $request->params['action']
 				));
 			}
 			return $method->invokeArgs($this, $request->params['pass']);
 
-		} catch (ReflectionException $e) {
+		} catch (\ReflectionException $e) {
 			if ($this->scaffold !== false) {
 				return $this->_getScaffold($request);
 			}
-			throw new MissingActionException(array(
+
+			throw new \MissingActionException(array(
 				'controller' => $this->name . "Controller",
 				'action' => $request->params['action']
 			));
@@ -509,7 +518,7 @@ class Controller extends CakeObject implements CakeEventListener {
  * @param CakeRequest $request The request to check.
  * @return bool
  */
-	protected function _isPrivateAction(ReflectionMethod $method, CakeRequest $request) {
+	protected function _isPrivateAction(\ReflectionMethod $method, CakeRequest $request) {
 		$privateAction = (
 			$method->name[0] === '_' ||
 			!$method->isPublic() ||
@@ -741,7 +750,7 @@ class Controller extends CakeObject implements CakeEventListener {
 			'class' => $plugin . $modelClass, 'alias' => $modelClass, 'id' => $id
 		));
 		if (!$this->{$modelClass}) {
-			throw new MissingModelException($modelClass);
+			throw new \MissingModelException($modelClass);
 		}
 		return true;
 	}
@@ -1241,10 +1250,14 @@ class Controller extends CakeObject implements CakeEventListener {
  */
 	protected function _getViewObject() {
 		$viewClass = $this->viewClass;
-		if ($this->viewClass !== 'View') {
+		if ($this->viewClass !== '\\Cake\\View\\View') {
 			list($plugin, $viewClass) = pluginSplit($viewClass, true);
 			$viewClass = $viewClass . 'View';
-			App::uses($viewClass, $plugin . 'View');
+
+			$namespace = '\\Cake\\View\\';
+			$viewClass = $namespace . $viewClass;
+
+			class_exists($viewClass);
 		}
 
 		return new $viewClass($this);

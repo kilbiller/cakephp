@@ -15,8 +15,9 @@
  * @since         CakePHP(tm) v 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\View\Elements;
 
-App::uses('Debugger', 'Utility');
+use Cake\Utility\Debugger;
 
 ?>
 <h3>Stack Trace</h3>

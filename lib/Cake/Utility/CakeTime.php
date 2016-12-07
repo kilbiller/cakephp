@@ -16,7 +16,10 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Multibyte', 'I18n');
+namespace Cake\Utility;
+
+use Cake\I18n\Multibyte;
+use Cake\Core\Configure;
 
 /**
  * Time Helper class for easy use of time data.
@@ -136,7 +139,7 @@ class CakeTime {
 			$time = time();
 		}
 		static::$_time = $time;
-		return preg_replace_callback('/\%(\w+)/', array('CakeTime', '_translateSpecifier'), $format);
+		return preg_replace_callback('/\%(\w+)/', array('\\Cake\\Utility\\CakeTime', '_translateSpecifier'), $format);
 	}
 
 /**
@@ -247,15 +250,15 @@ class CakeTime {
 	public static function convert($serverTime, $timezone) {
 		static $serverTimezone = null;
 		if ($serverTimezone === null || (date_default_timezone_get() !== $serverTimezone->getName())) {
-			$serverTimezone = new DateTimeZone(date_default_timezone_get());
+			$serverTimezone = new \DateTimeZone(date_default_timezone_get());
 		}
-		$serverOffset = $serverTimezone->getOffset(new DateTime('@' . $serverTime));
+		$serverOffset = $serverTimezone->getOffset(new \DateTime('@' . $serverTime));
 		$gmtTime = $serverTime - $serverOffset;
 		if (is_numeric($timezone)) {
 			$userOffset = $timezone * (60 * 60);
 		} else {
 			$timezone = static::timezone($timezone);
-			$userOffset = $timezone->getOffset(new DateTime('@' . $gmtTime));
+			$userOffset = $timezone->getOffset(new \DateTime('@' . $gmtTime));
 		}
 		$userTime = $gmtTime + $userOffset;
 		return (int)$userTime;
@@ -285,7 +288,7 @@ class CakeTime {
 			}
 
 			if ($tz === null || $tz->getName() !== $timezone) {
-				$tz = new DateTimeZone($timezone);
+				$tz = new \DateTimeZone($timezone);
 			}
 		}
 
@@ -322,13 +325,13 @@ class CakeTime {
 
 		if (is_int($dateString) || is_numeric($dateString)) {
 			$date = (int)$dateString;
-		} elseif ($dateString instanceof DateTime &&
+		} elseif ($dateString instanceof \DateTime &&
 			$dateString->getTimezone()->getName() != date_default_timezone_get()
 		) {
 			$clone = clone $dateString;
-			$clone->setTimezone(new DateTimeZone(date_default_timezone_get()));
+			$clone->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 			$date = (int)$clone->format('U') + $clone->getOffset();
-		} elseif ($dateString instanceof DateTime) {
+		} elseif ($dateString instanceof \DateTime) {
 			$date = (int)$dateString->format('U');
 		} else {
 			$date = strtotime($dateString);
@@ -627,25 +630,25 @@ class CakeTime {
  */
 	public static function toServer($dateString, $timezone = null, $format = 'Y-m-d H:i:s') {
 		if ($timezone === null) {
-			$timezone = new DateTimeZone('UTC');
+			$timezone = new \DateTimeZone('UTC');
 		} elseif (is_string($timezone)) {
-			$timezone = new DateTimeZone($timezone);
-		} elseif (!($timezone instanceof DateTimeZone)) {
+			$timezone = new \DateTimeZone($timezone);
+		} elseif (!($timezone instanceof \DateTimeZone)) {
 			return false;
 		}
 
-		if ($dateString instanceof DateTime) {
+		if ($dateString instanceof \DateTime) {
 			$date = $dateString;
 		} elseif (is_int($dateString) || is_numeric($dateString)) {
 			$dateString = (int)$dateString;
 
-			$date = new DateTime('@' . $dateString);
+			$date = new \DateTime('@' . $dateString);
 			$date->setTimezone($timezone);
 		} else {
-			$date = new DateTime($dateString, $timezone);
+			$date = new \DateTime($dateString, $timezone);
 		}
 
-		$date->setTimezone(new DateTimeZone(date_default_timezone_get()));
+		$date->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 		return $date->format($format);
 	}
 
@@ -679,9 +682,9 @@ class CakeTime {
 		$userOffset = $timezone;
 		if (!is_numeric($timezone)) {
 			if (!is_object($timezone)) {
-				$timezone = new DateTimeZone($timezone);
+				$timezone = new \DateTimeZone($timezone);
 			}
-			$currentDate = new DateTime('@' . $date);
+			$currentDate = new \DateTime('@' . $date);
 			$currentDate->setTimezone($timezone);
 			$userOffset = $timezone->getOffset($currentDate) / 60 / 60;
 		}
@@ -1108,12 +1111,12 @@ class CakeTime {
 			if ($regex === null) {
 				$regex = '#^((Africa|America|Antartica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific)/|UTC)#';
 			}
-			$identifiers = DateTimeZone::listIdentifiers();
+			$identifiers = \DateTimeZone::listIdentifiers();
 		} else {
 			if ($filter === null) {
-				$filter = DateTimeZone::ALL;
+				$filter = \DateTimeZone::ALL;
 			}
-			$identifiers = DateTimeZone::listIdentifiers($filter, $country);
+			$identifiers = \DateTimeZone::listIdentifiers($filter, $country);
 		}
 
 		if ($regex) {
@@ -1132,7 +1135,7 @@ class CakeTime {
 			foreach ($identifiers as $key => $tz) {
 				$abbr = null;
 				if ($options['abbr']) {
-					$dateTimeZone = new DateTimeZone($tz);
+					$dateTimeZone = new \DateTimeZone($tz);
 					$trans = $dateTimeZone->getTransitions($now, $now);
 					$abbr = isset($trans[0]['abbr']) ?
 						$before . $trans[0]['abbr'] . $after :

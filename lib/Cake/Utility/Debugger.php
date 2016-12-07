@@ -17,9 +17,11 @@
  * @since         CakePHP(tm) v 1.2.4560
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Utility;
 
-App::uses('CakeLog', 'Log');
-App::uses('CakeText', 'Utility');
+use Cake\CakeLog\CakeLog;
+use Cake\Utility\CakeText;
+use Cake\Core\Configure;
 
 /**
  * Provide custom logging and error handling.
@@ -581,11 +583,11 @@ class Debugger {
 			}
 
 			if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
-				$ref = new ReflectionObject($var);
+				$ref = new \ReflectionObject($var);
 
 				$filters = array(
-					ReflectionProperty::IS_PROTECTED => 'protected',
-					ReflectionProperty::IS_PRIVATE => 'private',
+					\ReflectionProperty::IS_PROTECTED => 'protected',
+					\ReflectionProperty::IS_PRIVATE => 'private',
 				);
 				foreach ($filters as $filter => $visibility) {
 					$reflectionProperties = $ref->getProperties($filter);
@@ -620,7 +622,7 @@ class Debugger {
 			return $self->_outputFormat;
 		}
 		if ($format !== false && !isset($self->_templates[$format])) {
-			throw new CakeException(__d('cake_dev', 'Invalid Debugger output format.'));
+			throw new \CakeException(__d('cake_dev', 'Invalid Debugger output format.'));
 		}
 		$self->_outputFormat = $format;
 	}

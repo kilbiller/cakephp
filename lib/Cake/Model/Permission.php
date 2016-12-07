@@ -14,7 +14,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppModel', 'Model');
+namespace Cake\Model;
+
+use Cake\Core\Configure;
+use Cake\Utility\Hash;
+use Invityou\Model\AppModel;
 
 /**
  * Permissions linking AROs with ACOs
@@ -194,7 +198,7 @@ class Permission extends AppModel {
 					$action = '_' . $action;
 				}
 				if (!in_array($action, $permKeys, true)) {
-					throw new AclException(__d('cake_dev', 'Invalid permission key "%s"', $action));
+					throw new \AclException(__d('cake_dev', 'Invalid permission key "%s"', $action));
 				}
 				$save[$action] = $value;
 			}

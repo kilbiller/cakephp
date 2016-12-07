@@ -12,7 +12,14 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('BaseAuthenticate', 'Controller/Component/Auth');
+namespace Cake\Controller\Component\Auth;
+
+use Cake\Utility\Security;
+use Cake\Utility\Hash;
+use Cake\Event\CakeEventListener;
+use Cake\Controller\ComponentCollection;
+use Cake\Network\CakeRequest;
+use Cake\Network\CakeResponse;
 
 /**
  * An authentication adapter for AuthComponent. Provides the ability to authenticate using POST

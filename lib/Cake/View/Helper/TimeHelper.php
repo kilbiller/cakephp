@@ -16,9 +16,14 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeTime', 'Utility');
-App::uses('Multibyte', 'I18n');
-App::uses('AppHelper', 'View/Helper');
+namespace Cake\View\Helper;
+
+use Invityou\View\Helper\AppHelper;
+use Cake\Utility\CakeTime;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Cake\I18n\Multibyte;
+use Cake\View\View;
 
 /**
  * Time Helper class for easy use of time data.
@@ -54,11 +59,14 @@ class TimeHelper extends AppHelper {
 		$settings = Hash::merge(array('engine' => 'CakeTime'), $settings);
 		parent::__construct($View, $settings);
 		list($plugin, $engineClass) = pluginSplit($settings['engine'], true);
-		App::uses($engineClass, $plugin . 'Utility');
+
+		$namespace = '\\Cake\\Utility\\';
+		$engineClass = $namespace . $engineClass;
+
 		if (class_exists($engineClass)) {
 			$this->_engine = new $engineClass($settings);
 		} else {
-			throw new CakeException(__d('cake_dev', '%s could not be found', $engineClass));
+			throw new \CakeException(__d('cake_dev', '%s could not be found', $engineClass));
 		}
 	}
 

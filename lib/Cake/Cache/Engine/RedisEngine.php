@@ -89,7 +89,7 @@ class RedisEngine extends CacheEngine {
 				$persistentId = $this->settings['port'] . $this->settings['timeout'] . $this->settings['database'];
 				$return = $this->_Redis->pconnect($this->settings['server'], $this->settings['port'], $this->settings['timeout'], $persistentId);
 			}
-		} catch (RedisException $e) {
+		} catch (\RedisException $e) {
 			$return = false;
 		}
 		if (!$return) {

@@ -17,9 +17,11 @@
  * @since         CakePHP(tm) v 1.2.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model;
 
-App::uses('ObjectCollection', 'Utility');
-App::uses('CakeEventListener', 'Event');
+use Cake\Utility\ObjectCollection;
+use Cake\Utility\ClassRegistry;
+use Cake\Event\CakeEventListener;
 
 /**
  * Model behavior collection class.
@@ -115,11 +117,18 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 		}
 
 		$class = $name . 'Behavior';
+		$namespace = '\\Cake\\Model\\Behavior\\';
 
-		App::uses($class, $plugin . 'Model/Behavior');
-		if (!class_exists($class)) {
-			throw new MissingBehaviorException(array(
-				'class' => $class,
+		if (!class_exists($namespace . $class)) :
+			$namespace = '\\Invityou\\Model\\Behavior\\';
+		endif;
+
+		$namespacedClass = $namespace . $class;
+
+		//App::uses($class, $plugin . 'Model/Behavior');
+		if (!class_exists($namespacedClass)) {
+			throw new \MissingBehaviorException(array(
+				'class' => $namespacedClass,
 				'plugin' => substr($plugin, 0, -1)
 			));
 		}
@@ -128,7 +137,7 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 			if (ClassRegistry::isKeySet($class)) {
 				$this->_loaded[$alias] = ClassRegistry::getObject($class);
 			} else {
-				$this->_loaded[$alias] = new $class();
+				$this->_loaded[$alias] = new $namespacedClass();
 				ClassRegistry::addObject($class, $this->_loaded[$alias]);
 			}
 		} elseif (isset($this->_loaded[$alias]->settings) && isset($this->_loaded[$alias]->settings[$this->modelName])) {
@@ -148,7 +157,7 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 			$this->_mappedMethods[$method] = array($alias, $methodAlias);
 		}
 		$methods = get_class_methods($this->_loaded[$alias]);
-		$parentMethods = array_flip(get_class_methods('ModelBehavior'));
+		$parentMethods = array_flip(get_class_methods('\\Cake\\Model\\ModelBehavior'));
 		$callbacks = array(
 			'setup', 'cleanup', 'beforeFind', 'afterFind', 'beforeSave', 'afterSave',
 			'beforeDelete', 'afterDelete', 'onError'

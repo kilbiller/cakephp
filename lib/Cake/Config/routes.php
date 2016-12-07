@@ -40,16 +40,21 @@
  *
  * You can disable the connection of default routes by deleting the require inside APP/Config/routes.php.
  */
+use Cake\Routing\Route;
+use Cake\Routing\Route\PluginShortRoute;
+use Cake\Utility\Inflector;
+use Cake\Routing\Router;
+use Cake\Core\CakePlugin;
+
 $prefixes = Router::prefixes();
 
 if ($plugins = CakePlugin::loaded()) {
-	App::uses('PluginShortRoute', 'Routing/Route');
 	foreach ($plugins as $key => $value) {
 		$plugins[$key] = Inflector::underscore($value);
 	}
 	$pluginPattern = implode('|', $plugins);
 	$match = array('plugin' => $pluginPattern, 'defaultRoute' => true);
-	$shortParams = array('routeClass' => 'PluginShortRoute', 'plugin' => $pluginPattern, 'defaultRoute' => true);
+	$shortParams = array('routeClass' => '\\Cake\\Routing\\Route\\PluginShortRoute', 'plugin' => $pluginPattern, 'defaultRoute' => true);
 
 	foreach ($prefixes as $prefix) {
 		$params = array('prefix' => $prefix, $prefix => true);
@@ -79,4 +84,3 @@ if ($namedConfig['rules'] === false) {
 
 unset($namedConfig, $params, $indexParams, $prefix, $prefixes, $shortParams, $match,
 	$pluginPattern, $plugins, $key, $value);
-

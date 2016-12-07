@@ -19,6 +19,7 @@
  *
  * @package       Cake.Cache
  */
+namespace Cake\Cache;
 abstract class CacheEngine {
 
 /**

@@ -13,14 +13,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Multibyte', 'I18n');
-App::uses('File', 'Utility');
-App::uses('CakeNumber', 'Utility');
+namespace Cake\Utility;
 
-// Load multibyte if the extension is missing.
-if (!function_exists('mb_strlen')) {
-	class_exists('Multibyte');
-}
+use Cake\I18n\Multibyte;
 
 /**
  * Validation Class. Used for validation of model data
@@ -933,7 +928,7 @@ class Validation {
 		$mime = $File->mime();
 
 		if ($mime === false) {
-			throw new CakeException(__d('cake_dev', 'Can not determine the mimetype.'));
+			throw new \CakeException(__d('cake_dev', 'Can not determine the mimetype.'));
 		}
 
 		if (is_string($mimeTypes)) {

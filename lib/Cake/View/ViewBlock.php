@@ -12,6 +12,7 @@
  * @since         CakePHP(tm) v2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\View;
 
 /**
  * ViewBlock implements the concept of Blocks or Slots in the View layer.
@@ -75,7 +76,7 @@ class ViewBlock {
  */
 	public function start($name) {
 		if (in_array($name, $this->_active)) {
-			throw new CakeException(__d('cake', "A view block with the name '%s' is already/still open.", $name));
+			throw new \CakeException(__d('cake', "A view block with the name '%s' is already/still open.", $name));
 		}
 		$this->_active[] = $name;
 		ob_start();

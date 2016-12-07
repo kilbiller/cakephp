@@ -17,9 +17,12 @@
  * @since         CakePHP(tm) v 0.9.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\View\Helper;
 
-App::uses('AppHelper', 'View/Helper');
-App::uses('CakeResponse', 'Network');
+use Invityou\View\Helper\AppHelper;
+use Cake\Network\CakeResponse;
+use Cake\View\View;
+use Cake\Core\Configure;
 
 /**
  * Html Helper class for easy use of HTML widgets.
@@ -1240,13 +1243,16 @@ class HtmlHelper extends AppHelper {
 				$reader = $configFile[1];
 			}
 		} else {
-			throw new ConfigureException(__d('cake_dev', 'Cannot load the configuration file. Wrong "configFile" configuration.'));
+			throw new \ConfigureException(__d('cake_dev', 'Cannot load the configuration file. Wrong "configFile" configuration.'));
 		}
 
 		$readerClass = Inflector::camelize($reader) . 'Reader';
-		App::uses($readerClass, 'Configure');
+
+		$namespace = '\\Cake\\Configure\\';
+		$readerClass = $namespace . $readerClass;
+
 		if (!class_exists($readerClass)) {
-			throw new ConfigureException(__d('cake_dev', 'Cannot load the configuration file. Unknown reader.'));
+			throw new \ConfigureException(__d('cake_dev', 'Cannot load the configuration file. Unknown reader.'));
 		}
 
 		$readerObj = new $readerClass($path);

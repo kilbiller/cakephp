@@ -118,7 +118,7 @@ class Scaffold {
 		$this->modelKey = $controller->modelKey;
 
 		if (!is_object($this->controller->{$this->modelClass})) {
-			throw new MissingModelException($this->modelClass);
+			throw new \MissingModelException($this->modelClass);
 		}
 
 		$this->ScaffoldModel = $this->controller->{$this->modelClass};
@@ -165,7 +165,7 @@ class Scaffold {
 				$this->ScaffoldModel->id = $request->params['pass'][0];
 			}
 			if (!$this->ScaffoldModel->exists()) {
-				throw new NotFoundException(__d('cake', 'Invalid %s', Inflector::humanize($this->modelKey)));
+				throw new \NotFoundException(__d('cake', 'Invalid %s', Inflector::humanize($this->modelKey)));
 			}
 			$this->ScaffoldModel->recursive = 1;
 			$this->controller->request->data = $this->ScaffoldModel->read();
@@ -232,7 +232,7 @@ class Scaffold {
 					$this->ScaffoldModel->id = $request['pass'][0];
 				}
 				if (!$this->ScaffoldModel->exists()) {
-					throw new NotFoundException(__d('cake', 'Invalid %s', Inflector::humanize($this->modelKey)));
+					throw new \NotFoundException(__d('cake', 'Invalid %s', Inflector::humanize($this->modelKey)));
 				}
 			}
 
@@ -293,7 +293,7 @@ class Scaffold {
 	protected function _scaffoldDelete(CakeRequest $request) {
 		if ($this->controller->beforeScaffold('delete')) {
 			if (!$request->is('post')) {
-				throw new MethodNotAllowedException();
+				throw new \MethodNotAllowedException();
 			}
 			$id = false;
 			if (isset($request->params['pass'][0])) {
@@ -301,7 +301,7 @@ class Scaffold {
 			}
 			$this->ScaffoldModel->id = $id;
 			if (!$this->ScaffoldModel->exists()) {
-				throw new NotFoundException(__d('cake', 'Invalid %s', Inflector::humanize($this->modelClass)));
+				throw new \NotFoundException(__d('cake', 'Invalid %s', Inflector::humanize($this->modelClass)));
 			}
 			if ($this->ScaffoldModel->delete()) {
 				$message = __d('cake', 'The %1$s with id: %2$s has been deleted.', Inflector::humanize($this->modelClass), $id);
@@ -401,13 +401,13 @@ class Scaffold {
 						break;
 				}
 			} else {
-				throw new MissingActionException(array(
+				throw new \MissingActionException(array(
 					'controller' => get_class($this->controller),
 					'action' => $request->action
 				));
 			}
 		} else {
-			throw new MissingDatabaseException(array('connection' => $this->ScaffoldModel->useDbConfig));
+			throw new \MissingDatabaseException(array('connection' => $this->ScaffoldModel->useDbConfig));
 		}
 	}
 

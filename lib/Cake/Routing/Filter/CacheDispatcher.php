@@ -12,8 +12,13 @@
  * @since         CakePHP(tm) v 2.2
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Routing\Filter;
 
-App::uses('DispatcherFilter', 'Routing');
+use Cake\Routing\DispatcherFilter;
+use Cake\Event\CakeEvent;
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+use Cake\View\View;
 
 /**
  * This filter will check whether the response was previously cached in the file system

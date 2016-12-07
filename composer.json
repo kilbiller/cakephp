@@ -28,6 +28,11 @@
 	"config": {
 		"vendor-dir": "vendors/"
 	},
+	"autoload": {
+        "psr-4": {
+            "Cake\\": "lib/Cake/"
+        }
+    },
 	"bin": [
 		"lib/Cake/Console/cake"
 	]

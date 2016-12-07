@@ -93,7 +93,7 @@ if (isset($filePresent)):
 	App::uses('ConnectionManager', 'Model');
 	try {
 		$connected = ConnectionManager::getDataSource('default');
-	} catch (Exception $connectionError) {
+	} catch (\Exception $connectionError) {
 		$connected = false;
 		$errorMsg = $connectionError->getMessage();
 		if (method_exists($connectionError, 'getAttributes')):

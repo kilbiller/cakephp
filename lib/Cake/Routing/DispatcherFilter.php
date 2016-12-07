@@ -13,8 +13,11 @@
  * @since		  CakePHP(tm) v 2.2
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Routing;
 
-App::uses('CakeEventListener', 'Event');
+use Cake\Event\CakeEvent;
+use Cake\Event\CakeEventListener;
+use Cake\Utility\Hash;
 
 /**
  * This abstract class represents a filter to be applied to a dispatcher cycle. It acts as as

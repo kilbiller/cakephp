@@ -148,11 +148,11 @@ class HttpSocketResponse implements ArrayAccess {
  */
 	public function parseResponse($message) {
 		if (!is_string($message)) {
-			throw new SocketException(__d('cake_dev', 'Invalid response.'));
+			throw new \SocketException(__d('cake_dev', 'Invalid response.'));
 		}
 
 		if (!preg_match("/^(.+\r\n)(.*)(?<=\r\n)\r\n/Us", $message, $match)) {
-			throw new SocketException(__d('cake_dev', 'Invalid HTTP response.'));
+			throw new \SocketException(__d('cake_dev', 'Invalid HTTP response.'));
 		}
 
 		list(, $statusLine, $header) = $match;

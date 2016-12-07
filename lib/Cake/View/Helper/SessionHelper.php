@@ -15,9 +15,11 @@
  * @since         CakePHP(tm) v 1.1.7.3328
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\View\Helper;
 
-App::uses('AppHelper', 'View/Helper');
-App::uses('CakeSession', 'Model/Datasource');
+use Invityou\View\Helper\AppHelper;
+use Cake\View\Helper;
+use Cake\Model\Datasource\CakeSession;
 
 /**
  * Session Helper.

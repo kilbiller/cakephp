@@ -15,14 +15,24 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\View;
 
-App::uses('HelperCollection', 'View');
-App::uses('AppHelper', 'View/Helper');
-App::uses('Router', 'Routing');
-App::uses('ViewBlock', 'View');
-App::uses('CakeEvent', 'Event');
-App::uses('CakeEventManager', 'Event');
-App::uses('CakeResponse', 'Network');
+use Cake\View\HelperCollection;
+use Cake\View\Helper\AppHelper;
+use Cake\Routing\Router;
+use Cake\View\ViewBlock;
+use Cake\Event\CakeEvent;
+use Cake\Event\CakeEventManager;
+use Cake\Network\CakeRequest;
+use Cake\Network\CakeResponse;
+use Cake\Core\CakeObject;
+use Cake\Controller\Controller;
+use Cake\Core\CakePlugin;
+use Cake\Utility\Inflector;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Utility\Hash;
+use Cake\Cache\Cache;
 
 /**
  * View, the V in the MVC triad. View interacts with Helpers and view variables passed
@@ -738,7 +748,7 @@ class View extends CakeObject {
 						list($plugin, $name) = $this->pluginSplit($name);
 						$paths = $this->_paths($plugin);
 						$defaultPath = $paths[0] . 'Elements' . DS;
-						throw new LogicException(__d(
+						throw new \LogicException(__d(
 							'cake_dev',
 							'You cannot extend an element which does not exist (%s).',
 							$defaultPath . $name . $this->ext
@@ -754,10 +764,10 @@ class View extends CakeObject {
 		}
 
 		if ($parent == $this->_current) {
-			throw new LogicException(__d('cake_dev', 'You cannot have views extend themselves.'));
+			throw new \LogicException(__d('cake_dev', 'You cannot have views extend themselves.'));
 		}
 		if (isset($this->_parents[$parent]) && $this->_parents[$parent] == $this->_current) {
-			throw new LogicException(__d('cake_dev', 'You cannot have views extend in a loop.'));
+			throw new \LogicException(__d('cake_dev', 'You cannot have views extend in a loop.'));
 		}
 		$this->_parents[$this->_current] = $parent;
 	}
@@ -949,7 +959,7 @@ class View extends CakeObject {
 		$remainingBlocks = count($this->Blocks->unclosed());
 
 		if ($initialBlocks !== $remainingBlocks) {
-			throw new CakeException(__d('cake_dev', 'The "%s" block was left open. Blocks are not allowed to cross files.', $this->Blocks->active()));
+			throw new \CakeException(__d('cake_dev', 'The "%s" block was left open. Blocks are not allowed to cross files.', $this->Blocks->active()));
 		}
 
 		return $content;
@@ -1028,7 +1038,7 @@ class View extends CakeObject {
 				}
 			}
 		}
-		throw new MissingViewException(array('file' => $name . $this->ext));
+		throw new \MissingViewException(array('file' => $name . $this->ext));
 	}
 
 /**
@@ -1081,7 +1091,7 @@ class View extends CakeObject {
 				}
 			}
 		}
-		throw new MissingLayoutException(array('file' => $file . $this->ext));
+		throw new \MissingLayoutException(array('file' => $file . $this->ext));
 	}
 
 /**

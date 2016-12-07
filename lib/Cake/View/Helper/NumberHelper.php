@@ -18,9 +18,12 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeNumber', 'Utility');
-App::uses('AppHelper', 'View/Helper');
-App::uses('Hash', 'Utility');
+namespace Cake\View\Helper;
+
+use Cake\Utility\Number;
+use Cake\Utility\Hash;
+use Invityou\View\Helper\AppHelper;
+use Cake\View\View;
 
 /**
  * Number helper library.
@@ -56,11 +59,19 @@ class NumberHelper extends AppHelper {
 		$settings = Hash::merge(array('engine' => 'CakeNumber'), $settings);
 		parent::__construct($View, $settings);
 		list($plugin, $engineClass) = pluginSplit($settings['engine'], true);
-		App::uses($engineClass, $plugin . 'Utility');
+
+		$namespace = '\\Cake\\Utility\\';
+
+		if (!empty($plugin)) {
+			$namespace = '\\' . substr($plugin, 0, -1) . '\\Lib\\Utility';
+		}
+
+		$engineClass = $namespace . $engineClass;
+
 		if (class_exists($engineClass)) {
 			$this->_engine = new $engineClass($settings);
 		} else {
-			throw new CakeException(__d('cake_dev', '%s could not be found', $engineClass));
+			throw new \CakeException(__d('cake_dev', '%s could not be found', $engineClass));
 		}
 	}
 

@@ -16,9 +16,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppHelper', 'View/Helper');
-App::uses('JsBaseEngineHelper', 'View/Helper');
-App::uses('Multibyte', 'I18n');
+namespace Cake\View\Helper;
+
+use Cake\I18n\Multibyte;
+use Invityou\View\Helper\AppHelper;
+use Cake\View\View;
 
 /**
  * Javascript Generator helper class for easy use of JavaScript.

@@ -12,7 +12,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('View', 'View');
+namespace Cake\View;
+
+use Cake\View\View;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
 
 /**
  * A view class that is used for JSON responses.
@@ -164,10 +168,10 @@ class JsonView extends View {
 		$json = json_encode($data, $jsonOptions);
 
 		if (function_exists('json_last_error') && json_last_error() !== JSON_ERROR_NONE) {
-			throw new CakeException(json_last_error_msg());
+			throw new \CakeException(json_last_error_msg());
 		}
 		if ($json === false) {
-			throw new CakeException('Failed to parse JSON');
+			throw new \CakeException('Failed to parse JSON');
 		}
 		return $json;
 	}

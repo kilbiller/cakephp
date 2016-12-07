@@ -13,13 +13,11 @@
  * @since         CakePHP(tm) v 0.9.2
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Utility;
 
-/**
- * Included libraries.
- */
-App::uses('Model', 'Model');
-App::uses('AppModel', 'Model');
-App::uses('ConnectionManager', 'Model');
+use Cake\Model\Model;
+use Cake\Model\AppModel;
+use Cake\Model\ConnectionManager;
 
 /**
  * Class Collections.
@@ -140,13 +138,19 @@ class ClassRegistry {
 					return $model;
 				}
 
-				App::uses($plugin . 'AppModel', $pluginPath . 'Model');
-				App::uses($class, $pluginPath . 'Model');
+				$namespace = '\\Cake\\Model\\';
 
-				if (class_exists($class) || interface_exists($class)) {
-					$reflection = new ReflectionClass($class);
+				if (!class_exists($namespace . $class)) {
+					$namespace = '\\Invityou\\Model\\';
+					if (!empty($plugin)) {
+						$namespace = '\\' . $plugin . '\\Model\\';
+					}
+				}
+
+				if (class_exists($namespace . $class) || interface_exists($namespace . $class)) {
+					$reflection = new \ReflectionClass($namespace . $class);
 					if ($reflection->isAbstract() || $reflection->isInterface()) {
-						throw new CakeException(__d('cake_dev', 'Cannot create instance of %s, as it is abstract or is an interface', $class));
+						throw new \CakeException(__d('cake_dev', 'Cannot create instance of %s, as it is abstract or is an interface', $namespace .$class));
 					}
 					$testing = isset($settings['testing']) ? $settings['testing'] : false;
 					if ($testing) {
@@ -175,13 +179,12 @@ class ClassRegistry {
 					}
 				}
 				if (!isset($instance)) {
-					$appModel = 'AppModel';
+					$appModel = $namespace . 'AppModel';
 					if ($strict) {
 						return false;
 					} elseif ($plugin && class_exists($plugin . 'AppModel')) {
 						$appModel = $plugin . 'AppModel';
 					}
-
 					$settings['name'] = $class;
 					$instance = new $appModel($settings);
 				}

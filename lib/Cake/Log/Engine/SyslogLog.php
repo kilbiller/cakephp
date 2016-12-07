@@ -16,7 +16,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('BaseLog', 'Log/Engine');
+namespace Cake\Log\Engine;
+
+use Cake\Log\Engine\BaseLog;
 
 /**
  * Syslog stream for Logging. Writes logs to the system logger

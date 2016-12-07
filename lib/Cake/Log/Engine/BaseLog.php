@@ -16,7 +16,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeLogInterface', 'Log');
+namespace Cake\Log\Engine;
+
+use Cake\Log\CakeLogInterface;
 
 /**
  * Base log engine class.

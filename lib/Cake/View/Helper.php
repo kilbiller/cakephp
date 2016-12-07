@@ -13,10 +13,16 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\View;
 
-App::uses('Router', 'Routing');
-App::uses('Hash', 'Utility');
-App::uses('Inflector', 'Utility');
+use Cake\Routing\Router;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Cake\Core\CakeObject;
+use Cake\Core\Configure;
+use Cake\Core\App;
+use Cake\Utility\ObjectCollection;
+use Cake\Utility\ClassRegistry;
 
 /**
  * Abstract base class for all other Helpers in CakePHP.
@@ -685,7 +691,7 @@ class Helper extends CakeObject {
 
 		$entity = $this->entity();
 		$model = array_shift($entity);
-		$dom = $model . implode('', array_map(array('Inflector', 'camelize'), $entity));
+		$dom = $model . implode('', array_map(array('\\Cake\\Utility\\Inflector', 'camelize'), $entity));
 
 		if (is_array($options) && !array_key_exists($id, $options)) {
 			$options[$id] = $dom;

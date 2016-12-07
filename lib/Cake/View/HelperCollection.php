@@ -16,9 +16,11 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\View;
 
-App::uses('ObjectCollection', 'Utility');
-App::uses('CakeEventListener', 'Event');
+use Cake\Utility\ObjectCollection;
+use Cake\Event\CakeEventListener;
+use Cake\Event\CakeEvent;
 
 /**
  * Helpers collection is used as a registry for loaded helpers and handles loading
@@ -61,7 +63,7 @@ class HelperCollection extends ObjectCollection implements CakeEventListener {
 
 		try {
 			$this->load($helper);
-		} catch (MissingHelperException $exception) {
+		} catch (\MissingHelperException $exception) {
 			if ($this->_View->plugin) {
 				$this->load($this->_View->plugin . '.' . $helper);
 				return true;
@@ -126,9 +128,21 @@ class HelperCollection extends ObjectCollection implements CakeEventListener {
 			return $this->_loaded[$alias];
 		}
 		$helperClass = $name . 'Helper';
-		App::uses($helperClass, $plugin . 'View/Helper');
+
+		$namespace = '\\Cake\\View\\Helper\\';
+
+		if (!class_exists($namespace . $helperClass)) {
+			$namespace = '\\Invityou\\View\\Helper\\';
+		}
+
+		if (!empty($plugin)) {
+			$namespace = '\\' . substr($plugin, 0, -1) . '\\View\\Helper\\';
+		}
+
+		$helperClass = $namespace . $helperClass;
+
 		if (!class_exists($helperClass)) {
-			throw new MissingHelperException(array(
+			throw new \MissingHelperException(array(
 				'class' => $helperClass,
 				'plugin' => substr($plugin, 0, -1)
 			));

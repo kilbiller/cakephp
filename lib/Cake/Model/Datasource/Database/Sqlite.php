@@ -114,8 +114,8 @@ class Sqlite extends DboSource {
 		try {
 			$this->_connection = new PDO('sqlite:' . $config['database'], null, null, $flags);
 			$this->connected = true;
-		} catch(PDOException $e) {
-			throw new MissingConnectionException(array(
+		} catch(\PDOException $e) {
+			throw new \MissingConnectionException(array(
 				'class' => get_class($this),
 				'message' => $e->getMessage()
 			));
@@ -342,7 +342,7 @@ class Sqlite extends DboSource {
 				if (!empty($metaData['sqlite:decl_type'])) {
 					$metaType = trim($metaData['sqlite:decl_type']);
 				}
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 			}
 
 			if (strpos($columnName, '.')) {

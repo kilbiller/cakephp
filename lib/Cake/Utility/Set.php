@@ -16,8 +16,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeText', 'Utility');
-App::uses('Hash', 'Utility');
+namespace Cake\Utility;
 
 /**
  * Class used for manipulation of arrays.

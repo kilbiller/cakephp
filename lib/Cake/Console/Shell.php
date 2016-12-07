@@ -15,13 +15,13 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('TaskCollection', 'Console');
-App::uses('ConsoleOutput', 'Console');
-App::uses('ConsoleInput', 'Console');
-App::uses('ConsoleInputSubcommand', 'Console');
-App::uses('ConsoleOptionParser', 'Console');
-App::uses('ClassRegistry', 'Utility');
-App::uses('File', 'Utility');
+namespace Cake\Console;
+
+use Cake\Core\CakeObject;
+use Cake\Utility\ClassRegistry;
+use Cake\Utility\File;
+use Cake\Utility\Inflector;
+use Cake\Log\CakeLog;
 
 /**
  * Base class for command-line utilities for automating programmer chores.
@@ -316,7 +316,7 @@ class Shell extends CakeObject {
 			'class' => $plugin . $modelClass, 'alias' => $modelClass, 'id' => $id
 		));
 		if (!$this->{$modelClass}) {
-			throw new MissingModelException($modelClass);
+			throw new \MissingModelException($modelClass);
 		}
 		return true;
 	}
@@ -355,7 +355,7 @@ class Shell extends CakeObject {
  */
 	public function hasMethod($name) {
 		try {
-			$method = new ReflectionMethod($this, $name);
+			$method = new \ReflectionMethod($this, $name);
 			if (!$method->isPublic() || substr($name, 0, 1) === '_') {
 				return false;
 			}
@@ -363,7 +363,7 @@ class Shell extends CakeObject {
 				return false;
 			}
 			return true;
-		} catch (ReflectionException $e) {
+		} catch (\ReflectionException $e) {
 			return false;
 		}
 	}
@@ -430,7 +430,7 @@ class Shell extends CakeObject {
 		$this->OptionParser = $this->getOptionParser();
 		try {
 			list($this->params, $this->args) = $this->OptionParser->parse($argv, $command);
-		} catch (ConsoleException $e) {
+		} catch (\ConsoleException $e) {
 			$this->out($this->OptionParser->help($command));
 			return false;
 		}
@@ -810,7 +810,7 @@ class Shell extends CakeObject {
 		$helperClassName = Inflector::camelize($name) . "ShellHelper";
 		App::uses($helperClassName, $plugin . "Console/Helper");
 		if (!class_exists($helperClassName)) {
-			throw new RuntimeException("Class " . $helperClassName . " not found");
+			throw new \RuntimeException("Class " . $helperClassName . " not found");
 		}
 		$helper = new $helperClassName($this->stdout);
 		$this->_helpers[$name] = $helper;
@@ -984,7 +984,7 @@ class Shell extends CakeObject {
 
 /**
  * Configure the stdout logger
- * 
+ *
  * @return void
  */
 	protected function _configureStdOutLogger() {
@@ -997,7 +997,7 @@ class Shell extends CakeObject {
 
 /**
  * Configure the stderr logger
- * 
+ *
  * @return void
  */
 	protected function _configureStdErrLogger() {
@@ -1010,8 +1010,8 @@ class Shell extends CakeObject {
 
 /**
  * Checks if the given logger is configured
- * 
- * @param string $logger The name of the logger to check 
+ *
+ * @param string $logger The name of the logger to check
  * @return bool
  */
 	protected function _loggerIsConfigured($logger) {

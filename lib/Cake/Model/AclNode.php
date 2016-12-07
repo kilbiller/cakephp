@@ -14,7 +14,10 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Model', 'Model');
+namespace Cake\Model;
+
+use Cake\Core\Configure;
+use Cake\Utility\ClassRegistry;
 
 /**
  * ACL Node
@@ -135,7 +138,7 @@ class AclNode extends Model {
 			$model = ClassRegistry::init(array('class' => $name, 'alias' => $alias));
 
 			if (empty($model)) {
-				throw new CakeException('cake_dev', "Model class '%s' not found in AclNode::node() when trying to bind %s object", $type, $this->alias);
+				throw new \CakeException('cake_dev', "Model class '%s' not found in AclNode::node() when trying to bind %s object", $type, $this->alias);
 			}
 
 			$tmpRef = null;
@@ -179,7 +182,7 @@ class AclNode extends Model {
 			$result = $db->read($this, $queryData, -1);
 
 			if (!$result) {
-				throw new CakeException(__d('cake_dev', "AclNode::node() - Couldn't find %s node identified by \"%s\"", $type, print_r($ref, true)));
+				throw new \CakeException(__d('cake_dev', "AclNode::node() - Couldn't find %s node identified by \"%s\"", $type, print_r($ref, true)));
 			}
 		}
 		return $result;

@@ -15,9 +15,14 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Routing;
 
-App::uses('CakeRequest', 'Network');
-App::uses('CakeRoute', 'Routing/Route');
+use Cake\Core\Configure;
+use Cake\Network\CakeRequest;
+use Cake\Routing\Route\CakeRoute;
+use Cake\Routing\Route\RedirectRoute;
+use Cake\Utility\Inflector;
+use Cake\Utility\Hash;
 
 /**
  * Parses the request URL into controller, action, and parameters. Uses the connected routes
@@ -202,7 +207,7 @@ class Router {
  *
  * @var string
  */
-	protected static $_routeClass = 'CakeRoute';
+	protected static $_routeClass = '\\Cake\\Routing\\Route\\CakeRoute';
 
 /**
  * Set the default route class to use or return the current one
@@ -227,10 +232,10 @@ class Router {
  * @throws RouterException
  */
 	protected static function _validateRouteClass($routeClass) {
-		if ($routeClass !== 'CakeRoute' &&
-			(!class_exists($routeClass) || !is_subclass_of($routeClass, 'CakeRoute'))
+		if ($routeClass !== '\\Cake\\Routing\\Route\\CakeRoute' &&
+			(!class_exists($routeClass) || !is_subclass_of($routeClass, '\\Cake\\Routing\\Route\\CakeRoute'))
 		) {
-			throw new RouterException(__d('cake_dev', 'Route class not found, or route class is not a subclass of CakeRoute'));
+			throw new \RouterException(__d('cake_dev', 'Route class not found, or route class is not a subclass of CakeRoute'));
 		}
 		return $routeClass;
 	}
@@ -371,7 +376,7 @@ class Router {
 			$routeClass = static::_validateRouteClass($routeClass);
 			unset($options['routeClass']);
 		}
-		if ($routeClass === 'RedirectRoute' && isset($defaults['redirect'])) {
+		if ($routeClass === '\\Cake\\Routing\\Route\\RedirectRoute' && isset($defaults['redirect'])) {
 			$defaults = $defaults['redirect'];
 		}
 		static::$routes[] = new $routeClass($route, $defaults, $options);
@@ -411,8 +416,7 @@ class Router {
  * @return array Array of routes
  */
 	public static function redirect($route, $url, $options = array()) {
-		App::uses('RedirectRoute', 'Routing/Route');
-		$options['routeClass'] = 'RedirectRoute';
+		$options['routeClass'] = '\\Cake\\Routing\\Route\\RedirectRoute';
 		if (is_string($url)) {
 			$url = array('redirect' => $url);
 		}

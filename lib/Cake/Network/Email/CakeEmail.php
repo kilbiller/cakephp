@@ -623,7 +623,7 @@ class CakeEmail {
 		} elseif (preg_match($this->_emailPattern, $email)) {
 			return;
 		}
-		throw new SocketException(__d('cake_dev', 'Invalid email: "%s"', $email));
+		throw new \SocketException(__d('cake_dev', 'Invalid email: "%s"', $email));
 	}
 
 /**
@@ -642,7 +642,7 @@ class CakeEmail {
 		$this->_setEmail($varName, $email, $name);
 		if (count($this->{$varName}) !== 1) {
 			$this->{$varName} = $current;
-			throw new SocketException($throwMessage);
+			throw new \SocketException($throwMessage);
 		}
 		return $this;
 	}
@@ -701,7 +701,7 @@ class CakeEmail {
  */
 	public function setHeaders($headers) {
 		if (!is_array($headers)) {
-			throw new SocketException(__d('cake_dev', '$headers should be an array.'));
+			throw new \SocketException(__d('cake_dev', '$headers should be an array.'));
 		}
 		$this->_headers = $headers;
 		return $this;
@@ -716,7 +716,7 @@ class CakeEmail {
  */
 	public function addHeaders($headers) {
 		if (!is_array($headers)) {
-			throw new SocketException(__d('cake_dev', '$headers should be an array.'));
+			throw new \SocketException(__d('cake_dev', '$headers should be an array.'));
 		}
 		$this->_headers = array_merge($this->_headers, $headers);
 		return $this;
@@ -928,7 +928,7 @@ class CakeEmail {
 			return $this->_emailFormat;
 		}
 		if (!in_array($format, $this->_emailFormatAvailable)) {
-			throw new SocketException(__d('cake_dev', 'Format not available.'));
+			throw new \SocketException(__d('cake_dev', 'Format not available.'));
 		}
 		$this->_emailFormat = $format;
 		return $this;
@@ -963,9 +963,9 @@ class CakeEmail {
 		$transportClassname .= 'Transport';
 		App::uses($transportClassname, $plugin . 'Network/Email');
 		if (!class_exists($transportClassname)) {
-			throw new SocketException(__d('cake_dev', 'Class "%s" not found.', $transportClassname));
+			throw new \SocketException(__d('cake_dev', 'Class "%s" not found.', $transportClassname));
 		} elseif (!method_exists($transportClassname, 'send')) {
-			throw new SocketException(__d('cake_dev', 'The "%s" does not have a %s method.', $transportClassname, 'send()'));
+			throw new \SocketException(__d('cake_dev', 'The "%s" does not have a %s method.', $transportClassname, 'send()'));
 		}
 
 		return $this->_transportClass = new $transportClassname();
@@ -986,7 +986,7 @@ class CakeEmail {
 			$this->_messageId = $message;
 		} else {
 			if (!preg_match('/^\<.+@.+\>$/', $message)) {
-				throw new SocketException(__d('cake_dev', 'Invalid format for Message-ID. The text should be something like "<uuid@server.com>"'));
+				throw new \SocketException(__d('cake_dev', 'Invalid format for Message-ID. The text should be something like "<uuid@server.com>"'));
 			}
 			$this->_messageId = $message;
 		}
@@ -1065,17 +1065,17 @@ class CakeEmail {
 			}
 			if (!isset($fileInfo['file'])) {
 				if (!isset($fileInfo['data'])) {
-					throw new SocketException(__d('cake_dev', 'No file or data specified.'));
+					throw new \SocketException(__d('cake_dev', 'No file or data specified.'));
 				}
 				if (is_int($name)) {
-					throw new SocketException(__d('cake_dev', 'No filename specified.'));
+					throw new \SocketException(__d('cake_dev', 'No filename specified.'));
 				}
 				$fileInfo['data'] = chunk_split(base64_encode($fileInfo['data']), 76, "\r\n");
 			} else {
 				$fileName = $fileInfo['file'];
 				$fileInfo['file'] = realpath($fileInfo['file']);
 				if ($fileInfo['file'] === false || !file_exists($fileInfo['file'])) {
-					throw new SocketException(__d('cake_dev', 'File not found: "%s"', $fileName));
+					throw new \SocketException(__d('cake_dev', 'File not found: "%s"', $fileName));
 				}
 				if (is_int($name)) {
 					$name = basename($fileInfo['file']);
@@ -1158,10 +1158,10 @@ class CakeEmail {
  */
 	public function send($content = null) {
 		if (empty($this->_from)) {
-			throw new SocketException(__d('cake_dev', 'From is not specified.'));
+			throw new \SocketException(__d('cake_dev', 'From is not specified.'));
 		}
 		if (empty($this->_to) && empty($this->_cc) && empty($this->_bcc)) {
-			throw new SocketException(__d('cake_dev', 'You need to specify at least one destination for to, cc or bcc.'));
+			throw new \SocketException(__d('cake_dev', 'You need to specify at least one destination for to, cc or bcc.'));
 		}
 
 		if (is_array($content)) {
@@ -1238,12 +1238,12 @@ class CakeEmail {
 		if (is_string($config)) {
 			if (!$this->_configInstance) {
 				if (!class_exists($this->_configClass) && !config('email')) {
-					throw new ConfigureException(__d('cake_dev', '%s not found.', APP . 'Config' . DS . 'email.php'));
+					throw new \ConfigureException(__d('cake_dev', '%s not found.', APP . 'Config' . DS . 'email.php'));
 				}
 				$this->_configInstance = new $this->_configClass();
 			}
 			if (!isset($this->_configInstance->{$config})) {
-				throw new ConfigureException(__d('cake_dev', 'Unknown email configuration "%s".', $config));
+				throw new \ConfigureException(__d('cake_dev', 'Unknown email configuration "%s".', $config));
 			}
 			$config = $this->_configInstance->{$config};
 		}

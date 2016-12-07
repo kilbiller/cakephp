@@ -16,7 +16,10 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeRequest', 'Network');
+namespace Cake\I18n;
+
+use Cake\Core\Configure;
+use Cake\Network\CakeRequest;
 
 /**
  * Localization

@@ -141,7 +141,7 @@ class ConsoleInputArgument {
 			return true;
 		}
 		if (!in_array($value, $this->_choices)) {
-			throw new ConsoleException(
+			throw new \ConsoleException(
 				__d('cake_console', '"%s" is not a valid value for %s. Please use one of "%s"',
 				$value, $this->_name, implode(', ', $this->_choices)
 			));

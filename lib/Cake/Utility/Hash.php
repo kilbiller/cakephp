@@ -14,7 +14,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeText', 'Utility');
+//App::uses('CakeText', 'Utility');
+namespace Cake\Utility;
 
 /**
  * Library of array functions for manipulating and extracting data
@@ -50,7 +51,7 @@ class Hash {
 			$parts = explode('.', $path);
 		} else {
 			if (!is_array($path)) {
-				throw new InvalidArgumentException(__d('cake_dev',
+				throw new \InvalidArgumentException(__d('cake_dev',
 					'Invalid Parameter %s, should be dot separated path or array.',
 					$path
 				));
@@ -411,7 +412,7 @@ class Hash {
 		}
 
 		if (count($keys) !== count($vals)) {
-			throw new CakeException(__d(
+			throw new \CakeException(__d(
 				'cake_dev',
 				'Hash::combine() needs an equal number of keys + values.'
 			));
@@ -1106,7 +1107,7 @@ class Hash {
 		}
 
 		if (!$return) {
-			throw new InvalidArgumentException(__d('cake_dev',
+			throw new \InvalidArgumentException(__d('cake_dev',
 				'Invalid data array to nest.'
 			));
 		}

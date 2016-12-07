@@ -15,10 +15,18 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model\Datasource;
 
-App::uses('DataSource', 'Model/Datasource');
-App::uses('CakeText', 'Utility');
-App::uses('View', 'View');
+use Cake\Model\Datasource\DataSource;
+use Cake\Utility\CakeText;
+use Cake\View\View;
+use Cake\Model\Model;
+use Cake\Core\Configure;
+use Cake\Cache\Cache;
+use Cake\Model\ConnectionManager;
+use Cake\Utility\Hash;
+use Cake\Utility\ClassRegistry;
+use Cake\Utility\Inflector;
 
 /**
  * DboSource
@@ -259,7 +267,7 @@ class DboSource extends DataSource {
 		parent::__construct($config);
 		$this->fullDebug = Configure::read('debug') > 1;
 		if (!$this->enabled()) {
-			throw new MissingConnectionException(array(
+			throw new \MissingConnectionException(array(
 				'class' => get_class($this),
 				'message' => __d('cake_dev', 'Selected driver is not enabled'),
 				'enabled' => false
@@ -290,7 +298,7 @@ class DboSource extends DataSource {
  * @return bool Always true
  */
 	public function disconnect() {
-		if ($this->_result instanceof PDOStatement) {
+		if ($this->_result instanceof \PDOStatement) {
 			$this->_result->closeCursor();
 		}
 		$this->_connection = null;
@@ -313,7 +321,7 @@ class DboSource extends DataSource {
  * @return string The database version
  */
 	public function getVersion() {
-		return $this->_connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+		return $this->_connection->getAttribute(\PDO::ATTR_SERVER_VERSION);
 	}
 
 /**
@@ -350,12 +358,12 @@ class DboSource extends DataSource {
 
 		switch ($column) {
 			case 'binary':
-				return $this->_connection->quote($data, PDO::PARAM_LOB);
+				return $this->_connection->quote($data, \PDO::PARAM_LOB);
 			case 'boolean':
-				return $this->_connection->quote($this->boolean($data, true), PDO::PARAM_BOOL);
+				return $this->_connection->quote($this->boolean($data, true), \PDO::PARAM_BOOL);
 			case 'string':
 			case 'text':
-				return $this->_connection->quote($data, PDO::PARAM_STR);
+				return $this->_connection->quote($data, \PDO::PARAM_STR);
 			default:
 				if ($data === '') {
 					return $null ? 'NULL' : '""';
@@ -383,7 +391,7 @@ class DboSource extends DataSource {
  * @return stdClass An object representing a database identifier to be used in a query
  */
 	public function identifier($identifier) {
-		$obj = new stdClass();
+		$obj = new \stdClass();
 		$obj->type = 'identifier';
 		$obj->value = $identifier;
 		return $obj;
@@ -466,7 +474,7 @@ class DboSource extends DataSource {
 
 		try {
 			$query = $this->_connection->prepare($sql, $prepareOptions);
-			$query->setFetchMode(PDO::FETCH_LAZY);
+			$query->setFetchMode(\PDO::FETCH_LAZY);
 			if (!$query->execute($params)) {
 				$this->_results = $query;
 				$query->closeCursor();
@@ -479,7 +487,7 @@ class DboSource extends DataSource {
 				}
 			}
 			return $query;
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			if (isset($query->queryString)) {
 				$e->queryString = $query->queryString;
 			} else {
@@ -495,7 +503,7 @@ class DboSource extends DataSource {
  * @param PDOStatement $query the query to extract the error from if any
  * @return string Error message with error number
  */
-	public function lastError(PDOStatement $query = null) {
+	public function lastError(\PDOStatement $query = null) {
 		if ($query) {
 			$error = $query->errorInfo();
 		} else {
@@ -928,7 +936,7 @@ class DboSource extends DataSource {
 		} else {
 			try {
 				$connected = $this->_connection->query('SELECT 1');
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$connected = false;
 			}
 		}
@@ -942,7 +950,7 @@ class DboSource extends DataSource {
  * @return bool True if the result is valid else false
  */
 	public function hasResult() {
-		return $this->_result instanceof PDOStatement;
+		return $this->_result instanceof \PDOStatement;
 	}
 
 /**
@@ -1338,7 +1346,7 @@ class DboSource extends DataSource {
 		}
 
 		if (!is_array($resultSet)) {
-			throw new CakeException(__d('cake_dev', 'Error in Model %s', get_class($Model)));
+			throw new \CakeException(__d('cake_dev', 'Error in Model %s', get_class($Model)));
 		}
 
 		if ($type === 'hasMany' && empty($assocData['limit']) && !empty($assocData['foreignKey'])) {
@@ -3234,11 +3242,11 @@ class DboSource extends DataSource {
 		$fields = implode(', ', array_map(array(&$this, 'name'), $fields));
 
 		$pdoMap = array(
-			'integer' => PDO::PARAM_INT,
-			'float' => PDO::PARAM_STR,
-			'boolean' => PDO::PARAM_BOOL,
-			'string' => PDO::PARAM_STR,
-			'text' => PDO::PARAM_STR
+			'integer' => \PDO::PARAM_INT,
+			'float' => \PDO::PARAM_STR,
+			'boolean' => \PDO::PARAM_BOOL,
+			'string' => \PDO::PARAM_STR,
+			'text' => \PDO::PARAM_STR
 		);
 		$columnMap = array();
 

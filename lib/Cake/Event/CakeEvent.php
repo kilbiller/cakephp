@@ -13,7 +13,7 @@
  * @since		  CakePHP(tm) v 2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
+namespace Cake\Event;
 /**
  * Represents the transport class of events across the system. It receives a name, subject and an optional
  * payload. The name can be any string that uniquely identifies the event across the application, while the subject
