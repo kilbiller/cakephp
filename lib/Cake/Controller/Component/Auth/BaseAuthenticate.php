@@ -12,9 +12,14 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Security', 'Utility');
-App::uses('Hash', 'Utility');
-App::uses('CakeEventListener', 'Event');
+namespace Cake\Controller\Component\Auth;
+
+use Cake\Utility\Security;
+use Cake\Utility\Hash;
+use Cake\Event\CakeEventListener;
+use Cake\Controller\ComponentCollection;
+use Cake\Network\CakeRequest;
+use Cake\Network\CakeResponse;
 
 /**
  * Base Authentication class with common methods and properties.
@@ -169,10 +174,10 @@ abstract class BaseAuthenticate implements CakeEventListener {
 		$className = $class . 'PasswordHasher';
 		App::uses($className, $plugin . 'Controller/Component/Auth');
 		if (!class_exists($className)) {
-			throw new CakeException(__d('cake_dev', 'Password hasher class "%s" was not found.', $class));
+			throw new \CakeException(__d('cake_dev', 'Password hasher class "%s" was not found.', $class));
 		}
 		if (!is_subclass_of($className, 'AbstractPasswordHasher')) {
-			throw new CakeException(__d('cake_dev', 'Password hasher must extend AbstractPasswordHasher class.'));
+			throw new \CakeException(__d('cake_dev', 'Password hasher must extend AbstractPasswordHasher class.'));
 		}
 		$this->_passwordHasher = new $className($config);
 		return $this->_passwordHasher;

@@ -16,6 +16,10 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+namespace Cake\I18n;
+
+use Cake\Configure\PhpReader;
+
 /**
  * Multibyte handling methods.
  *
@@ -834,7 +838,6 @@ class Multibyte {
 				return array();
 			}
 			if (!Configure::configured('_cake_core_')) {
-				App::uses('PhpReader', 'Configure');
 				Configure::config('_cake_core_', new PhpReader(CAKE . 'Config' . DS));
 			}
 			Configure::load('unicode' . DS . 'casefolding' . DS . $range, '_cake_core_');

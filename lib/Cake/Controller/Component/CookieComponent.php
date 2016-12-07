@@ -15,10 +15,14 @@
  * @since         CakePHP(tm) v 1.2.0.4213
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component;
 
-App::uses('Component', 'Controller');
-App::uses('Security', 'Utility');
-App::uses('Hash', 'Utility');
+use Cake\Controller\Component;
+use Cake\Utility\Hash;
+use Cake\Utility\Security;
+use Cake\Controller\ComponentCollection;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
 
 /**
  * Cookie Component.
@@ -413,7 +417,7 @@ class CookieComponent extends Component {
 		if (!$expires) {
 			return $this->_expires = 0;
 		}
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		if (is_int($expires) || is_numeric($expires)) {
 			return $this->_expires = $now->format('U') + (int)$expires;

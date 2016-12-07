@@ -12,7 +12,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('BasicAuthenticate', 'Controller/Component/Auth');
+namespace Cake\Controller\Component\Auth;
+
+use Cake\Utility\Security;
+use Cake\Utility\Hash;
+use Cake\Event\CakeEventListener;
 
 /**
  * Digest Authentication adapter for AuthComponent.

@@ -16,8 +16,12 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Inflector', 'Utility');
-App::uses('CakePlugin', 'Core');
+namespace Cake\Core;
+
+use Cake\Cache\Cache;
+use Cake\Utility\Inflector;
+use Cake\Core\CakePlugin;
+use Cake\Error\ErrorHandler;
 
 /**
  * App is responsible for path management, class location and class loading.
@@ -468,7 +472,7 @@ class App {
 
 			foreach ((array)$path as $dir) {
 				if ($dir != APP && is_dir($dir)) {
-					$files = new RegexIterator(new DirectoryIterator($dir), $extension);
+					$files = new \RegexIterator(new \DirectoryIterator($dir), $extension);
 					foreach ($files as $file) {
 						$fileName = basename($file);
 						if (!$file->isDot() && $fileName[0] !== '.') {
@@ -518,9 +522,9 @@ class App {
  * @return void
  * @link http://book.cakephp.org/2.0/en/core-utility-libraries/app.html#App::uses
  */
-	public static function uses($className, $location) {
+	/*public static function uses($className, $location) {
 		static::$_classMap[$className] = $location;
-	}
+	}*/
 
 /**
  * Method to handle the automatic class loading. It will look for each class' package
@@ -531,7 +535,7 @@ class App {
  * @param string $className the name of the class to load
  * @return bool
  */
-	public static function load($className) {
+	/*public static function load($className) {
 		if (!isset(static::$_classMap[$className])) {
 			return false;
 		}
@@ -569,7 +573,7 @@ class App {
 		}
 
 		return false;
-	}
+	}*/
 
 /**
  * Returns the package name where a class was defined to be located at
@@ -603,7 +607,7 @@ class App {
  * @return bool true if Class is already in memory or if file is found and loaded, false if not
  * @link http://book.cakephp.org/2.0/en/core-utility-libraries/app.html#including-files-with-app-import
  */
-	public static function import($type = null, $name = null, $parent = true, $search = array(), $file = null, $return = false) {
+	/*public static function import($type = null, $name = null, $parent = true, $search = array(), $file = null, $return = false) {
 		$ext = null;
 
 		if (is_array($type)) {
@@ -652,7 +656,7 @@ class App {
 		}
 
 		return false;
-	}
+	}*/
 
 /**
  * Helper function to include classes
@@ -665,7 +669,7 @@ class App {
  * @param bool $parent whether to load the class parent or not
  * @return bool true indicating the successful load and existence of the class
  */
-	protected static function _loadClass($name, $plugin, $type, $originalType, $parent) {
+	/*protected static function _loadClass($name, $plugin, $type, $originalType, $parent) {
 		if ($type === 'Console/Command' && $name === 'Shell') {
 			$type = 'Console';
 		} elseif (isset(static::$types[$originalType]['suffix'])) {
@@ -691,7 +695,7 @@ class App {
 		$name = Inflector::camelize($name);
 		App::uses($name, $plugin . $type);
 		return class_exists($name);
-	}
+	}*/
 
 /**
  * Helper function to include single files
@@ -703,7 +707,7 @@ class App {
  * @param bool $return whether this function should return the contents of the file after being parsed by php or just a success notice
  * @return mixed if $return contents of the file after php parses it, boolean indicating success otherwise
  */
-	protected static function _loadFile($name, $plugin, $search, $file, $return) {
+	/*protected static function _loadFile($name, $plugin, $search, $file, $return) {
 		$mapped = static::_mapped($name, $plugin);
 		if ($mapped) {
 			$file = $mapped;
@@ -729,7 +733,7 @@ class App {
 			return (bool)$returnValue;
 		}
 		return false;
-	}
+	}*/
 
 /**
  * Helper function to load files from vendors folders
@@ -740,7 +744,7 @@ class App {
  * @param string $ext file extension if known
  * @return bool true if the file was loaded successfully, false otherwise
  */
-	protected static function _loadVendor($name, $plugin, $file, $ext) {
+	/*protected static function _loadVendor($name, $plugin, $file, $ext) {
 		if ($mapped = static::_mapped($name, $plugin)) {
 			return (bool)include_once $mapped;
 		}
@@ -765,7 +769,7 @@ class App {
 			}
 		}
 		return false;
-	}
+	}*/
 
 /**
  * Initializes the cache for App, registers a shutdown function.
@@ -774,7 +778,7 @@ class App {
  */
 	public static function init() {
 		static::$_map += (array)Cache::read('file_map', '_cake_core_');
-		register_shutdown_function(array('App', 'shutdown'));
+		register_shutdown_function(array('Cake\\Core\\App', 'shutdown'));
 	}
 
 /**
@@ -891,7 +895,7 @@ class App {
 /**
  * Increases the PHP "memory_limit" ini setting by the specified amount
  * in kilobytes
- *  
+ *
  * @param string $additionalKb Number in kilobytes
  * @return void
  */

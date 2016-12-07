@@ -144,8 +144,8 @@ class Sqlserver extends DboSource {
 					$this->_execute("SET $key $value");
 				}
 			}
-		} catch (PDOException $e) {
-			throw new MissingConnectionException(array(
+		} catch (\PDOException $e) {
+			throw new \MissingConnectionException(array(
 				'class' => get_class($this),
 				'message' => $e->getMessage()
 			));
@@ -224,7 +224,7 @@ class Sqlserver extends DboSource {
 		);
 
 		if (!$cols) {
-			throw new CakeException(__d('cake_dev', 'Could not describe table for %s', $table));
+			throw new \CakeException(__d('cake_dev', 'Could not describe table for %s', $table));
 		}
 
 		while ($column = $cols->fetch(PDO::FETCH_OBJ)) {
@@ -785,7 +785,7 @@ class Sqlserver extends DboSource {
 				return false;
 			}
 			return true;
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			if (isset($query->queryString)) {
 				$e->queryString = $query->queryString;
 			} else {

@@ -489,7 +489,7 @@ class ConsoleOptionParser {
 		}
 		foreach ($this->_args as $i => $arg) {
 			if ($arg->isRequired() && !isset($args[$i]) && empty($params['help'])) {
-				throw new ConsoleException(
+				throw new \ConsoleException(
 					__d('cake_console', 'Missing required arguments. %s is required.', $arg->name())
 				);
 			}
@@ -573,7 +573,7 @@ class ConsoleOptionParser {
 			}
 		}
 		if (!isset($this->_shortOptions[$key])) {
-			throw new ConsoleException(__d('cake_console', 'Unknown short option `%s`', $key));
+			throw new \ConsoleException(__d('cake_console', 'Unknown short option `%s`', $key));
 		}
 		$name = $this->_shortOptions[$key];
 		return $this->_parseOption($name, $params);
@@ -589,7 +589,7 @@ class ConsoleOptionParser {
  */
 	protected function _parseOption($name, $params) {
 		if (!isset($this->_options[$name])) {
-			throw new ConsoleException(__d('cake_console', 'Unknown option `%s`', $name));
+			throw new \ConsoleException(__d('cake_console', 'Unknown option `%s`', $name));
 		}
 		$option = $this->_options[$name];
 		$isBoolean = $option->isBoolean();
@@ -642,7 +642,7 @@ class ConsoleOptionParser {
 		}
 		$next = count($args);
 		if (!isset($this->_args[$next])) {
-			throw new ConsoleException(__d('cake_console', 'Too many arguments.'));
+			throw new \ConsoleException(__d('cake_console', 'Too many arguments.'));
 		}
 
 		if ($this->_args[$next]->validChoice($argument)) {

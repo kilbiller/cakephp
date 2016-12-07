@@ -14,8 +14,10 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Network;
 
-App::uses('Hash', 'Utility');
+use Cake\Utility\Hash;
+use Cake\Core\Configure;
 
 /**
  * A class that helps wrap Request information and particulars about a single request.
@@ -27,7 +29,7 @@ App::uses('Hash', 'Utility');
  *
  * @package       Cake.Network
  */
-class CakeRequest implements ArrayAccess {
+class CakeRequest implements \ArrayAccess {
 
 /**
  * Array of parameters parsed from the URL.
@@ -278,6 +280,7 @@ class CakeRequest implements ArrayAccess {
 		) {
 			$uri = '/';
 		}
+
 		return $uri;
 	}
 
@@ -292,7 +295,7 @@ class CakeRequest implements ArrayAccess {
  */
 	protected function _base() {
 		$dir = $webroot = null;
-		$config = Configure::read('App');
+		$config = \Cake\Core\Configure::read('App');
 		extract($config);
 
 		if (!isset($base)) {
@@ -466,7 +469,7 @@ class CakeRequest implements ArrayAccess {
 			$type = strtolower(substr($name, 2));
 			return $this->is($type);
 		}
-		throw new CakeException(__d('cake_dev', 'Method %s does not exist', $name));
+		throw new \CakeException(__d('cake_dev', 'Method %s does not exist', $name));
 	}
 
 /**
@@ -1057,7 +1060,7 @@ class CakeRequest implements ArrayAccess {
 			}
 		}
 		$allowed = strtoupper(implode(', ', $methods));
-		$e = new MethodNotAllowedException();
+		$e = new \MethodNotAllowedException();
 		$e->responseHeader('Allow', $allowed);
 		throw $e;
 	}

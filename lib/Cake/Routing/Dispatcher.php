@@ -18,17 +18,20 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Routing;
 
-App::uses('Router', 'Routing');
-App::uses('CakeRequest', 'Network');
-App::uses('CakeResponse', 'Network');
-App::uses('Controller', 'Controller');
-App::uses('Scaffold', 'Controller');
-App::uses('View', 'View');
-App::uses('Debugger', 'Utility');
-App::uses('CakeEvent', 'Event');
-App::uses('CakeEventManager', 'Event');
-App::uses('CakeEventListener', 'Event');
+use Cake\Network\CakeRequest;
+use Cake\Network\CakeResponse;
+use Cake\Controller\Controller;
+use Cake\Controller\Scaffold;
+use Cake\View\View;
+use Cake\Utility\Debugger;
+use Cake\Event\CakeEvent;
+use Cake\Event\CakeEventManager;
+use Cake\Event\CakeEventListener;
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+use Cake\Routing\Router;
 
 /**
  * Dispatcher converts Requests into controller actions. It uses the dispatched Request
@@ -106,9 +109,16 @@ class Dispatcher implements CakeEventListener {
 			}
 			if (is_string($filter['callable'])) {
 				list($plugin, $callable) = pluginSplit($filter['callable'], true);
-				App::uses($callable, $plugin . 'Routing/Filter');
+				$namespace = '\\Cake\\Routing\\Filter\\';
+
+				if (!class_exists($namespace . $callable)) {
+					$namespace = '\\Invityou\\Lib\\Routing\\Filter\\';
+				}
+
+				$callable = $namespace . $callable;
+
 				if (!class_exists($callable)) {
-					throw new MissingDispatcherFilterException($callable);
+					throw new \MissingDispatcherFilterException($callable);
 				}
 				$manager->attach(new $callable($settings));
 			} else {
@@ -158,7 +168,7 @@ class Dispatcher implements CakeEventListener {
 		$controller = $this->_getController($request, $response);
 
 		if (!($controller instanceof Controller)) {
-			throw new MissingControllerException(array(
+			throw new \MissingControllerException(array(
 				'class' => Inflector::camelize($request->params['controller']) . 'Controller',
 				'plugin' => empty($request->params['plugin']) ? null : Inflector::camelize($request->params['plugin'])
 			));
@@ -236,7 +246,7 @@ class Dispatcher implements CakeEventListener {
 		if (!$ctrlClass) {
 			return false;
 		}
-		$reflection = new ReflectionClass($ctrlClass);
+		$reflection = new \ReflectionClass($ctrlClass);
 		if ($reflection->isAbstract() || $reflection->isInterface()) {
 			return false;
 		}
@@ -260,9 +270,14 @@ class Dispatcher implements CakeEventListener {
 		}
 		if ($pluginPath . $controller) {
 			$class = $controller . 'Controller';
-			App::uses('AppController', 'Controller');
-			App::uses($pluginName . 'AppController', $pluginPath . 'Controller');
-			App::uses($class, $pluginPath . 'Controller');
+			$namespace = '\\Invityou\\Controller\\';
+
+			if (!empty($pluginName)) {
+				$namespace = '\\' . $pluginName . '\\Controller\\';
+			}
+
+			$class = $namespace . $class;
+
 			if (class_exists($class)) {
 				return $class;
 			}

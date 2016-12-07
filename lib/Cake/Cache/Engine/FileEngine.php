@@ -19,6 +19,12 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+
+namespace Cake\Cache\Engine;
+use Cake\Cache\CacheEngine;
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
 /**
  * File Storage engine for cache. Filestorage is the slowest cache storage
  * to read and write. However, it is good for servers that don't have other storage
@@ -234,8 +240,8 @@ class FileEngine extends CacheEngine {
 
 		$this->_clearDirectory($this->settings['path'], $now, $threshold);
 
-		$directory = new RecursiveDirectoryIterator($this->settings['path']);
-		$contents = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
+		$directory = new \RecursiveDirectoryIterator($this->settings['path']);
+		$contents = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
 		$cleared = array();
 		foreach ($contents as $path) {
 			if ($path->isFile()) {
@@ -273,8 +279,8 @@ class FileEngine extends CacheEngine {
 			}
 
 			try {
-				$file = new SplFileObject($path . $entry, 'r');
-			} catch (Exception $e) {
+				$file = new \SplFileObject($path . $entry, 'r');
+			} catch (\Exception $e) {
 				continue;
 			}
 
@@ -310,7 +316,7 @@ class FileEngine extends CacheEngine {
  * @throws CacheException
  */
 	public function decrement($key, $offset = 1) {
-		throw new CacheException(__d('cake_dev', 'Files cannot be atomically decremented.'));
+		throw new \CacheException(__d('cake_dev', 'Files cannot be atomically decremented.'));
 	}
 
 /**
@@ -322,7 +328,7 @@ class FileEngine extends CacheEngine {
  * @throws CacheException
  */
 	public function increment($key, $offset = 1) {
-		throw new CacheException(__d('cake_dev', 'Files cannot be atomically incremented.'));
+		throw new \CacheException(__d('cake_dev', 'Files cannot be atomically incremented.'));
 	}
 
 /**
@@ -343,7 +349,7 @@ class FileEngine extends CacheEngine {
 		if (!is_dir($dir)) {
 			mkdir($dir, 0775, true);
 		}
-		$path = new SplFileInfo($dir . $key);
+		$path = new \SplFileInfo($dir . $key);
 
 		if (!$createKey && !$path->isFile()) {
 			return false;
@@ -352,7 +358,7 @@ class FileEngine extends CacheEngine {
 			$exists = file_exists($path->getPathname());
 			try {
 				$this->_File = $path->openFile('c+');
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				trigger_error($e->getMessage(), E_USER_WARNING);
 				return false;
 			}
@@ -373,7 +379,7 @@ class FileEngine extends CacheEngine {
  * @return bool
  */
 	protected function _active() {
-		$dir = new SplFileInfo($this->settings['path']);
+		$dir = new \SplFileInfo($this->settings['path']);
 		if (Configure::read('debug')) {
 			$path = $dir->getPathname();
 			if (!is_dir($path)) {
@@ -411,8 +417,8 @@ class FileEngine extends CacheEngine {
  */
 	public function clearGroup($group) {
 		$this->_File = null;
-		$directoryIterator = new RecursiveDirectoryIterator($this->settings['path']);
-		$contents = new RecursiveIteratorIterator($directoryIterator, RecursiveIteratorIterator::CHILD_FIRST);
+		$directoryIterator = new \RecursiveDirectoryIterator($this->settings['path']);
+		$contents = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::CHILD_FIRST);
 		foreach ($contents as $object) {
 			$containsGroup = strpos($object->getPathName(), DS . $group . DS) !== false;
 			$hasPrefix = true;

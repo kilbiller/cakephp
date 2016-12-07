@@ -15,9 +15,10 @@
  * @since         CakePHP(tm) v 2.7.0-dev
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\View\Helper;
 
-App::uses('AppHelper', 'View/Helper');
-App::uses('CakeSession', 'Model/Datasource');
+use Invityou\View\Helper\AppHelper;
+use Cake\Model\Datasource\CakeSession;
 
 /**
  * FlashHelper class to render flash messages.
@@ -76,7 +77,7 @@ class FlashHelper extends AppHelper {
 		$flash = CakeSession::read("Message.$key");
 
 		if (!is_array($flash)) {
-			throw new UnexpectedValueException(sprintf(
+			throw new \UnexpectedValueException(sprintf(
 				'Value for flash setting key "%s" must be an array.',
 				$key
 			));

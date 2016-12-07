@@ -14,7 +14,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppHelper', 'View/Helper');
+namespace Cake\View\Helper;
+
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+use Invityou\View\Helper\AppHelper;
 
 /**
  * CacheHelper helps create full page view caching.
@@ -153,7 +157,7 @@ class CacheHelper extends AppHelper {
 			$cached = $this->_parseOutput($out);
 			try {
 				$this->_writeFile($cached, $cacheTime, $useCallbacks);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				if (Configure::read('debug')) {
 					throw $e;
 				}

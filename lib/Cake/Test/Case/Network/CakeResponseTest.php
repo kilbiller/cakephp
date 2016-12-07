@@ -335,7 +335,7 @@ class CakeResponseTest extends CakeTestCase {
 	public function testCache() {
 		$response = new CakeResponse();
 		$since = time();
-		$time = new DateTime('+1 day', new DateTimeZone('UTC'));
+		$time = new \DateTime('+1 day', new \DateTimeZone('UTC'));
 		$response->expires('+1 day');
 		$expected = array(
 			'Date' => gmdate("D, j M Y G:i:s ", $since) . 'GMT',
@@ -658,9 +658,9 @@ class CakeResponseTest extends CakeTestCase {
  */
 	public function testExpires() {
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent'));
-		$now = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
+		$now = new \DateTime('now', new \DateTimeZone('America/Los_Angeles'));
 		$response->expires($now);
-		$now->setTimeZone(new DateTimeZone('UTC'));
+		$now->setTimeZone(new \DateTimeZone('UTC'));
 		$this->assertEquals($now->format('D, j M Y H:i:s') . ' GMT', $response->expires());
 		$response->expects($this->at(1))
 			->method('_sendHeader')->with('Expires', $now->format('D, j M Y H:i:s') . ' GMT');
@@ -675,7 +675,7 @@ class CakeResponseTest extends CakeTestCase {
 		$response->send();
 
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent'));
-		$time = new DateTime('+1 day', new DateTimeZone('UTC'));
+		$time = new \DateTime('+1 day', new \DateTimeZone('UTC'));
 		$response->expires('+1 day');
 		$this->assertEquals($time->format('D, j M Y H:i:s') . ' GMT', $response->expires());
 		$response->expects($this->at(1))
@@ -690,9 +690,9 @@ class CakeResponseTest extends CakeTestCase {
  */
 	public function testModified() {
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent'));
-		$now = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
+		$now = new \DateTime('now', new \DateTimeZone('America/Los_Angeles'));
 		$response->modified($now);
-		$now->setTimeZone(new DateTimeZone('UTC'));
+		$now->setTimeZone(new \DateTimeZone('UTC'));
 		$this->assertEquals($now->format('D, j M Y H:i:s') . ' GMT', $response->modified());
 		$response->expects($this->at(1))
 			->method('_sendHeader')->with('Last-Modified', $now->format('D, j M Y H:i:s') . ' GMT');
@@ -707,7 +707,7 @@ class CakeResponseTest extends CakeTestCase {
 		$response->send();
 
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent'));
-		$time = new DateTime('+1 day', new DateTimeZone('UTC'));
+		$time = new \DateTime('+1 day', new \DateTimeZone('UTC'));
 		$response->modified('+1 day');
 		$this->assertEquals($time->format('D, j M Y H:i:s') . ' GMT', $response->modified());
 		$response->expects($this->at(1))

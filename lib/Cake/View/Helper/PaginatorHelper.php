@@ -18,7 +18,13 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppHelper', 'View/Helper');
+namespace Cake\View\Helper;
+
+use Invityou\View\Helper\AppHelper;
+use Cake\Utility\ClassRegistry;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Cake\View\View;
 
 /**
  * Pagination Helper class for easy generation of pagination links.
@@ -92,10 +98,14 @@ class PaginatorHelper extends AppHelper {
 		$ajaxProvider = isset($settings['ajax']) ? $settings['ajax'] : 'Js';
 		$this->helpers[] = $ajaxProvider;
 		$this->_ajaxHelperClass = $ajaxProvider;
-		App::uses($ajaxProvider . 'Helper', 'View/Helper');
+
 		$classname = $ajaxProvider . 'Helper';
+
+		$namespace = '\\Cake\View\\Helper\\';
+		$classname = $namespace . $classname;
+
 		if (!class_exists($classname) || !method_exists($classname, 'link')) {
-			throw new CakeException(
+			throw new \CakeException(
 				__d('cake_dev', '%s does not implement a %s method, it is incompatible with %s', $classname, 'link()', 'PaginatorHelper')
 			);
 		}

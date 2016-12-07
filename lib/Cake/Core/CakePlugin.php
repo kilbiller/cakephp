@@ -15,6 +15,9 @@
  * @since         CakePHP(tm) v 2.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Core;
+
+use Cake\Utility\Inflector;
 
 /**
  * CakePlugin is responsible for loading and unloading plugins. It also can
@@ -115,7 +118,7 @@ class CakePlugin {
 		}
 
 		if (empty(static::$_plugins[$plugin]['path'])) {
-			throw new MissingPluginException(array('plugin' => $plugin));
+			throw new \MissingPluginException(array('plugin' => $plugin));
 		}
 		if (!empty(static::$_plugins[$plugin]['bootstrap'])) {
 			static::bootstrap($plugin);
@@ -173,7 +176,7 @@ class CakePlugin {
  */
 	public static function path($plugin) {
 		if (empty(static::$_plugins[$plugin])) {
-			throw new MissingPluginException(array('plugin' => $plugin));
+			throw new \MissingPluginException(array('plugin' => $plugin));
 		}
 		return static::$_plugins[$plugin]['path'];
 	}

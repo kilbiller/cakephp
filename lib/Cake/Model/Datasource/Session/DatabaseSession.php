@@ -128,7 +128,7 @@ class DatabaseSession implements CakeSessionHandlerInterface {
 		);
 		try {
 			return (bool)$this->_model->save($record, $options);
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			return (bool)$this->_model->save($record, $options);
 		}
 	}

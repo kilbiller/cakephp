@@ -18,7 +18,10 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppController', 'Controller');
+namespace Cake\Controller;
+
+use Invityou\Controller\AppController;
+use Cake\Routing\Router;
 
 /**
  * Error Handling Controller

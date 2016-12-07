@@ -18,8 +18,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeValidationSet', 'Model/Validator');
-App::uses('Hash', 'Utility');
+namespace Cake\Model;
+
+use Cake\Utility\Hash;
+use Cake\Model\Validator\CakeValidationSet;
+use Cake\Event\CakeEvent;
 
 /**
  * ModelValidator object encapsulates all methods related to data validations for a model
@@ -31,7 +34,7 @@ App::uses('Hash', 'Utility');
  * @package       Cake.Model
  * @link          http://book.cakephp.org/2.0/en/data-validation.html
  */
-class ModelValidator implements ArrayAccess, IteratorAggregate, Countable {
+class ModelValidator implements \ArrayAccess, \IteratorAggregate, \Countable {
 
 /**
  * Holds the CakeValidationSet objects array
@@ -515,7 +518,7 @@ class ModelValidator implements ArrayAccess, IteratorAggregate, Countable {
  */
 	public function getIterator() {
 		$this->_parseRules();
-		return new ArrayIterator($this->_fields);
+		return new \ArrayIterator($this->_fields);
 	}
 
 /**

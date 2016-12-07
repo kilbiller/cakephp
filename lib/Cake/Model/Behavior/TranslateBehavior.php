@@ -13,10 +13,17 @@
  * @since         CakePHP(tm) v 1.2.0.4525
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model\Behavior;
 
-App::uses('ModelBehavior', 'Model');
-App::uses('I18n', 'I18n');
-App::uses('I18nModel', 'Model');
+use Cake\Model\ModelBehavior;
+use Cake\Model\I18nModel;
+use Cake\I18n\I18n;
+use Cake\Utility\Hash;
+use Cake\Utility\ClassRegistry;
+use Cake\Model\Model;
+use Cake\Model\ConnectionManager;
+use Cake\Core\Configure;
+use Cake\Utility\CakeText;
 
 /**
  * Translate behavior
@@ -113,7 +120,7 @@ class TranslateBehavior extends ModelBehavior {
 		} else {
 			$tablePrefix = $db->config['prefix'];
 		}
-		$joinTable = new StdClass();
+		$joinTable = new \StdClass();
 		$joinTable->tablePrefix = $tablePrefix;
 		$joinTable->table = $RuntimeModel->table;
 		$joinTable->schemaName = $RuntimeModel->getDataSource()->getSchemaName();
@@ -602,7 +609,7 @@ class TranslateBehavior extends ModelBehavior {
 				$association = $value;
 			}
 			if ($association === 'name') {
-				throw new CakeException(
+				throw new \CakeException(
 					__d('cake_dev', 'You cannot bind a translation named "name".')
 				);
 			}

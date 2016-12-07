@@ -18,8 +18,13 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppHelper', 'View/Helper');
-App::uses('Hash', 'Utility');
+namespace Cake\View\Helper;
+
+use Invityou\View\Helper\AppHelper;
+use Cake\Utility\ClassRegistry;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Cake\View\View;
 
 /**
  * Text helper library.
@@ -71,11 +76,18 @@ class TextHelper extends AppHelper {
 		$settings = Hash::merge(array('engine' => 'CakeText'), $settings);
 		parent::__construct($View, $settings);
 		list($plugin, $engineClass) = pluginSplit($settings['engine'], true);
-		App::uses($engineClass, $plugin . 'Utility');
+
+		$namespace = '\\Cake\\Utility\\';
+
+		if (!empty($plugin)) {
+			$namespace = '\\' . substr($plugin, 0, -1) . '\\Lib\\Utility';
+		}
+
+		$engineClass = $namespace . $engineClass;
 		if (class_exists($engineClass)) {
 			$this->_engine = new $engineClass($settings);
 		} else {
-			throw new CakeException(__d('cake_dev', '%s could not be found', $engineClass));
+			throw new \CakeException(__d('cake_dev', '%s could not be found', $engineClass));
 		}
 	}
 

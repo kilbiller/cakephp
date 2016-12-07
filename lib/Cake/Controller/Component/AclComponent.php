@@ -13,9 +13,13 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component;
 
-App::uses('Component', 'Controller');
-App::uses('AclInterface', 'Controller/Component/Acl');
+use Cake\Controller\Component;
+use Cake\Controller\Component\Acl\AclInterface;
+use Cake\Controller\ComponentCollection;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
 
 /**
  * Access Control List factory class.
@@ -62,9 +66,10 @@ class AclComponent extends Component {
 		$name = Configure::read('Acl.classname');
 		if (!class_exists($name)) {
 			list($plugin, $name) = pluginSplit($name, true);
-			App::uses($name, $plugin . 'Controller/Component/Acl');
+			$namespace = '\\Cake\\Controller\\Component\\Acl\\';
+			$name = $namespace . $name;
 			if (!class_exists($name)) {
-				throw new CakeException(__d('cake_dev', 'Could not find %s.', $name));
+				throw new \CakeException(__d('cake_dev', 'Could not find %s.', $name));
 			}
 		}
 		$this->adapter($name);
@@ -88,7 +93,7 @@ class AclComponent extends Component {
 				$adapter = new $adapter();
 			}
 			if (!$adapter instanceof AclInterface) {
-				throw new CakeException(__d('cake_dev', 'AclComponent adapters must implement AclInterface'));
+				throw new \CakeException(__d('cake_dev', 'AclComponent adapters must implement AclInterface'));
 			}
 			$this->_Instance = $adapter;
 			$this->_Instance->initialize($this);

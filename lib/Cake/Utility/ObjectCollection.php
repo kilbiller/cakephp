@@ -11,7 +11,9 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Utility;
 
+use Cake\Event\CakeEvent;
 /**
  * Deals with Collections of objects. Keeping registries of those objects,
  * loading and constructing new objects and triggering callbacks. Each subclass needs
@@ -121,7 +123,7 @@ abstract class ObjectCollection {
 		$collected = array();
 		$list = array_keys($this->_enabled);
 		if ($options['modParams'] !== false && !isset($params[$options['modParams']])) {
-			throw new CakeException(__d('cake_dev', 'Cannot use modParams with indexes that do not exist.'));
+			throw new \CakeException(__d('cake_dev', 'Cannot use modParams with indexes that do not exist.'));
 		}
 		$result = null;
 		foreach ($list as $name) {

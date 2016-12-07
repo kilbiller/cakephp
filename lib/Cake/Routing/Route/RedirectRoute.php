@@ -13,9 +13,11 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Routing\Route;
 
-App::uses('CakeResponse', 'Network');
-App::uses('CakeRoute', 'Routing/Route');
+use Cake\Routing\Route;
+use Cake\Routing\Router;
+use Cake\Network\CakeResponse;
 
 /**
  * Redirect route will perform an immediate redirect. Redirect routes

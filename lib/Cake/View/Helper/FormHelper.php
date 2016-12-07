@@ -14,10 +14,15 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('ClassRegistry', 'Utility');
-App::uses('AppHelper', 'View/Helper');
-App::uses('Hash', 'Utility');
-App::uses('Inflector', 'Utility');
+namespace Cake\View\Helper;
+
+use Invityou\View\Helper\AppHelper;
+use Cake\Utility\ClassRegistry;
+use Cake\Utility\Hash;
+use Cake\Utility\Security;
+use Cake\Utility\Inflector;
+use Cake\View\View;
+use Cake\Core\Configure;
 
 /**
  * Form helper library.
@@ -1685,7 +1690,7 @@ class FormHelper extends AppHelper {
 	public function __call($method, $params) {
 		$options = array();
 		if (empty($params)) {
-			throw new CakeException(__d('cake_dev', 'Missing field name for FormHelper::%s', $method));
+			throw new \CakeException(__d('cake_dev', 'Missing field name for FormHelper::%s', $method));
 		}
 		if (isset($params[1])) {
 			$options = $params[1];
@@ -2404,13 +2409,13 @@ class FormHelper extends AppHelper {
 
 		if (strlen($attributes['value']) > 2) {
 			try {
-				$date = new DateTime($attributes['value']);
+				$date = new \DateTime($attributes['value']);
 				if ($format24Hours) {
 					$attributes['value'] = $date->format('H');
 				} else {
 					$attributes['value'] = $date->format('g');
 				}
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$attributes['value'] = null;
 			}
 		} elseif ($attributes['value'] === false) {
@@ -2604,7 +2609,7 @@ class FormHelper extends AppHelper {
 		$attributes = array_diff_key($attributes, $defaults);
 
 		if (!empty($interval) && $interval > 1 && !empty($min)) {
-			$current = new DateTime();
+			$current = new \DateTime();
 			if ($year !== null) {
 				$current->setDate($year, $month, $day);
 			}

@@ -15,6 +15,12 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+namespace Cake\Console;
+
+use Cake\Core\App;
+use Cake\Utility\Debugger;
+use Cake\Core\Configure;
+
 /**
  * Shell dispatcher handles dispatching cli commands.
  *
@@ -99,7 +105,7 @@ class ShellDispatcher {
 	protected function _initEnvironment() {
 		if (!$this->_bootstrap()) {
 			$message = "Unable to load CakePHP core.\nMake sure " . DS . 'lib' . DS . 'Cake exists in ' . CAKE_CORE_INCLUDE_PATH;
-			throw new CakeException($message);
+			throw new \CakeException($message);
 		}
 
 		if (!isset($this->args[0]) || !isset($this->params['working'])) {
@@ -107,7 +113,7 @@ class ShellDispatcher {
 				"Please make sure that " . DS . 'lib' . DS . 'Cake' . DS . "Console is in your system path,\n" .
 				"and check the cookbook for the correct usage of this command.\n" .
 				"(http://book.cakephp.org/)";
-			throw new CakeException($message);
+			throw new \CakeException($message);
 		}
 
 		$this->shiftArgs();
@@ -169,7 +175,6 @@ class ShellDispatcher {
  * @return void
  */
 	public function setErrorHandlers() {
-		App::uses('ConsoleErrorHandler', 'Console');
 		$error = Configure::read('Error');
 		$exception = Configure::read('Exception');
 
@@ -185,7 +190,6 @@ class ShellDispatcher {
 		set_exception_handler($exception['consoleHandler']);
 		set_error_handler($error['consoleHandler'], Configure::read('Error.level'));
 
-		App::uses('Debugger', 'Utility');
 		Debugger::getInstance()->output('txt');
 	}
 
@@ -234,7 +238,7 @@ class ShellDispatcher {
 			}
 		}
 
-		throw new MissingShellMethodException(array('shell' => $shell, 'method' => $command));
+		throw new \MissingShellMethodException(array('shell' => $shell, 'method' => $command));
 	}
 
 /**
@@ -252,8 +256,6 @@ class ShellDispatcher {
 		$plugin = Inflector::camelize($plugin);
 		$class = Inflector::camelize($shell) . 'Shell';
 
-		App::uses('Shell', 'Console');
-		App::uses('AppShell', 'Console/Command');
 		App::uses($class, $plugin . 'Console/Command');
 
 		if (!class_exists($class)) {
@@ -262,7 +264,7 @@ class ShellDispatcher {
 		}
 
 		if (!class_exists($class)) {
-			throw new MissingShellException(array(
+			throw new \MissingShellException(array(
 				'class' => $class
 			));
 		}

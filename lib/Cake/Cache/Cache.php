@@ -13,9 +13,11 @@
  * @since         CakePHP(tm) v 1.2.0.4933
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
-App::uses('Inflector', 'Utility');
-App::uses('CacheEngine', 'Cache');
+namespace Cake\Cache;
+use Cake\Cache\Engine\FileEngine;
+use Cake\Core\Configure;
+//App::uses('Inflector', 'Utility');
+//App::uses('CacheEngine', 'Cache');
 
 /**
  * Cache provides a consistent interface to Caching in your application. It allows you
@@ -116,7 +118,7 @@ class Cache {
  * @param string $name Name of the configuration
  * @param array $settings Optional associative array of settings passed to the engine
  * @return array array(engine, settings) on success, false on failure
- * @throws CacheException
+ * @throws \CacheException
  * @see app/Config/core.php for configuration settings
  */
 	public static function config($name = null, $settings = array()) {
@@ -161,20 +163,20 @@ class Cache {
  *
  * @param string $name Name of the config array that needs an engine instance built
  * @return bool
- * @throws CacheException
+ * @throws \CacheException
  */
 	protected static function _buildEngine($name) {
 		$config = static::$_config[$name];
 
 		list($plugin, $class) = pluginSplit($config['engine'], true);
-		$cacheClass = $class . 'Engine';
-		App::uses($cacheClass, $plugin . 'Cache/Engine');
+		$cacheClass = '\\Cake\\Cache\\Engine\\' . $class . 'Engine';
+
 		if (!class_exists($cacheClass)) {
-			throw new CacheException(__d('cake_dev', 'Cache engine %s is not available.', $name));
+			throw new \CacheException(__d('cake_dev', 'Cache engine %s is not available.', $name));
 		}
-		$cacheClass = $class . 'Engine';
-		if (!is_subclass_of($cacheClass, 'CacheEngine')) {
-			throw new CacheException(__d('cake_dev', 'Cache engines must use %s as a base class.', 'CacheEngine'));
+		//$cacheClass = $class . 'Engine';
+		if (!is_subclass_of($cacheClass, '\\Cake\\Cache\\CacheEngine')) {
+			throw new \CacheException(__d('cake_dev', 'Cache engines must use %s as a base class.', 'CacheEngine'));
 		}
 		static::$_engines[$name] = new $cacheClass();
 		if (!static::$_engines[$name]->init($config)) {
@@ -183,7 +185,7 @@ class Cache {
 				'Cache engine "%s" is not properly configured. Ensure required extensions are installed, and credentials/permissions are correct',
 				$name
 			);
-			throw new CacheException($msg);
+			throw new \CacheException($msg);
 		}
 		if (static::$_engines[$name]->settings['probability'] && time() % static::$_engines[$name]->settings['probability'] === 0) {
 			static::$_engines[$name]->gc();
@@ -531,7 +533,7 @@ class Cache {
  *
  * @param string $group group name or null to retrieve all group mappings
  * @return array map of group and all configuration that has the same group
- * @throws CacheException
+ * @throws \CacheException
  */
 	public static function groupConfigs($group = null) {
 		if ($group === null) {
@@ -540,7 +542,7 @@ class Cache {
 		if (isset(static::$_groups[$group])) {
 			return array($group => static::$_groups[$group]);
 		}
-		throw new CacheException(__d('cake_dev', 'Invalid cache group %s', $group));
+		throw new \CacheException(__d('cake_dev', 'Invalid cache group %s', $group));
 	}
 
 /**

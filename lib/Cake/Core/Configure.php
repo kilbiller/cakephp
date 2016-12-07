@@ -13,14 +13,12 @@
  * @since         CakePHP(tm) v 1.0.0.2363
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Core;
 
-App::uses('Hash', 'Utility');
-App::uses('ConfigReaderInterface', 'Configure');
-
-/**
- * Compatibility with 2.1, which expects Configure to load Set.
- */
-App::uses('Set', 'Utility');
+use Cake\Utility\Hash;
+use Cake\Console\ConsoleErrorHandler;
+use Cake\Configure\ConfigReaderInterface;
+use Cake\Configure\PhpReader;
 
 /**
  * Configuration class. Used for managing runtime configuration information.
@@ -81,18 +79,20 @@ class Configure {
 			App::build();
 
 			$exception = array(
-				'handler' => 'ErrorHandler::handleException',
+				'handler' => '\\Cake\\Error\\ErrorHandler::handleException',
 			);
 			$error = array(
-				'handler' => 'ErrorHandler::handleError',
+				'handler' => '\\Cake\\Error\\ErrorHandler::handleError',
 				'level' => E_ALL & ~E_DEPRECATED,
 			);
+
 			if (PHP_SAPI === 'cli') {
-				App::uses('ConsoleErrorHandler', 'Console');
 				$console = new ConsoleErrorHandler();
+
 				$exception['handler'] = array($console, 'handleException');
 				$error['handler'] = array($console, 'handleError');
 			}
+
 			static::_setErrorHandlers($error, $exception);
 
 			if (!include APP . 'Config' . DS . 'bootstrap.php') {
@@ -111,8 +111,8 @@ class Configure {
 
 			// Preload Debugger + CakeText in case of E_STRICT errors when loading files.
 			if (static::$_values['debug'] > 0) {
-				class_exists('Debugger');
-				class_exists('CakeText');
+				class_exists('\\Cake\\Utility\\Debugger');
+				class_exists('\\Cake\\Utility\\CakeText');
 			}
 		}
 	}
@@ -368,10 +368,10 @@ class Configure {
 	public static function dump($key, $config = 'default', $keys = array()) {
 		$reader = static::_getReader($config);
 		if (!$reader) {
-			throw new ConfigureException(__d('cake_dev', 'There is no "%s" adapter.', $config));
+			throw new \ConfigureException(__d('cake_dev', 'There is no "%s" adapter.', $config));
 		}
 		if (!method_exists($reader, 'dump')) {
-			throw new ConfigureException(__d('cake_dev', 'The "%s" adapter, does not have a %s method.', $config, 'dump()'));
+			throw new \ConfigureException(__d('cake_dev', 'The "%s" adapter, does not have a %s method.', $config, 'dump()'));
 		}
 		$values = static::$_values;
 		if (!empty($keys) && is_array($keys)) {
@@ -392,7 +392,7 @@ class Configure {
 			if ($config !== 'default') {
 				return false;
 			}
-			App::uses('PhpReader', 'Configure');
+
 			static::config($config, new PhpReader());
 		}
 		return static::$_readers[$config];

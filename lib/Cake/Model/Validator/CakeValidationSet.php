@@ -18,7 +18,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeValidationRule', 'Model/Validator');
+namespace Cake\Model\Validator;
 
 /**
  * CakeValidationSet object. Holds all validation rules for a field and exposes
@@ -27,7 +27,7 @@ App::uses('CakeValidationRule', 'Model/Validator');
  * @package       Cake.Model.Validator
  * @link          http://book.cakephp.org/2.0/en/data-validation.html
  */
-class CakeValidationSet implements ArrayAccess, IteratorAggregate, Countable {
+class CakeValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable {
 
 /**
  * Holds the CakeValidationRule objects
@@ -355,7 +355,7 @@ class CakeValidationSet implements ArrayAccess, IteratorAggregate, Countable {
  * @return ArrayIterator
  */
 	public function getIterator() {
-		return new ArrayIterator($this->_rules);
+		return new \ArrayIterator($this->_rules);
 	}
 
 /**

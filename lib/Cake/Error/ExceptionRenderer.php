@@ -18,14 +18,17 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Error;
 
-App::uses('Sanitize', 'Utility');
-App::uses('Dispatcher', 'Routing');
-App::uses('Router', 'Routing');
-App::uses('Controller', 'Controller');
-App::uses('CakeRequest', 'Network');
-App::uses('CakeResponse', 'Network');
-App::uses('CakeEvent', 'Event');
+use Cake\Utility\Sanitize;
+use Cake\Routing\Dispatcher;
+use Cake\Routing\Router;
+use Cake\Controller\Controller;
+use Cake\Network\CakeRequest;
+use Cake\Network\CakeResponse;
+use Cake\Event\CakeEvent;
+use Cake\Utility\Inflector;
+use Cake\Core\Configure;
 
 /**
  * Exception Renderer.
@@ -103,12 +106,12 @@ class ExceptionRenderer {
 
 		$methodExists = method_exists($this, $method);
 
-		if ($exception instanceof CakeException && !$methodExists) {
+		if ($exception instanceof \CakeException && !$methodExists) {
 			$method = '_cakeError';
 			if (empty($template) || $template === 'internalError') {
 				$template = 'error500';
 			}
-		} elseif ($exception instanceof PDOException) {
+		} elseif ($exception instanceof \PDOException) {
 			$method = 'pdoError';
 			$template = 'pdo_error';
 			$code = 500;
@@ -141,8 +144,6 @@ class ExceptionRenderer {
  * @return Controller
  */
 	protected function _getController($exception) {
-		App::uses('AppController', 'Controller');
-		App::uses('CakeErrorController', 'Controller');
 		if (!$request = Router::getRequest(true)) {
 			$request = new CakeRequest();
 		}
@@ -157,7 +158,7 @@ class ExceptionRenderer {
 				$controller = new CakeErrorController($request, $response);
 				$controller->startupProcess();
 				$startup = true;
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$startup = false;
 			}
 			// Retry RequestHandler, as another aspect of startupProcess()
@@ -169,7 +170,7 @@ class ExceptionRenderer {
 			) {
 				try {
 					$controller->RequestHandler->startup($controller);
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 				}
 			}
 		}
@@ -197,7 +198,7 @@ class ExceptionRenderer {
  * @param CakeException $error The exception to render.
  * @return void
  */
-	protected function _cakeError(CakeException $error) {
+	protected function _cakeError(\CakeException $error) {
 		$url = $this->controller->request->here();
 		$code = ($error->getCode() >= 400 && $error->getCode() < 506) ? $error->getCode() : 500;
 		$this->controller->response->statusCode($code);
@@ -221,7 +222,7 @@ class ExceptionRenderer {
  */
 	public function error400($error) {
 		$message = $error->getMessage();
-		if (!Configure::read('debug') && $error instanceof CakeException) {
+		if (!Configure::read('debug') && $error instanceof \CakeException) {
 			$message = __d('cake', 'Not Found');
 		}
 		$url = $this->controller->request->here();
@@ -266,7 +267,7 @@ class ExceptionRenderer {
  * @param PDOException $error The exception to render.
  * @return void
  */
-	public function pdoError(PDOException $error) {
+	public function pdoError(\PDOException $error) {
 		$url = $this->controller->request->here();
 		$code = 500;
 		$this->controller->response->statusCode($code);
@@ -292,20 +293,20 @@ class ExceptionRenderer {
 			$this->controller->render($template);
 			$this->_shutdown();
 			$this->controller->response->send();
-		} catch (MissingViewException $e) {
+		} catch (\MissingViewException $e) {
 			$attributes = $e->getAttributes();
 			if (isset($attributes['file']) && strpos($attributes['file'], 'error500') !== false) {
 				$this->_outputMessageSafe('error500');
 			} else {
 				$this->_outputMessage('error500');
 			}
-		} catch (MissingPluginException $e) {
+		} catch (\MissingPluginException $e) {
 			$attributes = $e->getAttributes();
 			if (isset($attributes['plugin']) && $attributes['plugin'] === $this->controller->plugin) {
 				$this->controller->plugin = null;
 			}
 			$this->_outputMessageSafe('error500');
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->_outputMessageSafe('error500');
 		}
 	}

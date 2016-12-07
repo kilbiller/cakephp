@@ -15,9 +15,13 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component;
 
-App::uses('Component', 'Controller');
-App::uses('Hash', 'Utility');
+use Cake\Controller\Component;
+use Cake\Controller\ComponentCollection;
+use Cake\Controller\Controller;
+use Cake\Utility\Hash;
+use Cake\Model\Model;
 
 /**
  * This component is used to handle automatic model data pagination. The primary way to use this
@@ -135,7 +139,7 @@ class PaginatorComponent extends Component {
 		$object = $this->_getObject($object);
 
 		if (!is_object($object)) {
-			throw new MissingModelException($object);
+			throw new \MissingModelException($object);
 		}
 
 		$options = $this->mergeOptions($object->alias);
@@ -237,7 +241,7 @@ class PaginatorComponent extends Component {
 		);
 
 		if ($requestedPage > $page) {
-			throw new NotFoundException();
+			throw new \NotFoundException();
 		}
 
 		if (!in_array('Paginator', $this->Controller->helpers) &&
@@ -245,6 +249,7 @@ class PaginatorComponent extends Component {
 		) {
 			$this->Controller->helpers[] = 'Paginator';
 		}
+
 		return $results;
 	}
 

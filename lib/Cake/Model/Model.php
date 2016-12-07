@@ -17,19 +17,23 @@
  * @since         CakePHP(tm) v 0.10.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model;
 
-App::uses('ClassRegistry', 'Utility');
-App::uses('Validation', 'Utility');
-App::uses('CakeText', 'Utility');
-App::uses('Hash', 'Utility');
-App::uses('BehaviorCollection', 'Model');
-App::uses('ModelBehavior', 'Model');
-App::uses('ModelValidator', 'Model');
-App::uses('ConnectionManager', 'Model');
-App::uses('Xml', 'Utility');
-App::uses('CakeEvent', 'Event');
-App::uses('CakeEventListener', 'Event');
-App::uses('CakeEventManager', 'Event');
+use Cake\Utility\ClassRegistry;
+use Cake\Utility\Validation;
+use Cake\Utility\CakeText;
+use Cake\Utility\Hash;
+use Cake\Model\BehaviorCollection;
+use Cake\Model\ModelBehavior;
+use Cake\Model\ModelValidator;
+use Cake\Model\ConnectionManager;
+use Cake\Utility\Xml;
+use Cake\Event\CakeEvent;
+use Cake\Event\CakeEventListener;
+use Cake\Event\CakeEventManager;
+use Cake\Core\CakeObject;
+use Cake\Utility\Inflector;
+use Cake\Core\Configure;
 
 /**
  * Object-relational mapper.
@@ -719,8 +723,12 @@ class Model extends CakeObject implements CakeEventListener {
 			$this->plugin = (isset($plugin) ? $plugin : $this->plugin);
 		}
 
+
 		if ($this->name === null) {
-			$this->name = (isset($name) ? $name : get_class($this));
+			$this->name = explode('\\', get_class($this));
+			$this->name = array_pop($this->name);
+
+			$this->name = (isset($name) ? $name : $this->name);
 		}
 
 		if ($this->alias === null) {
@@ -739,6 +747,7 @@ class Model extends CakeObject implements CakeEventListener {
 		if ($table === false) {
 			$this->useTable = false;
 		} elseif ($table) {
+
 			$this->useTable = $table;
 		}
 
@@ -761,7 +770,9 @@ class Model extends CakeObject implements CakeEventListener {
 		if ($this->useTable !== false) {
 
 			if ($this->useTable === null) {
-				$this->useTable = Inflector::tableize($this->name);
+				$useTable = explode('\\', $this->name);
+				$useTable = array_pop($useTable);
+				$this->useTable = Inflector::tableize($useTable);
 			}
 
 			if (!$this->displayField) {
@@ -871,7 +882,7 @@ class Model extends CakeObject implements CakeEventListener {
 					if ($className) {
 						$assocKey = $k;
 						$dynamic = !empty($relation['dynamicWith']);
-						break(2);
+						break 2;
 					}
 				}
 			}
@@ -884,7 +895,7 @@ class Model extends CakeObject implements CakeEventListener {
 		list($plugin, $className) = pluginSplit($className);
 
 		if (!ClassRegistry::isKeySet($className) && !empty($dynamic)) {
-			$this->{$className} = new AppModel(array(
+			$this->{$className} = new \Invityou\Model\AppModel(array(
 				'name' => $className,
 				'table' => $this->hasAndBelongsToMany[$assocKey]['joinTable'],
 				'ds' => $this->useDbConfig
@@ -1155,7 +1166,7 @@ class Model extends CakeObject implements CakeEventListener {
  * Sets a custom table for your model class. Used by your controller to select a database table.
  *
  * @param string $tableName Name of the custom table
- * @throws MissingTableException when database table $tableName is not found on data source
+ * @throws \MissingTableException when database table $tableName is not found on data source
  * @return void
  */
 	public function setSource($tableName) {
@@ -1169,7 +1180,7 @@ class Model extends CakeObject implements CakeEventListener {
 			$db->cacheSources = $restore;
 
 			if (is_array($sources) && !in_array(strtolower($this->tablePrefix . $tableName), array_map('strtolower', $sources))) {
-				throw new MissingTableException(array(
+				throw new \MissingTableException(array(
 					'table' => $this->tablePrefix . $tableName,
 					'class' => $this->alias,
 					'ds' => $this->useDbConfig,
@@ -1764,7 +1775,7 @@ class Model extends CakeObject implements CakeEventListener {
 				}
 			}
 			return $success;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			if ($transactionBegun) {
 				$db->rollback();
 			}
@@ -1922,7 +1933,7 @@ class Model extends CakeObject implements CakeEventListener {
 				$this->__safeUpdateMode = true;
 				try {
 					$success = (bool)$db->update($this, $fields, $values);
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$this->__safeUpdateMode = false;
 					throw $e;
 				}
@@ -2380,7 +2391,7 @@ class Model extends CakeObject implements CakeEventListener {
 				$db->rollback();
 			}
 			return false;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			if ($transactionBegun) {
 				$db->rollback();
 			}
@@ -2600,7 +2611,7 @@ class Model extends CakeObject implements CakeEventListener {
 				$db->rollback();
 			}
 			return false;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			if ($transactionBegun) {
 				$db->rollback();
 			}
@@ -3003,6 +3014,7 @@ class Model extends CakeObject implements CakeEventListener {
 		$this->id = $this->getID();
 
 		$query = $this->buildQuery($type, $query);
+
 		if ($query === null) {
 			return null;
 		}

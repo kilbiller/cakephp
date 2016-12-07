@@ -60,7 +60,7 @@ class ProgressShellHelper extends BaseShellHelper {
 			$args['callback'] = $args[0];
 		}
 		if (!$args['callback'] || !is_callable($args['callback'])) {
-			throw new RuntimeException('Callback option must be a callable.');
+			throw new \RuntimeException('Callback option must be a callable.');
 		}
 		$this->init($args);
 		$callback = $args['callback'];

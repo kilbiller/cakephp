@@ -19,9 +19,17 @@
  * @since         CakePHP(tm) v 0.10.4.1076
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component;
 
-App::uses('Component', 'Controller');
-App::uses('Xml', 'Utility');
+use Cake\Controller\Component;
+use Cake\Utility\Hash;
+use Cake\Utility\Xml;
+use Cake\Controller\ComponentCollection;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\Routing\Router;
+use Cake\Network\CakeRequest;
+use Cake\Network\CakeResponse;
 
 /**
  * Request object for handling alternative HTTP requests
@@ -623,8 +631,11 @@ class RequestHandlerComponent extends Component {
 			$viewClass = Inflector::classify($type);
 		}
 		$viewName = $viewClass . 'View';
+		$namespace = '\\Cake\\View\\';
+
+		$viewName = $namespace . $viewName;
 		if (!class_exists($viewName)) {
-			App::uses($viewName, $pluginDot . 'View');
+			throw new \Exception('View could not be found.');
 		}
 		if (class_exists($viewName)) {
 			$controller->viewClass = $viewClass;
@@ -647,9 +658,12 @@ class RequestHandlerComponent extends Component {
 		$helper = ucfirst($type);
 
 		if (!in_array($helper, $controller->helpers) && empty($controller->helpers[$helper])) {
-			App::uses('AppHelper', 'View/Helper');
-			App::uses($helper . 'Helper', 'View/Helper');
-			if (class_exists($helper . 'Helper')) {
+			$helperClass = $helper . 'Helper';
+			$namespace = '\\Invityou\\View\\Helper\\';
+
+			$helperClass = $namespace . $helperClass;
+
+			if (class_exists($helperClass)) {
 				$controller->helpers[] = $helper;
 			}
 		}
@@ -758,7 +772,7 @@ class RequestHandlerComponent extends Component {
  */
 	public function addInputType($type, $handler) {
 		if (!is_array($handler) || !isset($handler[0]) || !is_callable($handler[0])) {
-			throw new CakeException(__d('cake_dev', 'You must give a handler callback.'));
+			throw new \CakeException(__d('cake_dev', 'You must give a handler callback.'));
 		}
 		$this->_inputTypeMap[$type] = $handler;
 	}

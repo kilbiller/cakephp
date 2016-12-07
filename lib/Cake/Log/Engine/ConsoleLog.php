@@ -16,8 +16,10 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('BaseLog', 'Log/Engine');
-App::uses('ConsoleOutput', 'Console');
+namespace Cake\Log\Engine;
+
+use Cake\Console\ConsoleOutput;
+use Cake\Utility\Hash;
 
 /**
  * Console logging. Writes logs to console output.
@@ -67,7 +69,7 @@ class ConsoleLog extends BaseLog {
 		} elseif (is_string($config['stream'])) {
 			$this->_output = new ConsoleOutput($config['stream']);
 		} else {
-			throw new CakeLogException('`stream` not a ConsoleOutput nor string');
+			throw new \CakeLogException('`stream` not a ConsoleOutput nor string');
 		}
 		$this->_output->outputAs($config['outputAs']);
 	}

@@ -18,6 +18,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Core\App;
+use Cake\Core\Configure;
+
 define('TIME_START', microtime(true));
 
 if (!defined('E_DEPRECATED')) {
@@ -136,18 +139,9 @@ if (!defined('JS_URL')) {
 }
 
 require CAKE . 'basics.php';
-require CAKE . 'Core' . DS . 'App.php';
 require CAKE . 'Error' . DS . 'exceptions.php';
 
-spl_autoload_register(array('App', 'load'));
-
-App::uses('ErrorHandler', 'Error');
-App::uses('Configure', 'Core');
-App::uses('CakePlugin', 'Core');
-App::uses('Cache', 'Cache');
-App::uses('CakeObject', 'Core');
-App::uses('Object', 'Core');
-App::uses('Multibyte', 'I18n');
+//spl_autoload_register(array('App', 'load'));
 
 App::$bootstrapping = true;
 

@@ -14,8 +14,9 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
-App::uses('CakePlugin', 'Core');
+namespace Cake\Configure;
+use Cake\Configure\ConfigReaderInterface;
+//App::uses('CakePlugin', 'Core');
 
 /**
  * PHP Reader allows Configure to load configuration values from
@@ -61,17 +62,17 @@ class PhpReader implements ConfigReaderInterface {
  */
 	public function read($key) {
 		if (strpos($key, '..') !== false) {
-			throw new ConfigureException(__d('cake_dev', 'Cannot load configuration files with ../ in them.'));
+			throw new \ConfigureException(__d('cake_dev', 'Cannot load configuration files with ../ in them.'));
 		}
 
 		$file = $this->_getFilePath($key);
 		if (!is_file(realpath($file))) {
-			throw new ConfigureException(__d('cake_dev', 'Could not load configuration file: %s', $file));
+			throw new \ConfigureException(__d('cake_dev', 'Could not load configuration file: %s', $file));
 		}
 
 		include $file;
 		if (!isset($config)) {
-			throw new ConfigureException(__d('cake_dev', 'No variable %s found in %s', '$config', $file));
+			throw new \ConfigureException(__d('cake_dev', 'No variable %s found in %s', '$config', $file));
 		}
 		return $config;
 	}

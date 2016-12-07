@@ -17,11 +17,13 @@
  * @since         CakePHP(tm) v 0.10.5.1732
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Error;
 
-App::uses('Debugger', 'Utility');
-App::uses('CakeLog', 'Log');
-App::uses('ExceptionRenderer', 'Error');
-App::uses('Router', 'Routing');
+use Cake\Core\Configure;
+use Cake\Utility\Debugger;
+use Cake\Log\CakeLog;
+use Cake\Error\ExceptionRenderer;
+use Cake\Routing\Router;
 
 /**
  * Error Handler provides basic error and exception handling for your application. It captures and
@@ -122,10 +124,12 @@ class ErrorHandler {
 			list($plugin, $renderer) = pluginSplit($renderer, true);
 			App::uses($renderer, $plugin . 'Error');
 		}
+
 		try {
+			$renderer = '\\Cake\\Error\\' . $renderer;
 			$error = new $renderer($exception);
 			$error->render();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			set_error_handler(Configure::read('Error.handler')); // Should be using configured ErrorHandler
 			Configure::write('Error.trace', false); // trace is useless here since it's internal
 			$message = sprintf("[%s] %s\n%s", // Keeping same message format
@@ -256,9 +260,9 @@ class ErrorHandler {
 		}
 
 		if (Configure::read('debug')) {
-			$exception = new FatalErrorException($description, 500, $file, $line);
+			$exception = new \FatalErrorException($description, 500, $file, $line);
 		} else {
-			$exception = new InternalErrorException();
+			$exception = new \InternalErrorException();
 		}
 
 		if (static::$_bailExceptionRendering) {

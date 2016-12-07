@@ -12,8 +12,11 @@
  * @since         CakePHP(tm) v 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Routing\Route;
 
-App::uses('CakeRoute', 'Routing/Route');
+use Cake\Routing\Route;
+use Cake\Routing\Router;
+use Cake\utility\Hash;
 
 /**
  * Plugin short route, that copies the plugin param to the controller parameters

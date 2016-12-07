@@ -14,7 +14,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('ComponentCollection', 'Controller');
+namespace Cake\Controller;
+
+use Cake\Controller\ComponentCollection;
+use Cake\Controller\Controller;
+use Cake\Core\CakeObject;
 
 /**
  * Base class for an individual Component. Components provide reusable bits of

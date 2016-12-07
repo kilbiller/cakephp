@@ -13,8 +13,14 @@
  * @since		  CakePHP(tm) v 2.2
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Routing\Filter;
 
-App::uses('DispatcherFilter', 'Routing');
+use Cake\Routing\DispatcherFilter;
+use Cake\Event\CakeEvent;
+use Cake\Core\Configure;
+use Cake\Core\CakePlugin;
+use Cake\Network\CakeResponse;
+use Cake\Utility\Inflector;
 
 /**
  * Filters a request and tests whether it is a file in the webroot folder or not and

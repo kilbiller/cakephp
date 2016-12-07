@@ -12,7 +12,14 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Hash', 'Utility');
+namespace Cake\Controller\Component\Auth;
+
+use Cake\Utility\Hash;
+use Cake\Controller\Controller;
+use Cake\Controller\ComponentCollection;
+use Cake\Network\CakeRequest;
+use Cake\Utility\Inflector;
+use Cake\Network\CakeResponse;
 
 /**
  * Abstract base authorization adapter for AuthComponent.
@@ -92,7 +99,7 @@ abstract class BaseAuthorize {
 	public function controller(Controller $controller = null) {
 		if ($controller) {
 			if (!$controller instanceof Controller) {
-				throw new CakeException(__d('cake_dev', '$controller needs to be an instance of Controller'));
+				throw new \CakeException(__d('cake_dev', '$controller needs to be an instance of Controller'));
 			}
 			$this->_Controller = $controller;
 			return true;

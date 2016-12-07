@@ -144,7 +144,7 @@ class SmtpTransport extends AbstractTransport {
 	protected function _connect() {
 		$this->_generateSocket();
 		if (!$this->_socket->connect()) {
-			throw new SocketException(__d('cake_dev', 'Unable to connect to SMTP server.'));
+			throw new \SocketException(__d('cake_dev', 'Unable to connect to SMTP server.'));
 		}
 		$this->_smtpSend(null, '220');
 
@@ -163,14 +163,14 @@ class SmtpTransport extends AbstractTransport {
 				$this->_socket->enableCrypto('tls');
 				$this->_smtpSend("EHLO {$host}", '250');
 			}
-		} catch (SocketException $e) {
+		} catch (\SocketException $e) {
 			if ($this->_config['tls']) {
-				throw new SocketException(__d('cake_dev', 'SMTP server did not accept the connection or trying to connect to non TLS SMTP server using TLS.'));
+				throw new \SocketException(__d('cake_dev', 'SMTP server did not accept the connection or trying to connect to non TLS SMTP server using TLS.'));
 			}
 			try {
 				$this->_smtpSend("HELO {$host}", '250');
-			} catch (SocketException $e2) {
-				throw new SocketException(__d('cake_dev', 'SMTP server did not accept the connection.'));
+			} catch (\SocketException $e2) {
+				throw new \SocketException(__d('cake_dev', 'SMTP server did not accept the connection.'));
 			}
 		}
 	}
@@ -187,18 +187,18 @@ class SmtpTransport extends AbstractTransport {
 			if ($replyCode == '334') {
 				try {
 					$this->_smtpSend(base64_encode($this->_config['username']), '334');
-				} catch (SocketException $e) {
-					throw new SocketException(__d('cake_dev', 'SMTP server did not accept the username.'));
+				} catch (\SocketException $e) {
+					throw new \SocketException(__d('cake_dev', 'SMTP server did not accept the username.'));
 				}
 				try {
 					$this->_smtpSend(base64_encode($this->_config['password']), '235');
-				} catch (SocketException $e) {
-					throw new SocketException(__d('cake_dev', 'SMTP server did not accept the password.'));
+				} catch (\SocketException $e) {
+					throw new \SocketException(__d('cake_dev', 'SMTP server did not accept the password.'));
 				}
 			} elseif ($replyCode == '504') {
-				throw new SocketException(__d('cake_dev', 'SMTP authentication method not allowed, check if SMTP server requires TLS.'));
+				throw new \SocketException(__d('cake_dev', 'SMTP authentication method not allowed, check if SMTP server requires TLS.'));
 			} else {
-				throw new SocketException(__d('cake_dev', 'AUTH command not recognized or not implemented, SMTP server may not require authentication.'));
+				throw new \SocketException(__d('cake_dev', 'AUTH command not recognized or not implemented, SMTP server may not require authentication.'));
 			}
 		}
 	}
@@ -359,7 +359,7 @@ class SmtpTransport extends AbstractTransport {
 				$response .= $bytes;
 			}
 			if (substr($response, -2) !== "\r\n") {
-				throw new SocketException(__d('cake_dev', 'SMTP timeout.'));
+				throw new \SocketException(__d('cake_dev', 'SMTP timeout.'));
 			}
 			$responseLines = explode("\r\n", rtrim($response, "\r\n"));
 			$response = end($responseLines);
@@ -372,7 +372,7 @@ class SmtpTransport extends AbstractTransport {
 				}
 				return $code[1];
 			}
-			throw new SocketException(__d('cake_dev', 'SMTP Error: %s', $response));
+			throw new \SocketException(__d('cake_dev', 'SMTP Error: %s', $response));
 		}
 	}
 

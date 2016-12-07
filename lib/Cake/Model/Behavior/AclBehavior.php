@@ -17,10 +17,13 @@
  * @since         CakePHP v 1.2.0.4487
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model\Behavior;
 
-App::uses('ModelBehavior', 'Model');
-App::uses('AclNode', 'Model');
-App::uses('Hash', 'Utility');
+use Cake\Model\ModelBehavior;
+use Cake\Model\AclNode;
+use Cake\Model\Model;
+use Cake\Utility\Hash;
+use Cake\Utility\ClassRegistry;
 
 /**
  * ACL behavior
@@ -62,6 +65,7 @@ class AclBehavior extends ModelBehavior {
 		foreach ($types as $type) {
 			$model->{$type} = ClassRegistry::init($type);
 		}
+
 		if (!method_exists($model, 'parentNode')) {
 			trigger_error(__d('cake_dev', 'Callback %s not defined in %s', 'parentNode()', $model->alias), E_USER_WARNING);
 		}

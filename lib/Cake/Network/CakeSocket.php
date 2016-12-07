@@ -171,12 +171,12 @@ class CakeSocket {
 
 		if (!empty($errNum) || !empty($errStr)) {
 			$this->setLastError($errNum, $errStr);
-			throw new SocketException($errStr, $errNum);
+			throw new \SocketException($errStr, $errNum);
 		}
 
 		if (!$this->connection && $this->_connectionErrors) {
 			$message = implode("\n", $this->_connectionErrors);
-			throw new SocketException($message, E_WARNING);
+			throw new \SocketException($message, E_WARNING);
 		}
 
 		$this->connected = is_resource($this->connection);
@@ -443,15 +443,15 @@ class CakeSocket {
  */
 	public function enableCrypto($type, $clientOrServer = 'client', $enable = true) {
 		if (!array_key_exists($type . '_' . $clientOrServer, $this->_encryptMethods)) {
-			throw new InvalidArgumentException(__d('cake_dev', 'Invalid encryption scheme chosen'));
+			throw new \InvalidArgumentException(__d('cake_dev', 'Invalid encryption scheme chosen'));
 		}
 		$enableCryptoResult = false;
 		try {
 			$enableCryptoResult = stream_socket_enable_crypto($this->connection, $enable,
 				$this->_encryptMethods[$type . '_' . $clientOrServer]);
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->setLastError(null, $e->getMessage());
-			throw new SocketException($e->getMessage());
+			throw new \SocketException($e->getMessage());
 		}
 		if ($enableCryptoResult === true) {
 			$this->encrypted = $enable;
@@ -459,6 +459,6 @@ class CakeSocket {
 		}
 		$errorMessage = __d('cake_dev', 'Unable to perform enableCrypto operation on CakeSocket');
 		$this->setLastError(null, $errorMessage);
-		throw new SocketException($errorMessage);
+		throw new \SocketException($errorMessage);
 	}
 }

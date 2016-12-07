@@ -248,7 +248,7 @@ class CakeSchema extends CakeObject {
 
 				try {
 					$Object = ClassRegistry::init(array('class' => $model, 'ds' => $connection));
-				} catch (CakeException $e) {
+				} catch (\CakeException $e) {
 					continue;
 				}
 
@@ -410,7 +410,7 @@ class CakeSchema extends CakeObject {
 	public function generateTable($table, $fields) {
 		// Valid var name regex (http://www.php.net/manual/en/language.variables.basics.php)
 		if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $table)) {
-			throw new Exception("Invalid table name '{$table}'");
+			throw new \Exception("Invalid table name '{$table}'");
 		}
 
 		$out = "\tpublic \${$table} = array(\n";

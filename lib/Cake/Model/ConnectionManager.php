@@ -17,8 +17,10 @@
  * @since         CakePHP(tm) v 0.10.x.1402
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model;
 
-App::uses('DataSource', 'Model/Datasource');
+use Cake\Model\Datasource\DataSource;
+use Cake\Core\App;
 
 /**
  * Manages loaded instances of DataSource objects
@@ -66,7 +68,7 @@ class ConnectionManager {
 	protected static function _init() {
 		include_once APP . 'Config' . DS . 'database.php';
 		if (class_exists('DATABASE_CONFIG')) {
-			static::$config = new DATABASE_CONFIG();
+			static::$config = new \DATABASE_CONFIG();
 		}
 		static::$_init = true;
 	}
@@ -95,8 +97,8 @@ class ConnectionManager {
 		$conn = static::$_connectionsEnum[$name];
 		$class = $conn['classname'];
 
-		if (strpos(App::location($class), 'Datasource') === false) {
-			throw new MissingDatasourceException(array(
+		if (!class_exists($class, false)) {
+			throw new \MissingDatasourceException(array(
 				'class' => $class,
 				'plugin' => null,
 				'message' => 'Datasource is not found in Model/Datasource package.'
@@ -173,9 +175,9 @@ class ConnectionManager {
 			$package = '/' . $conn['package'];
 		}
 
-		App::uses($conn['classname'], $plugin . 'Model/Datasource' . $package);
+		//App::uses($conn['classname'], $plugin . 'Model/Datasource' . $package);
 		if (!class_exists($conn['classname'])) {
-			throw new MissingDatasourceException(array(
+			throw new \MissingDatasourceException(array(
 				'class' => $conn['classname'],
 				'plugin' => substr($plugin, 0, -1)
 			));
@@ -246,7 +248,7 @@ class ConnectionManager {
 		if (!empty(static::$config->{$name})) {
 			static::$_connectionsEnum[$name] = static::_connectionData(static::$config->{$name});
 		} else {
-			throw new MissingDatasourceConfigException(array('config' => $name));
+			throw new \MissingDatasourceConfigException(array('config' => $name));
 		}
 	}
 
@@ -262,7 +264,8 @@ class ConnectionManager {
 		list($plugin, $classname) = pluginSplit($config['datasource']);
 		if (strpos($classname, '/') !== false) {
 			$package = dirname($classname);
-			$classname = basename($classname);
+			$namespace = '\\Cake\\Model\\Datasource\\Database\\';
+			$classname = $namespace . basename($classname);
 		}
 		return compact('package', 'classname', 'plugin');
 	}

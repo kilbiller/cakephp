@@ -15,11 +15,16 @@
  * @since         CakePHP(tm) v 0.10.8.2156
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component;
 
-App::uses('Component', 'Controller');
-App::uses('CakeText', 'Utility');
-App::uses('Hash', 'Utility');
-App::uses('Security', 'Utility');
+use Cake\Controller\Component;
+use Cake\Utility\Hash;
+use Cake\Utility\Security;
+use Cake\Utility\CakeText;
+use Cake\Controller\ComponentCollection;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\Network\CakeRequest;
 
 /**
  * The Security Component creates an easy way to integrate tighter security in
@@ -333,7 +338,7 @@ class SecurityComponent extends Component {
  */
 	public function blackHole(Controller $controller, $error = '') {
 		if (!$this->blackHoleCallback) {
-			throw new BadRequestException(__d('cake_dev', 'The request has been black-holed'));
+			throw new \BadRequestException(__d('cake_dev', 'The request has been black-holed'));
 		}
 		return $this->_callback($controller, $this->blackHoleCallback, array($error));
 	}
@@ -619,7 +624,7 @@ class SecurityComponent extends Component {
  */
 	protected function _callback(Controller $controller, $method, $params = array()) {
 		if (!is_callable(array($controller, $method))) {
-			throw new BadRequestException(__d('cake_dev', 'The request has been black-holed'));
+			throw new \BadRequestException(__d('cake_dev', 'The request has been black-holed'));
 		}
 		return call_user_func_array(array(&$controller, $method), empty($params) ? null : $params);
 	}

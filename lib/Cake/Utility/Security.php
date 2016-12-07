@@ -16,8 +16,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('CakeText', 'Utility');
+namespace Cake\Utility;
 
+use Cake\Core\Configure;
 /**
  * Security Library contains utility methods related to security
  *
@@ -369,7 +370,7 @@ class Security {
  */
 	protected static function _checkKey($key, $method) {
 		if (strlen($key) < 32) {
-			throw new CakeException(__d('cake_dev', 'Invalid key for %s, key must be at least 256 bits (32 bytes) long.', $method));
+			throw new \CakeException(__d('cake_dev', 'Invalid key for %s, key must be at least 256 bits (32 bytes) long.', $method));
 		}
 	}
 
@@ -385,7 +386,7 @@ class Security {
 	public static function decrypt($cipher, $key, $hmacSalt = null) {
 		static::_checkKey($key, 'decrypt()');
 		if (empty($cipher)) {
-			throw new CakeException(__d('cake_dev', 'The data to decrypt cannot be empty.'));
+			throw new \CakeException(__d('cake_dev', 'The data to decrypt cannot be empty.'));
 		}
 		if ($hmacSalt === null) {
 			$hmacSalt = Configure::read('Security.salt');

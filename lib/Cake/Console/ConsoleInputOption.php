@@ -91,7 +91,7 @@ class ConsoleInputOption {
 			$this->_choices = $choices;
 		}
 		if (strlen($this->_short) > 1) {
-			throw new ConsoleException(
+			throw new \ConsoleException(
 				__d('cake_console', 'Short option "%s" is invalid, short options must be one letter.', $this->_short)
 			);
 		}
@@ -186,7 +186,7 @@ class ConsoleInputOption {
 			return true;
 		}
 		if (!in_array($value, $this->_choices)) {
-			throw new ConsoleException(
+			throw new \ConsoleException(
 				__d('cake_console', '"%s" is not a valid value for --%s. Please use one of "%s"',
 				$value, $this->_name, implode(', ', $this->_choices)
 			));
@@ -200,7 +200,7 @@ class ConsoleInputOption {
  * @param SimpleXmlElement $parent The parent element.
  * @return SimpleXmlElement The parent with this option appended.
  */
-	public function xml(SimpleXmlElement $parent) {
+	public function xml(\SimpleXmlElement $parent) {
 		$option = $parent->addChild('option');
 		$option->addAttribute('name', '--' . $this->_name);
 		$short = '';

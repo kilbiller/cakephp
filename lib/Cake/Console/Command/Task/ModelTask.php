@@ -218,7 +218,7 @@ class ModelTask extends BakeTask {
 		try {
 			$fields = $tempModel->schema(true);
 			$knownToExist = true;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$fields = array($tempModel->primaryKey);
 		}
 		if (!array_key_exists('id', $fields)) {

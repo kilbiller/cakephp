@@ -131,7 +131,7 @@ class MemcachedEngine extends CacheEngine {
 
 		if ($this->settings['login'] !== null && $this->settings['password'] !== null) {
 			if (!method_exists($this->_Memcached, 'setSaslAuthData')) {
-				throw new CacheException(
+				throw new \CacheException(
 					__d('cake_dev', 'Memcached extension is not build with SASL support')
 				);
 			}
@@ -158,13 +158,13 @@ class MemcachedEngine extends CacheEngine {
 
 		$serializer = strtolower($this->settings['serialize']);
 		if (!isset($this->_serializers[$serializer])) {
-			throw new CacheException(
+			throw new \CacheException(
 				__d('cake_dev', '%s is not a valid serializer engine for Memcached', $serializer)
 			);
 		}
 
 		if ($serializer !== 'php' && !constant('Memcached::HAVE_' . strtoupper($serializer))) {
-			throw new CacheException(
+			throw new \CacheException(
 				__d('cake_dev', 'Memcached extension is not compiled with %s support', $serializer)
 			);
 		}

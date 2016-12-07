@@ -13,11 +13,13 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Core;
 
-App::uses('CakeLog', 'Log');
-App::uses('Dispatcher', 'Routing');
-App::uses('Router', 'Routing');
-App::uses('Set', 'Utility');
+use Cake\Log\CakeLog;
+use Cake\Routing\Dispatcher;
+use Cake\Routing\Router;
+use Cake\Utility\Set;
+use Cake\Utility\Hash;
 
 /**
  * CakeObject class provides a few generic methods used in several subclasses.

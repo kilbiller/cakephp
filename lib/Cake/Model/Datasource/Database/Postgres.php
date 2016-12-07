@@ -136,8 +136,8 @@ class Postgres extends DboSource {
 					$this->_execute("SET $key TO $value");
 				}
 			}
-		} catch (PDOException $e) {
-			throw new MissingConnectionException(array(
+		} catch (\PDOException $e) {
+			throw new \MissingConnectionException(array(
 				'class' => get_class($this),
 				'message' => $e->getMessage()
 			));
