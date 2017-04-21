@@ -1,9 +1,9 @@
 {
-	"name": "cakephp/cakephp",
-	"description": "The CakePHP framework",
+	"name": "kilbiller/cakephp",
+	"description": "A fork of the CakePHP framework",
 	"type": "library",
 	"keywords": ["framework"],
-	"homepage": "http://cakephp.org",
+	"homepage": "https://github.com/kilbiller/cakephp",
 	"license": "MIT",
 	"authors": [
 		{
