@@ -270,16 +270,21 @@ class Dispatcher implements CakeEventListener {
 		}
 		if ($pluginPath . $controller) {
 			$class = $controller . 'Controller';
-			$namespace = '\\Invityou\\Controller\\';
+			$namespaces = [];
+			$controllerPaths = \Cake\Core\App::paths()['Controller'];
+
+			foreach ($controllerPaths as $controllerPath) {
+				$namespaces[] = '\\Invityou\\' . str_replace('/', '\\', str_replace(APP, '', substr($controllerPath, 0, -1))) . '\\';
+			}
 
 			if (!empty($pluginName)) {
 				$namespace = '\\' . $pluginName . '\\Controller\\';
 			}
 
-			$class = $namespace . $class;
-
-			if (class_exists($class)) {
-				return $class;
+			foreach ($namespaces as $namespace) {
+				if (class_exists($namespace . $class)) {
+					return $namespace . $class;
+				}
 			}
 		}
 		return false;
