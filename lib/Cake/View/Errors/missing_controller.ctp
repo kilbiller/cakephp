@@ -14,6 +14,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Core\CakePlugin;
+
 $pluginDot = empty($plugin) ? null : $plugin . '.';
 ?>
 <h2><?php echo __d('cake_dev', 'Missing Controller'); ?></h2>

@@ -278,7 +278,7 @@ class Dispatcher implements CakeEventListener {
 			}
 
 			if (!empty($pluginName)) {
-				$namespace = '\\' . $pluginName . '\\Controller\\';
+				$namespaces[] = '\\' . $pluginName . '\\Controller\\';
 			}
 
 			foreach ($namespaces as $namespace) {
