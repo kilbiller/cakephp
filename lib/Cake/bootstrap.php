@@ -138,8 +138,8 @@ if (!defined('JS_URL')) {
 	define('JS_URL', 'js/');
 }
 
-require CAKE . 'basics.php';
-require CAKE . 'Error' . DS . 'exceptions.php';
+//require CAKE . 'basics.php';
+//require CAKE . 'Error' . DS . 'exceptions.php';
 
 //spl_autoload_register(array('App', 'load'));
 

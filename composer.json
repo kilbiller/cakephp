@@ -31,7 +31,8 @@
 	"autoload": {
         "psr-4": {
             "Cake\\": "lib/Cake/"
-        }
+        },
+        "files": ["lib/Cake/basics.php", "lib/Cake/Error/exceptions.php"]
     },
 	"bin": [
 		"lib/Cake/Console/cake"
