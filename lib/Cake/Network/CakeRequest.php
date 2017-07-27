@@ -33,8 +33,6 @@ class CakeRequest implements \ArrayAccess {
 
 /**
  * Array of parameters parsed from the URL.
- *
- * @var array
  */
 	public $params = array(
 		'plugin' => null,
