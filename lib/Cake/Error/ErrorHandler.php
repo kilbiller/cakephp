@@ -119,14 +119,10 @@ class ErrorHandler {
 		$config = Configure::read('Exception');
 		static::_log($exception, $config);
 
-		$renderer = isset($config['renderer']) ? $config['renderer'] : 'ExceptionRenderer';
-		if ($renderer !== 'ExceptionRenderer') {
-			list($plugin, $renderer) = pluginSplit($renderer, true);
-			App::uses($renderer, $plugin . 'Error');
-		}
+		$renderer = isset($config['renderer']) ? $config['renderer'] : '\\Cake\\Error\\ExceptionRenderer';
 
 		try {
-			$renderer = '\\Cake\\Error\\' . $renderer;
+			$renderer = $renderer;
 			$error = new $renderer($exception);
 			$error->render();
 		} catch (\Exception $e) {
