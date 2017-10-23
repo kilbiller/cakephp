@@ -22,11 +22,12 @@
 		"ext-mcrypt": "*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "3.7.*",
+		"phpunit/phpunit": "<6.0.0",
 		"cakephp/cakephp-codesniffer": "^1.0.0"
 	},
 	"config": {
-		"vendor-dir": "vendors/"
+		"vendor-dir": "vendors/",
+		"process-timeout": 0
 	},
 	"autoload": {
         "psr-4": {
@@ -36,5 +37,13 @@
     },
 	"bin": [
 		"lib/Cake/Console/cake"
-	]
+	],
+	"scripts": {
+		"check": [
+			"@cs-check",
+			"@test"
+		],
+		"cs-check": "./vendors/bin/phpcs -p --extensions=php --standard=CakePHP ./lib/Cake",
+		"test": "./lib/Cake/Console/cake test core AllTests --stderr"
+	}
 }

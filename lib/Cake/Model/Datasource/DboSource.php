@@ -2,18 +2,18 @@
 /**
  * Dbo Source
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model.Datasource
  * @since         CakePHP(tm) v 0.10.0.1076
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Model\Datasource;
 
@@ -221,7 +221,9 @@ class DboSource extends DataSource {
 		'limit' => null,
 		'joins' => array(),
 		'group' => null,
-		'offset' => null
+		'offset' => null,
+		'having' => null,
+		'lock' => null,
 	);
 
 /**
@@ -1740,7 +1742,9 @@ class DboSource extends DataSource {
 				'joins' => $queryData['joins'],
 				'conditions' => $queryData['conditions'],
 				'order' => $queryData['order'],
-				'group' => $queryData['group']
+				'group' => $queryData['group'],
+				'having' => $queryData['having'],
+				'lock' => $queryData['lock'],
 			),
 			$Model
 		);
@@ -2019,7 +2023,9 @@ class DboSource extends DataSource {
 			'order' => $this->order($query['order'], 'ASC', $Model),
 			'limit' => $this->limit($query['limit'], $query['offset']),
 			'joins' => implode(' ', $query['joins']),
-			'group' => $this->group($query['group'], $Model)
+			'group' => $this->group($query['group'], $Model),
+			'having' => $this->having($query['having'], true, $Model),
+			'lock' => $this->getLockingHint($query['lock']),
 		));
 	}
 
@@ -2049,7 +2055,9 @@ class DboSource extends DataSource {
 
 		switch (strtolower($type)) {
 			case 'select':
-				return trim("SELECT {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$group} {$order} {$limit}");
+				$having = !empty($having) ? " $having" : '';
+				$lock = !empty($lock) ? " $lock" : '';
+				return trim("SELECT {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$group}{$having} {$order} {$limit}{$lock}");
 			case 'create':
 				return "INSERT INTO {$table} ({$fields}) VALUES ({$values})";
 			case 'update':
@@ -2557,6 +2565,8 @@ class DboSource extends DataSource {
 		static $base = null;
 		if ($base === null) {
 			$base = array_fill_keys(array('conditions', 'fields', 'joins', 'order', 'limit', 'offset', 'group'), array());
+			$base['having'] = null;
+			$base['lock'] = null;
 			$base['callbacks'] = null;
 		}
 		return (array)$data + $base;
@@ -2905,7 +2915,8 @@ class DboSource extends DataSource {
 			$isKey = (
 				strpos($key, '(') !== false ||
 				strpos($key, ')') !== false ||
-				strpos($key, '|') !== false
+				strpos($key, '|') !== false ||
+				strpos($key, '->') !== false
 			);
 			$key = $isKey ? $this->_quoteFields($key) : $this->name($key);
 		}
@@ -2965,10 +2976,11 @@ class DboSource extends DataSource {
 		if (!empty($this->endQuote)) {
 			$end = preg_quote($this->endQuote);
 		}
+
 		// Remove quotes and requote all the Model.field names.
 		$conditions = str_replace(array($start, $end), '', $conditions);
 		$conditions = preg_replace_callback(
-			'/(?:[\'\"][^\'\"\\\]*(?:\\\.[^\'\"\\\]*)*[\'\"])|([a-z0-9_][a-z0-9\\-_]*\\.[a-z0-9_][a-z0-9_\\-]*)/i',
+			'/(?:[\'\"][^\'\"\\\]*(?:\\\.[^\'\"\\\]*)*[\'\"])|([a-z0-9_][a-z0-9\\-_]*\\.[a-z0-9_][a-z0-9_\\-]*[a-z0-9_])|([a-z0-9_][a-z0-9_\\-]*)(?=->)/i',
 			array(&$this, '_quoteMatchedField'),
 			$conditions
 		);
@@ -3129,6 +3141,36 @@ class DboSource extends DataSource {
 		$fields = implode(', ', $fields);
 
 		return ' GROUP BY ' . $this->_quoteFields($fields);
+	}
+
+/**
+ * Create a HAVING SQL clause.
+ *
+ * @param mixed $fields Array or string of conditions
+ * @param bool $quoteValues If true, values should be quoted
+ * @param Model $Model A reference to the Model instance making the query
+ * @return string|null HAVING clause or null
+ */
+	public function having($fields, $quoteValues = true, Model $Model = null) {
+		if (!$fields) {
+			return null;
+		}
+		return ' HAVING ' . $this->conditions($fields, $quoteValues, false, $Model);
+	}
+
+/**
+ * Returns a locking hint for the given mode.
+ *
+ * Currently, this method only returns FOR UPDATE when the mode is set to true.
+ *
+ * @param mixed $mode Lock mode
+ * @return string|null FOR UPDATE clause or null
+ */
+	public function getLockingHint($mode) {
+		if ($mode !== true) {
+			return null;
+		}
+		return ' FOR UPDATE';
 	}
 
 /**
