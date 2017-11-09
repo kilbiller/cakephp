@@ -813,7 +813,12 @@ class AuthComponent extends Component {
 			$namespace = '\\Cake\\Controller\\Component\\Auth\\';
 			$className = $namespace . $className;
 			if (!class_exists($className)) {
-				throw new \CakeException(__d('cake_dev', 'Authentication adapter "%s" was not found.', $class));
+				$className = $class . 'Authenticate';
+				$namespace = '\\Invityou\\Controller\\Component\\Auth\\';
+				$className = $namespace . $className;
+				if (!class_exists($className)) {
+					throw new \CakeException(__d('cake_dev', 'Authentication adapter "%s" was not found.', $class));
+				}
 			}
 			if (!method_exists($className, 'authenticate')) {
 				throw new \CakeException(__d('cake_dev', 'Authentication objects must implement an %s method.', 'authenticate()'));
