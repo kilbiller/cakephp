@@ -16,6 +16,7 @@ namespace Cake\Controller\Component\Auth;
 
 use Cake\Utility\Security;
 use Cake\Utility\Hash;
+use Cake\Utility\ClassRegistry;
 use Cake\Event\CakeEventListener;
 use Cake\Controller\ComponentCollection;
 use Cake\Network\CakeRequest;
