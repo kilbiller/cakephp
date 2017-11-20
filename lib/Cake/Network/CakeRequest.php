@@ -968,7 +968,7 @@ class CakeRequest implements \ArrayAccess {
 			$this->data = Hash::insert($this->data, $name, $args[1]);
 			return $this;
 		}
-		return Hash::get($this->data, $name);
+		return Hash::get((array)$this->data, $name);
 	}
 
 /**
