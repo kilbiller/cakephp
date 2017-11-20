@@ -1250,16 +1250,6 @@ class Controller extends CakeObject implements CakeEventListener {
  */
 	protected function _getViewObject() {
 		$viewClass = $this->viewClass;
-		if ($this->viewClass !== '\\Cake\\View\\View') {
-			list($plugin, $viewClass) = pluginSplit($viewClass, true);
-			$viewClass = $viewClass . 'View';
-
-			$namespace = '\\Cake\\View\\';
-			$viewClass = $namespace . $viewClass;
-
-			class_exists($viewClass);
-		}
-
 		return new $viewClass($this);
 	}
 
