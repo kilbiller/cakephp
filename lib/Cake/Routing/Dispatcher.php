@@ -112,7 +112,7 @@ class Dispatcher implements CakeEventListener {
 				$namespace = '\\Cake\\Routing\\Filter\\';
 
 				if (!class_exists($namespace . $callable)) {
-					$namespace = '\\Invityou\\Lib\\Routing\\Filter\\';
+					$namespace = '\\Invityou\\Routing\\Filter\\';
 				}
 
 				$callable = $namespace . $callable;
