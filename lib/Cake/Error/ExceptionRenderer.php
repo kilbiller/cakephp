@@ -29,6 +29,7 @@ use Cake\Network\CakeResponse;
 use Cake\Event\CakeEvent;
 use Cake\Utility\Inflector;
 use Cake\Core\Configure;
+use Cake\View\View;
 
 /**
  * Exception Renderer.
