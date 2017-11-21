@@ -638,7 +638,7 @@ class RequestHandlerComponent extends Component {
 			throw new \Exception('View could not be found.');
 		}
 		if (class_exists($viewName)) {
-			$controller->viewClass = $viewClass;
+			$controller->viewClass = $viewName;
 		} elseif (empty($this->_renderType)) {
 			$controller->viewPath .= DS . $type;
 		} else {
