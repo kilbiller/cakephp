@@ -407,7 +407,7 @@ class DboSource extends DataSource {
  * @return stdClass An object representing a database expression to be used in a query
  */
 	public function expression($expression) {
-		$obj = new stdClass();
+		$obj = new \stdClass();
 		$obj->type = 'expression';
 		$obj->value = $expression;
 		return $obj;
