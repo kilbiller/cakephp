@@ -64,6 +64,11 @@ class LogEngineCollection extends ObjectCollection {
  * @throws CakeLogException
  */
 	protected static function _getLogger($loggerName) {
+		// If full import name is specified, no formatting is necessary
+		if (class_exists($loggerName)) {
+			return $loggerName;
+		}
+
 		list($plugin, $loggerName) = pluginSplit($loggerName, true);
 		$namespace = '\\Cake\\Log\\Engine\\';
 
