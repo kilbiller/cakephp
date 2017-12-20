@@ -304,6 +304,7 @@ class AuthComponent extends Component {
 		}
 
 		if ($this->_isAllowed($controller)) {
+			$this->_getUser();
 			return true;
 		}
 
