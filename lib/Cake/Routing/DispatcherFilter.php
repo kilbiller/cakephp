@@ -18,6 +18,7 @@ namespace Cake\Routing;
 use Cake\Event\CakeEvent;
 use Cake\Event\CakeEventListener;
 use Cake\Utility\Hash;
+use Cake\Network\CakeResponse;
 
 /**
  * This abstract class represents a filter to be applied to a dispatcher cycle. It acts as as
@@ -81,7 +82,7 @@ abstract class DispatcherFilter implements CakeEventListener {
  *
  * @param CakeEvent $event container object having the `request`, `response` and `additionalParams`
  *	keys in the data property.
- * @return CakeResponse|bool
+ * @return CakeResponse|bool|void
  */
 	public function beforeDispatch(CakeEvent $event) {
 	}
