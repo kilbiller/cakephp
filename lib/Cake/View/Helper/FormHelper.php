@@ -1065,6 +1065,8 @@ class FormHelper extends AppHelper {
 		if ($options['type'] === 'radio' && isset($options['options'])) {
 			$radioOptions = (array)$options['options'];
 			unset($options['options']);
+		} else {
+			$radioOptions = array();
 		}
 
 		$label = $this->_getLabel($fieldName, $options);
@@ -1085,6 +1087,9 @@ class FormHelper extends AppHelper {
 			$dateFormat = $this->_extractOption('dateFormat', $options, 'MDY');
 			$timeFormat = $this->_extractOption('timeFormat', $options, 12);
 			unset($options['dateFormat'], $options['timeFormat']);
+		} else {
+			$dateFormat = 'MDY';
+			$timeFormat = 12;
 		}
 
 		$type = $options['type'];

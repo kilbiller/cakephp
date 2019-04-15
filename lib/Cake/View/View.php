@@ -130,9 +130,9 @@ class View extends CakeObject {
 	public $view = null;
 
 /**
- * Name of layout to use with this View.
+ * Name of layout to use with this View. If `false` then no layout is rendered.
  *
- * @var string
+ * @var string|bool
  */
 	public $layout = 'default';
 
@@ -465,7 +465,7 @@ class View extends CakeObject {
  * a plugin view/layout can be used instead of the app ones. If the chosen plugin is not found
  * the view will be located along the regular view path cascade.
  *
- * @param string $view Name of view file to use
+ * @param false|string $view Name of view file to use.
  * @param string $layout Layout to use.
  * @return string|null Rendered content or null if content already rendered and returned earlier.
  * @triggers View.beforeRender $this, array($viewFileName)
@@ -817,7 +817,7 @@ class View extends CakeObject {
  * a layout or other element. Analogous to Controller::set().
  *
  * @param string|array $one A string or an array of data.
- * @param string|array $two Value in case $one is a string (which then works as the key).
+ * @param mixed $two Value in case $one is a string (which then works as the key).
  *    Unused if $one is an associative array, otherwise serves as the values to $one's keys.
  * @return void
  */

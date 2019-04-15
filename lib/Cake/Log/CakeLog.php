@@ -400,7 +400,7 @@ class CakeLog {
  *
  * @param int|string $type Type of message being written. When value is an integer
  *    or a string matching the recognized levels, then it will
- *    be treated log levels. Otherwise it's treated as scope.
+ *    be treated as a log level. Otherwise it's treated as a scope.
  * @param string $message Message content to log
  * @param string|array $scope The scope(s) a log message is being created in.
  *    See CakeLog::config() for more information on logging scopes.

@@ -114,6 +114,9 @@ class Configure {
 				class_exists('\\Cake\\Utility\\Debugger');
 				class_exists('\\Cake\\Utility\\CakeText');
 			}
+			if (!defined('TESTS')) {
+				define('TESTS', APP . 'Test' . DS);
+			}
 		}
 	}
 
