@@ -13,8 +13,10 @@
  * @since         CakePHP(tm) v 0.9.1.114
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model\Datasource\Database;
 
-App::uses('DboSource', 'Model/Datasource');
+use Cake\Model\Datasource\DboSource;
+use Cake\Model\Model;
 
 /**
  * PostgreSQL layer for DBO.
@@ -108,19 +110,19 @@ class Postgres extends DboSource {
  * Connects to the database using options in the given configuration array.
  *
  * @return bool True if successfully connected.
- * @throws MissingConnectionException
+ * @throws \MissingConnectionException
  */
 	public function connect() {
 		$config = $this->config;
 		$this->connected = false;
 
 		$flags = $config['flags'] + array(
-			PDO::ATTR_PERSISTENT => $config['persistent'],
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+			\PDO::ATTR_PERSISTENT => $config['persistent'],
+			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
 		);
 
 		try {
-			$this->_connection = new PDO(
+			$this->_connection = new \PDO(
 				"pgsql:host={$config['host']};port={$config['port']};dbname={$config['database']};sslmode={$config['sslmode']}",
 				$config['login'],
 				$config['password'],
@@ -155,7 +157,7 @@ class Postgres extends DboSource {
  * @return bool
  */
 	public function enabled() {
-		return in_array('pgsql', PDO::getAvailableDrivers());
+		return in_array('pgsql', \PDO::getAvailableDrivers());
 	}
 
 /**
@@ -765,7 +767,7 @@ class Postgres extends DboSource {
 /**
  * resultSet method
  *
- * @param PDOStatement $results The results
+ * @param \PDOStatement $results The results
  * @return void
  */
 	public function resultSet($results) {
@@ -792,7 +794,7 @@ class Postgres extends DboSource {
  * @return array
  */
 	public function fetchResult() {
-		if ($row = $this->_result->fetch(PDO::FETCH_NUM)) {
+		if ($row = $this->_result->fetch(\PDO::FETCH_NUM)) {
 			$resultRow = array();
 
 			foreach ($this->map as $index => $meta) {
