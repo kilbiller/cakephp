@@ -23,7 +23,6 @@ use Cake\Event\CakeEvent;
 use Cake\Event\CakeEventListener;
 use Cake\Event\CakeEventManager;
 use Cake\Utility\Inflector;
-use Cake\Utility\Hash;
 use Cake\Network\CakeRequest;
 use Cake\Network\CakeResponse;
 use Cake\Routing\Router;
@@ -50,21 +49,21 @@ use Cake\Routing\Router;
  * using Router::connect().
  *
  * @package       Cake.Controller
- * @property      AclComponent $Acl
- * @property      AuthComponent $Auth
- * @property      CookieComponent $Cookie
- * @property      EmailComponent $Email
- * @property      FlashComponent $Flash
- * @property      PaginatorComponent $Paginator
- * @property      RequestHandlerComponent $RequestHandler
- * @property      SecurityComponent $Security
- * @property      SessionComponent $Session
+ * @property      \Cake\Controller\Component\AclComponent $Acl
+ * @property      \Cake\Controller\Component\AuthComponent $Auth
+ * @property      \Cake\Controller\Component\CookieComponent $Cookie
+ * @property      \Cake\Controller\Component\EmailComponent $Email
+ * @property      \Cake\Controller\Component\FlashComponent $Flash
+ * @property      \Cake\Controller\Component\PaginatorComponent $Paginator
+ * @property      \Cake\Controller\Component\RequestHandlerComponent $RequestHandler
+ * @property      \Cake\Controller\Component\SecurityComponent $Security
+ * @property      \Cake\Controller\Component\SessionComponent $Session
  * @property      string $action  The action handling the current request. Deprecated, use CakeRequest::$action instead.
  * @property      string $base    Base URL path. Deprecated, use CakeRequest::$base instead.
  * @property      array $data     POST data. Deprecated, use CakeRequest::$data instead.
  * @property      string $here    The full address to the current request. Deprecated, use CakeRequest::$here instead.
  * @property      array $paginate Pagination settings.
- * @property      array $params   Array of parameters parsed from the URL. Deprecated, use CakeRequest::$params instead.
+ * @property      \Cake\Network\CakeRequest $params   Array of parameters parsed from the URL. Deprecated, use CakeRequest::$params instead.
  * @property      string $webroot Webroot path segment for the request.
  * @link          https://book.cakephp.org/2.0/en/controllers.html
  */
@@ -210,7 +209,7 @@ class Controller extends CakeObject implements CakeEventListener {
  *
  * @var string
  */
-	public $viewClass = '\\Cake\\View\\View';
+	public $viewClass = View::class;
 
 /**
  * Instance of the View created during rendering. Won't be set until after

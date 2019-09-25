@@ -15,8 +15,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Configure;
+
 use Cake\Configure\ConfigReaderInterface;
-//App::uses('CakePlugin', 'Core');
 
 /**
  * PHP Reader allows Configure to load configuration values from

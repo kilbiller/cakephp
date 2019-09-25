@@ -11,8 +11,9 @@
  * @link          https://cakephp.org CakePHP(tm) Project
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component\Auth;
 
-App::uses('FormAuthenticate', 'Controller/Component/Auth');
+use Cake\Controller\ComponentCollection;
 
 /**
  * An authentication adapter for AuthComponent. Provides the ability to authenticate using POST data using Blowfish

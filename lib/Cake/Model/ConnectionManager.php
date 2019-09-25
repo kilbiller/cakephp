@@ -19,9 +19,6 @@
  */
 namespace Cake\Model;
 
-use Cake\Model\Datasource\DataSource;
-use Cake\Core\App;
-
 /**
  * Manages loaded instances of DataSource objects
  *
@@ -77,8 +74,8 @@ class ConnectionManager {
  * Gets a reference to a DataSource object
  *
  * @param string $name The name of the DataSource, as defined in app/Config/database.php
- * @return DataSource Instance
- * @throws MissingDatasourceException
+ * @return \Cake\Model\Datasource\DataSource Instance
+ * @throws \MissingDatasourceException
  */
 	public static function getDataSource($name) {
 		if (empty(static::$_init)) {
@@ -127,7 +124,7 @@ class ConnectionManager {
 /**
  * Gets a DataSource name from an object reference.
  *
- * @param DataSource $source DataSource object
+ * @param \Cake\Model\Datasource\DataSource $source DataSource object
  * @return string|null Datasource name, or null if source is not present
  *    in the ConnectionManager.
  */
@@ -175,7 +172,6 @@ class ConnectionManager {
 			$package = '/' . $conn['package'];
 		}
 
-		//App::uses($conn['classname'], $plugin . 'Model/Datasource' . $package);
 		if (!class_exists($conn['classname'])) {
 			throw new \MissingDatasourceException(array(
 				'class' => $conn['classname'],
@@ -203,7 +199,7 @@ class ConnectionManager {
  *
  * @param string $name The DataSource name
  * @param array $config The DataSource configuration settings
- * @return DataSource|null A reference to the DataSource object, or null if creation failed
+ * @return \Cake\Model\Datasource\DataSource|null A reference to the DataSource object, or null if creation failed
  */
 	public static function create($name = '', $config = array()) {
 		if (empty(static::$_init)) {

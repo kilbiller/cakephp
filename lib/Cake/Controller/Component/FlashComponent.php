@@ -21,8 +21,6 @@ use Cake\Controller\Component;
 use Cake\Utility\Inflector;
 use Cake\Model\Datasource\CakeSession;
 use Cake\Controller\ComponentCollection;
-use Cake\Controller\Controller;
-use Cake\Core\Configure;
 use Cake\Utility\Hash;
 
 /**

@@ -15,9 +15,10 @@
  * @since         CakePHP(tm) v 2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Configure;
 
-App::uses('Hash', 'Utility');
-App::uses('CakePlugin', 'Core');
+use Cake\Utility\Hash;
+use Cake\Core\CakePlugin;
 
 /**
  * Ini file configuration engine.

@@ -13,8 +13,6 @@
  * @since         CakePHP(tm) v 2.2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-
-//App::uses('CakeText', 'Utility');
 namespace Cake\Utility;
 
 /**

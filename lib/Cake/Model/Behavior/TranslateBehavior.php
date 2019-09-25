@@ -16,9 +16,7 @@
 namespace Cake\Model\Behavior;
 
 use Cake\Model\ModelBehavior;
-use Cake\Model\I18nModel;
 use Cake\I18n\I18n;
-use Cake\Utility\Hash;
 use Cake\Utility\ClassRegistry;
 use Cake\Model\Model;
 use Cake\Model\ConnectionManager;

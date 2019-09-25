@@ -20,9 +20,6 @@
 
 namespace Cake\View;
 
-use Cake\View\View;
-use Cake\Network\CakeRequest;
-
 /**
  * ScaffoldView provides specific view file loading features for scaffolded views.
  *

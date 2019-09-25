@@ -20,7 +20,6 @@
  */
 namespace Cake\Error;
 
-use Cake\Utility\Sanitize;
 use Cake\Routing\Dispatcher;
 use Cake\Routing\Router;
 use Cake\Controller\Controller;

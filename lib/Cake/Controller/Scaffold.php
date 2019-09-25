@@ -31,6 +31,8 @@
  */
 namespace Cake\Controller;
 
+use Cake\Network\CakeRequest;
+
 class Scaffold {
 
 /**

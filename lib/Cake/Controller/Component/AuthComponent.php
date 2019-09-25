@@ -28,7 +28,6 @@ use Cake\Model\Datasource\CakeSession;
 use Cake\Controller\Component\Auth\BaseAuthorize;
 use Cake\Controller\Component\Auth\BaseAuthenticate;
 use Cake\Event\CakeEvent;
-use Cake\Controller\ComponentCollection;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Network\CakeRequest;

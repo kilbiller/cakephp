@@ -18,7 +18,6 @@
 namespace Cake\View;
 
 use Cake\View\HelperCollection;
-use Cake\View\Helper\AppHelper;
 use Cake\Routing\Router;
 use Cake\View\ViewBlock;
 use Cake\Event\CakeEvent;
@@ -31,7 +30,6 @@ use Cake\Core\CakePlugin;
 use Cake\Utility\Inflector;
 use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Utility\Hash;
 use Cake\Cache\Cache;
 
 /**

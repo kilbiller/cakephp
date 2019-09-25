@@ -14,10 +14,6 @@
 
 namespace Cake\Controller\Component\Auth;
 
-use Cake\Utility\Security;
-use Cake\Utility\Hash;
-use Cake\Event\CakeEventListener;
-use Cake\Controller\ComponentCollection;
 use Cake\Network\CakeRequest;
 use Cake\Network\CakeResponse;
 

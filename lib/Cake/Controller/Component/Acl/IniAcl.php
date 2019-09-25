@@ -13,8 +13,9 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component\Acl;
 
-App::uses('AclInterface', 'Controller/Component/Acl');
+use Cake\Core\CakeObject;
 
 /**
  * IniAcl implements an access control system using an INI file. An example

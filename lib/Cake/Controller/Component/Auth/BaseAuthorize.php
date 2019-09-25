@@ -19,7 +19,6 @@ use Cake\Controller\Controller;
 use Cake\Controller\ComponentCollection;
 use Cake\Network\CakeRequest;
 use Cake\Utility\Inflector;
-use Cake\Network\CakeResponse;
 
 /**
  * Abstract base authorization adapter for AuthComponent.

@@ -20,11 +20,9 @@
 namespace Cake\Model;
 
 use Cake\Utility\ClassRegistry;
-use Cake\Utility\Validation;
 use Cake\Utility\CakeText;
 use Cake\Utility\Hash;
 use Cake\Model\BehaviorCollection;
-use Cake\Model\ModelBehavior;
 use Cake\Model\ModelValidator;
 use Cake\Model\ConnectionManager;
 use Cake\Utility\Xml;
@@ -2010,7 +2008,7 @@ class Model extends CakeObject implements CakeEventListener {
  *
  * @param array $joined Data to save
  * @param int|string $id ID of record in this model
- * @param DataSource $db Datasource instance.
+ * @param \Cake\Model\Datasource\DataSource $db Datasource instance.
  * @return void
  */
 	protected function _saveMulti($joined, $id, $db) {
@@ -3690,7 +3688,7 @@ class Model extends CakeObject implements CakeEventListener {
 /**
  * Gets the DataSource to which this model is bound.
  *
- * @return DataSource A DataSource object
+ * @return \Cake\Model\Datasource\DataSource A DataSource object
  */
 	public function getDataSource() {
 		if (!$this->_sourceConfigured && $this->useTable !== false) {

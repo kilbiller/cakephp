@@ -20,7 +20,6 @@
 namespace Cake\Model\Behavior;
 
 use Cake\Model\ModelBehavior;
-use Cake\Model\AclNode;
 use Cake\Model\Model;
 use Cake\Utility\Hash;
 use Cake\Utility\ClassRegistry;

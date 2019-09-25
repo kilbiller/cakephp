@@ -15,8 +15,9 @@
  * @since         CakePHP(tm) v 1.2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Network;
 
-App::uses('Validation', 'Utility');
+use Cake\Utility\Validation;
 
 /**
  * CakePHP network socket connection class.

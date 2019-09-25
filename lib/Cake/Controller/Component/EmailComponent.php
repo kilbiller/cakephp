@@ -18,9 +18,8 @@
 namespace Cake\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Utility\Hash;
-use Cake\I18n\Multibyte;
 use Cake\Network\Email\CakeEmail;
+use Cake\Controller\ComponentCollection;
 
 /**
  * EmailComponent

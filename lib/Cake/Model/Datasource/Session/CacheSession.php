@@ -15,9 +15,9 @@
  * @since         CakePHP(tm) v 2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model\Datasource\Session;
 
-App::uses('Cache', 'Cache');
-App::uses('CakeSessionHandlerInterface', 'Model/Datasource/Session');
+use Cake\Cache\Cache;
 
 /**
  * CacheSession provides method for saving sessions into a Cache engine. Used with CakeSession

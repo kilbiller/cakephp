@@ -17,8 +17,9 @@
  * @since         CakePHP v .0.10.3.1400
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Utility;
 
-App::uses('HttpSocket', 'Network/Http');
+use Cake\Network\Http\HttpSocket;
 
 /**
  * XML handling for CakePHP.

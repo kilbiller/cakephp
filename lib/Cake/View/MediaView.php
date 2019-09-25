@@ -18,9 +18,6 @@
 
 namespace Cake\View;
 
-use Cake\View\View;
-use Cake\Network\CakeRequest;
-
 /**
  * Media View provides a custom view implementation for sending files to visitors. Its great
  * for making the response of a controller action be a file that is saved somewhere on the filesystem.

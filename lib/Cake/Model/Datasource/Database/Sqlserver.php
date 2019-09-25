@@ -15,8 +15,10 @@
  * @since         CakePHP(tm) v 0.10.5.1790
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model\Datasource\Database;
 
-App::uses('DboSource', 'Model/Datasource');
+use Cake\Model\Datasource\DboSource;
+use Cake\Model\Model;
 
 /**
  * Dbo layer for Microsoft's official SQLServer driver

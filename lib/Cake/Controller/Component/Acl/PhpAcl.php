@@ -15,6 +15,9 @@
  * @since         CakePHP(tm) v 2.1
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Controller\Component\Acl;
+
+use Cake\Core\CakeObject;
 
 /**
  * PhpAcl implements an access control system using a plain PHP configuration file.

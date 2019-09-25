@@ -16,7 +16,6 @@
 namespace Cake\Controller\Component\Acl;
 
 use Cake\Controller\Component\Acl\AclInterface;
-use Cake\Utility\Hash;
 use Cake\Utility\ClassRegistry;
 use Cake\Core\CakeObject;
 use Cake\Controller\Component;

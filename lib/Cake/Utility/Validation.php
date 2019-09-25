@@ -15,8 +15,6 @@
 
 namespace Cake\Utility;
 
-use Cake\I18n\Multibyte;
-
 /**
  * Validation Class. Used for validation of model data
  *

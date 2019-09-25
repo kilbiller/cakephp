@@ -19,7 +19,6 @@ namespace Cake\Model\Datasource\Database;
 
 use Cake\Model\Datasource\DboSource;
 use Cake\Model\Model;
-//App::uses('DboSource', 'Model/Datasource');
 
 /**
  * MySQL DBO driver object

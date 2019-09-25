@@ -14,13 +14,14 @@
  * @since         CakePHP(tm) v 2.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Network\Http;
 
 /**
  * HTTP Response from HttpSocket.
  *
  * @package       Cake.Network.Http
  */
-class HttpSocketResponse implements ArrayAccess {
+class HttpSocketResponse implements \ArrayAccess {
 
 /**
  * Body content

@@ -15,11 +15,10 @@
  * @since         CakePHP(tm) v 1.2.0.5550
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+namespace Cake\Model;
 
-App::uses('Model', 'Model');
-App::uses('AppModel', 'Model');
-App::uses('ConnectionManager', 'Model');
-App::uses('File', 'Utility');
+use Cake\Utility\File;
+use Cake\Utility\Inflector;
 
 /**
  * Base Class for Schema management.

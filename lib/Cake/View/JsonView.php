@@ -14,7 +14,6 @@
 
 namespace Cake\View;
 
-use Cake\View\View;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 

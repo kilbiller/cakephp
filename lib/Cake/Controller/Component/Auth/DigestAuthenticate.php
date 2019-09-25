@@ -14,9 +14,7 @@
 
 namespace Cake\Controller\Component\Auth;
 
-use Cake\Utility\Security;
-use Cake\Utility\Hash;
-use Cake\Event\CakeEventListener;
+use Cake\Controller\ComponentCollection;
 
 /**
  * Digest Authentication adapter for AuthComponent.

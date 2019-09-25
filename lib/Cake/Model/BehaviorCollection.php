@@ -125,7 +125,6 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 
 		$namespacedClass = $namespace . $class;
 
-		//App::uses($class, $plugin . 'Model/Behavior');
 		if (!class_exists($namespacedClass)) {
 			throw new \MissingBehaviorException(array(
 				'class' => $namespacedClass,

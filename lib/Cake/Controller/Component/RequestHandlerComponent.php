@@ -22,7 +22,6 @@
 namespace Cake\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Utility\Hash;
 use Cake\Utility\Xml;
 use Cake\Controller\ComponentCollection;
 use Cake\Controller\Controller;

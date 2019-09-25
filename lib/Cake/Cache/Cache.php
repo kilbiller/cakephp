@@ -14,10 +14,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Cache;
-use Cake\Cache\Engine\FileEngine;
+
 use Cake\Core\Configure;
-//App::uses('Inflector', 'Utility');
-//App::uses('CacheEngine', 'Cache');
 
 /**
  * Cache provides a consistent interface to Caching in your application. It allows you

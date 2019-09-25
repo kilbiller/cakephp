@@ -18,7 +18,6 @@ namespace Cake\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Controller\Component\Acl\AclInterface;
 use Cake\Controller\ComponentCollection;
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 
 /**

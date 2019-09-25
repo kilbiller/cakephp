@@ -18,9 +18,6 @@
 
 namespace Cake\View;
 
-use Cake\View\View;
-use Cake\Network\CakeRequest;
-
 /**
  * Theme view class
  *

@@ -21,7 +21,6 @@ use Cake\Core\CakeObject;
 use Cake\Model\Model;
 use Cake\Model\ConnectionManager;
 use Cake\Cache\Cache;
-use Cake\Utility\Inflector;
 
 /**
  * DataSource base class

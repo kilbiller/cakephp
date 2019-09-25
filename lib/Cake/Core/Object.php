@@ -16,4 +16,4 @@
 
 namespace Cake\Core;
 
-class_alias('\Cake\Core\CakeObject', '\Cake\Core\Object');
+class_alias(CakeObject::class, '\Cake\Core\Object');

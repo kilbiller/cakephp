@@ -19,7 +19,6 @@ namespace Cake\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\ComponentCollection;
-use Cake\Controller\Controller;
 use Cake\Utility\Hash;
 use Cake\Model\Model;
 

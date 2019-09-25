@@ -24,7 +24,6 @@ namespace Cake\Model\Datasource;
 
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
-use Cake\Utility\Security;
 use Cake\Model\Datasource\Session\CakeSessionHandlerInterface;
 
 /**

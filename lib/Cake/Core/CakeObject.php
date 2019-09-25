@@ -18,8 +18,8 @@ namespace Cake\Core;
 use Cake\Log\CakeLog;
 use Cake\Routing\Dispatcher;
 use Cake\Routing\Router;
-use Cake\Utility\Set;
 use Cake\Utility\Hash;
+use Cake\Network\CakeResponse;
 
 /**
  * CakeObject class provides a few generic methods used in several subclasses.
