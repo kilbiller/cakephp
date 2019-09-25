@@ -303,7 +303,7 @@ class ClassRegistry {
  *
  * @param string $alias Alias to check.
  * @param string $class Class name.
- * @return bool
+ * @return bool|object Object stored in registry or `false` if the object does not exist.
  */
 	protected function &_duplicate($alias, $class) {
 		$duplicate = false;
