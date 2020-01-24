@@ -159,12 +159,12 @@ class CakeSession {
 	public static function init($base = null) {
 		static::$time = time();
 
-		if (env('HTTP_USER_AGENT') && !static::$_userAgent) {
-			static::$_userAgent = md5(env('HTTP_USER_AGENT') . Configure::read('Security.salt'));
+		if (cakeEnv('HTTP_USER_AGENT') && !static::$_userAgent) {
+			static::$_userAgent = md5(cakeEnv('HTTP_USER_AGENT') . Configure::read('Security.salt'));
 		}
 
 		static::_setPath($base);
-		static::_setHost(env('HTTP_HOST'));
+		static::_setHost(cakeEnv('HTTP_HOST'));
 
 		if (!static::$_initialized) {
 			register_shutdown_function('session_write_close');
@@ -533,7 +533,7 @@ class CakeSession {
 				$sessionConfig = Hash::merge($defaults, $sessionConfig);
 			}
 		}
-		if (!isset($sessionConfig['ini']['session.cookie_secure']) && env('HTTPS')) {
+		if (!isset($sessionConfig['ini']['session.cookie_secure']) && cakeEnv('HTTPS')) {
 			$sessionConfig['ini']['session.cookie_secure'] = 1;
 		}
 		if (isset($sessionConfig['timeout']) && !isset($sessionConfig['cookieTimeout'])) {

@@ -692,15 +692,15 @@ class CakeRequestTest extends CakeTestCase {
 	public function testMethodOverrides() {
 		$_POST = array('_method' => 'POST');
 		$request = new CakeRequest('some/path');
-		$this->assertEquals(env('REQUEST_METHOD'), 'POST');
+		$this->assertEquals(cakeEnv('REQUEST_METHOD'), 'POST');
 
 		$_POST = array('_method' => 'DELETE');
 		$request = new CakeRequest('some/path');
-		$this->assertEquals(env('REQUEST_METHOD'), 'DELETE');
+		$this->assertEquals(cakeEnv('REQUEST_METHOD'), 'DELETE');
 
 		$_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'] = 'PUT';
 		$request = new CakeRequest('some/path');
-		$this->assertEquals(env('REQUEST_METHOD'), 'PUT');
+		$this->assertEquals(cakeEnv('REQUEST_METHOD'), 'PUT');
 	}
 
 /**

@@ -16,6 +16,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Console\ConsoleOutput;
+
 App::uses('ConsoleLog', 'Log/Engine');
 
 /**
@@ -139,7 +141,7 @@ class ConsoleLogTest extends CakeTestCase {
 		TestCakeLog::config('test_console_log', array(
 			'engine' => 'TestConsole',
 			));
-		if ((DS === '\\' && !(bool)env('ANSICON') && env('ConEmuANSI') !== 'ON') ||
+		if ((DS === '\\' && !(bool)cakeEnv('ANSICON') && cakeEnv('ConEmuANSI') !== 'ON') ||
 			(function_exists('posix_isatty') && !posix_isatty(null))
 		) {
 			$expected = ConsoleOutput::PLAIN;

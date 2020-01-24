@@ -866,7 +866,7 @@ HTMLBLOC;
 		$this->assertTrue($this->Controller->EmailTest->send('This is the body of the message'));
 		$result = DebugCompTransport::$lastEmail;
 
-		$host = env('HTTP_HOST') ? env('HTTP_HOST') : php_uname('n');
+		$host = cakeEnv('HTTP_HOST') ? cakeEnv('HTTP_HOST') : php_uname('n');
 		$this->assertRegExp('/Message-ID: \<[a-f0-9]{8}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{12}@' . $host . '\>\n/', $result);
 
 		$this->Controller->EmailTest->messageId = '<22091985.998877@example.com>';

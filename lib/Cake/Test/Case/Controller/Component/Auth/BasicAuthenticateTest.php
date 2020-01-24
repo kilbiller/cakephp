@@ -15,6 +15,10 @@
  * @since         CakePHP(tm) v 2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use Cake\Controller\Component\Auth\BasicAuthenticate;
+use Cake\Utility\ClassRegistry;
+
 App::uses('BasicAuthenticate', 'Controller/Component/Auth');
 App::uses('AppModel', 'Model');
 App::uses('CakeRequest', 'Network');
@@ -69,7 +73,7 @@ class BasicAuthenticateTest extends CakeTestCase {
 		));
 		$this->assertEquals('AuthUser', $object->settings['userModel']);
 		$this->assertEquals(array('username' => 'user', 'password' => 'password'), $object->settings['fields']);
-		$this->assertEquals(env('SERVER_NAME'), $object->settings['realm']);
+		$this->assertEquals(cakeEnv('SERVER_NAME'), $object->settings['realm']);
 	}
 
 /**

@@ -14,6 +14,12 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Core\Configure;
+use Cake\Log\CakeLog;
+use Cake\Utility\CakeText;
+use Cake\Utility\File;
+use Cake\Utility\Hash;
+
 App::uses('Multibyte', 'I18n');
 App::uses('AbstractTransport', 'Network/Email');
 App::uses('File', 'Utility');
@@ -146,7 +152,7 @@ class CakeEmail {
 
 /**
  * Domain for messageId generation.
- * Needs to be manually set for CLI mailing as env('HTTP_HOST') is empty
+ * Needs to be manually set for CLI mailing as cakeEnv('HTTP_HOST') is empty
  *
  * @var string
  */
@@ -353,7 +359,7 @@ class CakeEmail {
 		if ($this->_appCharset !== null) {
 			$this->charset = $this->_appCharset;
 		}
-		$this->_domain = preg_replace('/\:\d+$/', '', env('HTTP_HOST'));
+		$this->_domain = preg_replace('/\:\d+$/', '', cakeEnv('HTTP_HOST'));
 		if (empty($this->_domain)) {
 			$this->_domain = php_uname('n');
 		}

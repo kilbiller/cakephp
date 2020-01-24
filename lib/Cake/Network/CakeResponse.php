@@ -1094,7 +1094,7 @@ class CakeResponse {
 	public function compress() {
 		$compressionEnabled = ini_get("zlib.output_compression") !== '1' &&
 			extension_loaded("zlib") &&
-			(strpos(env('HTTP_ACCEPT_ENCODING'), 'gzip') !== false);
+			(strpos(cakeEnv('HTTP_ACCEPT_ENCODING'), 'gzip') !== false);
 		return $compressionEnabled && ob_start('ob_gzhandler');
 	}
 
@@ -1104,7 +1104,7 @@ class CakeResponse {
  * @return bool
  */
 	public function outputCompressed() {
-		return strpos(env('HTTP_ACCEPT_ENCODING'), 'gzip') !== false
+		return strpos(cakeEnv('HTTP_ACCEPT_ENCODING'), 'gzip') !== false
 			&& (ini_get("zlib.output_compression") === '1' || in_array('ob_gzhandler', ob_list_handlers()));
 	}
 
@@ -1376,7 +1376,7 @@ class CakeResponse {
 
 		$fileSize = $file->size();
 		if ($download) {
-			$agent = env('HTTP_USER_AGENT');
+			$agent = cakeEnv('HTTP_USER_AGENT');
 
 			if (preg_match('%Opera(/| )([0-9].[0-9]{1,2})%', $agent)) {
 				$contentType = 'application/octet-stream';
@@ -1397,7 +1397,7 @@ class CakeResponse {
 		}
 
 		$this->header('Accept-Ranges', 'bytes');
-		$httpRange = env('HTTP_RANGE');
+		$httpRange = cakeEnv('HTTP_RANGE');
 		if (isset($httpRange)) {
 			$this->_fileRange($file, $httpRange);
 		} else {

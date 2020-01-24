@@ -181,8 +181,8 @@ class CakeRequest implements \ArrayAccess {
 		}
 
 		$override = null;
-		if (env('HTTP_X_HTTP_METHOD_OVERRIDE')) {
-			$this->data['_method'] = env('HTTP_X_HTTP_METHOD_OVERRIDE');
+		if (cakeEnv('HTTP_X_HTTP_METHOD_OVERRIDE')) {
+			$this->data['_method'] = cakeEnv('HTTP_X_HTTP_METHOD_OVERRIDE');
 			$override = $this->data['_method'];
 		}
 
@@ -262,7 +262,7 @@ class CakeRequest implements \ArrayAccess {
 			$uri = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['PHP_SELF']);
 		} elseif (isset($_SERVER['HTTP_X_REWRITE_URL'])) {
 			$uri = $_SERVER['HTTP_X_REWRITE_URL'];
-		} elseif ($var = env('argv')) {
+		} elseif ($var = cakeEnv('argv')) {
 			$uri = $var[0];
 		}
 
@@ -311,7 +311,7 @@ class CakeRequest implements \ArrayAccess {
 		}
 
 		if (empty($baseUrl)) {
-			$base = dirname(env('PHP_SELF'));
+			$base = dirname(cakeEnv('PHP_SELF'));
 			// Clean up additional / which cause following code to fail..
 			$base = preg_replace('#/+#', '/', $base);
 
@@ -343,7 +343,7 @@ class CakeRequest implements \ArrayAccess {
 		}
 		$this->webroot = $base . '/';
 
-		$docRoot = env('DOCUMENT_ROOT');
+		$docRoot = cakeEnv('DOCUMENT_ROOT');
 		$docRootContainsWebroot = strpos($docRoot, $dir . DS . $webroot);
 
 		if (!empty($base) || !$docRootContainsWebroot) {
@@ -408,11 +408,11 @@ class CakeRequest implements \ArrayAccess {
  * @return string
  */
 	public function contentType() {
-		$type = env('CONTENT_TYPE');
+		$type = cakeEnv('CONTENT_TYPE');
 		if ($type) {
 			return $type;
 		}
-		return env('HTTP_CONTENT_TYPE');
+		return cakeEnv('HTTP_CONTENT_TYPE');
 	}
 
 /**
@@ -423,12 +423,12 @@ class CakeRequest implements \ArrayAccess {
  * @return string The client IP.
  */
 	public function clientIp($safe = true) {
-		if (!$safe && env('HTTP_X_FORWARDED_FOR')) {
-			$ipaddr = preg_replace('/(?:,.*)/', '', env('HTTP_X_FORWARDED_FOR'));
-		} elseif (!$safe && env('HTTP_CLIENT_IP')) {
-			$ipaddr = env('HTTP_CLIENT_IP');
+		if (!$safe && cakeEnv('HTTP_X_FORWARDED_FOR')) {
+			$ipaddr = preg_replace('/(?:,.*)/', '', cakeEnv('HTTP_X_FORWARDED_FOR'));
+		} elseif (!$safe && cakeEnv('HTTP_CLIENT_IP')) {
+			$ipaddr = cakeEnv('HTTP_CLIENT_IP');
 		} else {
-			$ipaddr = env('REMOTE_ADDR');
+			$ipaddr = cakeEnv('REMOTE_ADDR');
 		}
 		return trim($ipaddr);
 	}
@@ -440,7 +440,7 @@ class CakeRequest implements \ArrayAccess {
  * @return string The referring address for this request.
  */
 	public function referer($local = false) {
-		$ref = env('HTTP_REFERER');
+		$ref = cakeEnv('HTTP_REFERER');
 
 		$base = Configure::read('App.fullBaseUrl') . $this->webroot;
 		if (!empty($ref) && !empty($base)) {
@@ -564,7 +564,7 @@ class CakeRequest implements \ArrayAccess {
  * @return bool Whether or not the request is the type you are checking.
  */
 	protected function _acceptHeaderDetector($detect) {
-		$acceptHeaders = explode(',', (string)env('HTTP_ACCEPT'));
+		$acceptHeaders = explode(',', (string)cakeEnv('HTTP_ACCEPT'));
 		foreach ($detect['accept'] as $header) {
 			if (in_array($header, $acceptHeaders)) {
 				return true;
@@ -581,7 +581,7 @@ class CakeRequest implements \ArrayAccess {
  */
 	protected function _headerDetector($detect) {
 		foreach ($detect['header'] as $header => $value) {
-			$header = env('HTTP_' . strtoupper($header));
+			$header = cakeEnv('HTTP_' . strtoupper($header));
 			if (!is_null($header)) {
 				if (!is_string($value) && !is_bool($value) && is_callable($value)) {
 					return call_user_func($value, $header);
@@ -619,14 +619,14 @@ class CakeRequest implements \ArrayAccess {
 	protected function _environmentDetector($detect) {
 		if (isset($detect['env'])) {
 			if (isset($detect['value'])) {
-				return env($detect['env']) == $detect['value'];
+				return cakeEnv($detect['env']) == $detect['value'];
 			}
 			if (isset($detect['pattern'])) {
-				return (bool)preg_match($detect['pattern'], env($detect['env']));
+				return (bool)preg_match($detect['pattern'], cakeEnv($detect['env']));
 			}
 			if (isset($detect['options'])) {
 				$pattern = '/' . implode('|', $detect['options']) . '/i';
-				return (bool)preg_match($pattern, env($detect['env']));
+				return (bool)preg_match($pattern, cakeEnv($detect['env']));
 			}
 		}
 		return false;
@@ -654,14 +654,14 @@ class CakeRequest implements \ArrayAccess {
  *
  * ### Environment value comparison
  *
- * An environment value comparison, compares a value fetched from `env()` to a known value
+ * An environment value comparison, compares a value fetched from `cakeEnv()` to a known value
  * the environment value is equality checked against the provided value.
  *
  * e.g `addDetector('post', array('env' => 'REQUEST_METHOD', 'value' => 'POST'))`
  *
  * ### Pattern value comparison
  *
- * Pattern value comparison allows you to compare a value fetched from `env()` to a regular expression.
+ * Pattern value comparison allows you to compare a value fetched from `cakeEnv()` to a regular expression.
  *
  * e.g `addDetector('iphone', array('env' => 'HTTP_USER_AGENT', 'pattern' => '/iPhone/i'));`
  *
@@ -781,7 +781,7 @@ class CakeRequest implements \ArrayAccess {
  * @return string The name of the HTTP method used.
  */
 	public function method() {
-		return env('REQUEST_METHOD');
+		return cakeEnv('REQUEST_METHOD');
 	}
 
 /**
@@ -792,9 +792,9 @@ class CakeRequest implements \ArrayAccess {
  */
 	public function host($trustProxy = false) {
 		if ($trustProxy) {
-			return env('HTTP_X_FORWARDED_HOST');
+			return cakeEnv('HTTP_X_FORWARDED_HOST');
 		}
-		return env('HTTP_HOST');
+		return cakeEnv('HTTP_HOST');
 	}
 
 /**

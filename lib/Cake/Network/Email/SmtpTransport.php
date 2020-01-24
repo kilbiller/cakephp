@@ -15,6 +15,9 @@
  * @since         CakePHP(tm) v 2.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use Cake\Network\CakeSocket;
+
 App::uses('AbstractTransport', 'Network/Email');
 App::uses('CakeSocket', 'Network');
 
@@ -150,7 +153,7 @@ class SmtpTransport extends AbstractTransport {
 
 		if (isset($this->_config['client'])) {
 			$host = $this->_config['client'];
-		} elseif ($httpHost = env('HTTP_HOST')) {
+		} elseif ($httpHost = cakeEnv('HTTP_HOST')) {
 			list($host) = explode(':', $httpHost);
 		} else {
 			$host = 'localhost';

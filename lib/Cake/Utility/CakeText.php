@@ -17,6 +17,8 @@
  */
 namespace Cake\Utility;
 
+use Cake\Core\Configure;
+
 /**
  * String handling methods.
  *
@@ -31,7 +33,7 @@ class CakeText {
  * @return string RFC 4122 UUID
  */
 	public static function uuid() {
-		$node = env('SERVER_ADDR');
+		$node = cakeEnv('SERVER_ADDR');
 
 		if (strpos($node, ':') !== false) {
 			if (substr_count($node, '::')) {
@@ -53,10 +55,10 @@ class CakeText {
 				$node = crc32($node);
 			}
 		} elseif (empty($node)) {
-			$host = env('HOSTNAME');
+			$host = cakeEnv('HOSTNAME');
 
 			if (empty($host)) {
-				$host = env('HOST');
+				$host = cakeEnv('HOST');
 			}
 
 			if (!empty($host)) {

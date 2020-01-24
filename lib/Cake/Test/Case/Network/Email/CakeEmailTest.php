@@ -607,7 +607,7 @@ class CakeEmailTest extends CakeTestCase {
  */
 	public function testDomain() {
 		$result = $this->CakeEmail->domain();
-		$expected = env('HTTP_HOST') ? env('HTTP_HOST') : php_uname('n');
+		$expected = cakeEnv('HTTP_HOST') ? cakeEnv('HTTP_HOST') : php_uname('n');
 		$this->assertSame($expected, $result);
 
 		$this->CakeEmail->domain('example.org');
@@ -1665,10 +1665,10 @@ class CakeEmailTest extends CakeTestCase {
 		$this->CakeEmail->config(array('empty'));
 		$this->CakeEmail->template('image');
 		$this->CakeEmail->emailFormat('html');
-		$server = env('SERVER_NAME') ? env('SERVER_NAME') : 'localhost';
+		$server = cakeEnv('SERVER_NAME') ? cakeEnv('SERVER_NAME') : 'localhost';
 
-		if (env('SERVER_PORT') && env('SERVER_PORT') != 80) {
-			$server .= ':' . env('SERVER_PORT');
+		if (cakeEnv('SERVER_PORT') && cakeEnv('SERVER_PORT') != 80) {
+			$server .= ':' . cakeEnv('SERVER_PORT');
 		}
 
 		$expected = '<img src="http://' . $server . '/img/image.gif" alt="cool image" width="100" height="100"/>';

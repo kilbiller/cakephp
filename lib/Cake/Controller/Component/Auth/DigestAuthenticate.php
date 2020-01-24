@@ -46,7 +46,7 @@ use Cake\Controller\ComponentCollection;
  * Due to the Digest authentication specification, digest auth requires a special password value. You
  * can generate this password using `DigestAuthenticate::password()`
  *
- * `$digestPass = DigestAuthenticate::password($username, $password, env('SERVER_NAME'));`
+ * `$digestPass = DigestAuthenticate::password($username, $password, cakeEnv('SERVER_NAME'));`
  *
  * Its recommended that you store this digest auth only password separate from password hashes used for other
  * login methods. For example `User.digest_pass` could be used for a digest password, while `User.password` would
@@ -141,7 +141,7 @@ class DigestAuthenticate extends BasicAuthenticate {
  * @return array|bool|null Array of digest information.
  */
 	protected function _getDigest() {
-		$digest = env('PHP_AUTH_DIGEST');
+		$digest = cakeEnv('PHP_AUTH_DIGEST');
 		if (empty($digest) && function_exists('apache_request_headers')) {
 			$headers = apache_request_headers();
 			if (!empty($headers['Authorization']) && substr($headers['Authorization'], 0, 7) === 'Digest ') {
@@ -190,7 +190,7 @@ class DigestAuthenticate extends BasicAuthenticate {
 		return md5(
 			$password .
 			':' . $digest['nonce'] . ':' . $digest['nc'] . ':' . $digest['cnonce'] . ':' . $digest['qop'] . ':' .
-			md5(env('REQUEST_METHOD') . ':' . $digest['uri'])
+			md5(cakeEnv('REQUEST_METHOD') . ':' . $digest['uri'])
 		);
 	}
 

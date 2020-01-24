@@ -426,7 +426,7 @@ class RequestHandlerComponent extends Component {
  * @return string|bool When Ajax the prototype version of component making the call otherwise false
  */
 	public function getAjaxVersion() {
-		$httpX = env('HTTP_X_PROTOTYPE_VERSION');
+		$httpX = cakeEnv('HTTP_X_PROTOTYPE_VERSION');
 		return ($httpX === null) ? false : $httpX;
 	}
 
@@ -538,7 +538,7 @@ class RequestHandlerComponent extends Component {
 			return false;
 		}
 
-		list($contentType) = explode(';', env('CONTENT_TYPE'));
+		list($contentType) = explode(';', cakeEnv('CONTENT_TYPE'));
 		if ($contentType === '') {
 			list($contentType) = explode(';', CakeRequest::header('CONTENT_TYPE'));
 		}

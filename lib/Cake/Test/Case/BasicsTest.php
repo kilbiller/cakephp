@@ -16,6 +16,9 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Core\Configure;
+use Cake\Network\CakeResponse;
+
 require_once CAKE . 'basics.php';
 
 App::uses('Folder', 'Utility');
@@ -83,94 +86,94 @@ class BasicsTest extends CakeTestCase {
 		$env = $_ENV;
 
 		$_SERVER['HTTP_HOST'] = 'localhost';
-		$this->assertEquals(env('HTTP_BASE'), '.localhost');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.localhost');
 
 		$_SERVER['HTTP_HOST'] = 'com.ar';
-		$this->assertEquals(env('HTTP_BASE'), '.com.ar');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.com.ar');
 
 		$_SERVER['HTTP_HOST'] = 'example.ar';
-		$this->assertEquals(env('HTTP_BASE'), '.example.ar');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.example.ar');
 
 		$_SERVER['HTTP_HOST'] = 'example.com';
-		$this->assertEquals(env('HTTP_BASE'), '.example.com');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.example.com');
 
 		$_SERVER['HTTP_HOST'] = 'www.example.com';
-		$this->assertEquals(env('HTTP_BASE'), '.example.com');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.example.com');
 
 		$_SERVER['HTTP_HOST'] = 'subdomain.example.com';
-		$this->assertEquals(env('HTTP_BASE'), '.example.com');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.example.com');
 
 		$_SERVER['HTTP_HOST'] = 'example.com.ar';
-		$this->assertEquals(env('HTTP_BASE'), '.example.com.ar');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.example.com.ar');
 
 		$_SERVER['HTTP_HOST'] = 'www.example.com.ar';
-		$this->assertEquals(env('HTTP_BASE'), '.example.com.ar');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.example.com.ar');
 
 		$_SERVER['HTTP_HOST'] = 'subdomain.example.com.ar';
-		$this->assertEquals(env('HTTP_BASE'), '.example.com.ar');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.example.com.ar');
 
 		$_SERVER['HTTP_HOST'] = 'double.subdomain.example.com';
-		$this->assertEquals(env('HTTP_BASE'), '.subdomain.example.com');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.subdomain.example.com');
 
 		$_SERVER['HTTP_HOST'] = 'double.subdomain.example.com.ar';
-		$this->assertEquals(env('HTTP_BASE'), '.subdomain.example.com.ar');
+		$this->assertEquals(cakeEnv('HTTP_BASE'), '.subdomain.example.com.ar');
 
 		$_SERVER = $_ENV = array();
 
 		$_SERVER['SCRIPT_NAME'] = '/a/test/test.php';
-		$this->assertEquals(env('SCRIPT_NAME'), '/a/test/test.php');
+		$this->assertEquals(cakeEnv('SCRIPT_NAME'), '/a/test/test.php');
 
 		$_SERVER = $_ENV = array();
 
 		$_ENV['CGI_MODE'] = 'BINARY';
 		$_ENV['SCRIPT_URL'] = '/a/test/test.php';
-		$this->assertEquals(env('SCRIPT_NAME'), '/a/test/test.php');
+		$this->assertEquals(cakeEnv('SCRIPT_NAME'), '/a/test/test.php');
 
 		$_SERVER = $_ENV = array();
 
-		$this->assertFalse(env('HTTPS'));
+		$this->assertFalse(cakeEnv('HTTPS'));
 
 		$_SERVER['HTTPS'] = 'on';
-		$this->assertTrue(env('HTTPS'));
+		$this->assertTrue(cakeEnv('HTTPS'));
 
 		$_SERVER['HTTPS'] = '1';
-		$this->assertTrue(env('HTTPS'));
+		$this->assertTrue(cakeEnv('HTTPS'));
 
 		$_SERVER['HTTPS'] = 'I am not empty';
-		$this->assertTrue(env('HTTPS'));
+		$this->assertTrue(cakeEnv('HTTPS'));
 
 		$_SERVER['HTTPS'] = 1;
-		$this->assertTrue(env('HTTPS'));
+		$this->assertTrue(cakeEnv('HTTPS'));
 
 		$_SERVER['HTTPS'] = 'off';
-		$this->assertFalse(env('HTTPS'));
+		$this->assertFalse(cakeEnv('HTTPS'));
 
 		$_SERVER['HTTPS'] = false;
-		$this->assertFalse(env('HTTPS'));
+		$this->assertFalse(cakeEnv('HTTPS'));
 
 		$_SERVER['HTTPS'] = '';
-		$this->assertFalse(env('HTTPS'));
+		$this->assertFalse(cakeEnv('HTTPS'));
 
 		$_SERVER = array();
 
 		$_ENV['SCRIPT_URI'] = 'https://domain.test/a/test.php';
-		$this->assertTrue(env('HTTPS'));
+		$this->assertTrue(cakeEnv('HTTPS'));
 
 		$_ENV['SCRIPT_URI'] = 'http://domain.test/a/test.php';
-		$this->assertFalse(env('HTTPS'));
+		$this->assertFalse(cakeEnv('HTTPS'));
 
 		$_SERVER = $_ENV = array();
 
-		$this->assertNull(env('TEST_ME'));
+		$this->assertNull(cakeEnv('TEST_ME'));
 
 		$_ENV['TEST_ME'] = 'a';
-		$this->assertEquals(env('TEST_ME'), 'a');
+		$this->assertEquals(cakeEnv('TEST_ME'), 'a');
 
 		$_SERVER['TEST_ME'] = 'b';
-		$this->assertEquals(env('TEST_ME'), 'b');
+		$this->assertEquals(cakeEnv('TEST_ME'), 'b');
 
 		unset($_ENV['TEST_ME']);
-		$this->assertEquals(env('TEST_ME'), 'b');
+		$this->assertEquals(cakeEnv('TEST_ME'), 'b');
 
 		$_SERVER = $server;
 		$_ENV = $env;

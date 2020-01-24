@@ -86,7 +86,7 @@ class DigestAuthenticateTest extends CakeTestCase {
 		$this->assertEquals('AuthUser', $object->settings['userModel']);
 		$this->assertEquals(array('username' => 'user', 'password' => 'password'), $object->settings['fields']);
 		$this->assertEquals(123456, $object->settings['nonce']);
-		$this->assertEquals(env('SERVER_NAME'), $object->settings['realm']);
+		$this->assertEquals(cakeEnv('SERVER_NAME'), $object->settings['realm']);
 	}
 
 /**

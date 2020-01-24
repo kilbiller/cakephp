@@ -154,9 +154,9 @@ class CakeTestSuiteDispatcher {
 		}
 		$phpunitPath = 'phpunit' . DS . 'phpunit';
 		if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
-			$composerGlobalDir[] = env('APPDATA') . DS . 'Composer' . DS . 'vendor' . DS;
+			$composerGlobalDir[] = cakeEnv('APPDATA') . DS . 'Composer' . DS . 'vendor' . DS;
 		} else {
-			$composerGlobalDir[] = env('HOME') . DS . '.composer' . DS . 'vendor' . DS;
+			$composerGlobalDir[] = cakeEnv('HOME') . DS . '.composer' . DS . 'vendor' . DS;
 		}
 		$vendors = array_merge(App::path('vendors'), $composerGlobalDir);
 		foreach ($vendors as $vendor) {

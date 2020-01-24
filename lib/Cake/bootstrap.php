@@ -150,11 +150,11 @@ App::$bootstrapping = true;
  */
 if (!defined('FULL_BASE_URL')) {
 	$s = null;
-	if (env('HTTPS')) {
+	if (cakeEnv('HTTPS')) {
 		$s = 's';
 	}
 
-	$httpHost = env('HTTP_HOST');
+	$httpHost = cakeEnv('HTTP_HOST');
 
 	if (isset($httpHost)) {
 		define('FULL_BASE_URL', 'http' . $s . '://' . $httpHost);

@@ -196,7 +196,7 @@ class XcacheEngine extends CacheEngine {
 					unset($_SERVER[$key]);
 				}
 			} else {
-				$value = env($key);
+				$value = cakeEnv($key);
 				if (!empty($value)) {
 					$backup[$key] = $value;
 				}

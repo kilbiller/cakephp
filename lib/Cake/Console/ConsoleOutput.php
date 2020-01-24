@@ -169,7 +169,7 @@ class ConsoleOutput {
 	public function __construct($stream = 'php://stdout') {
 		$this->_output = fopen($stream, 'w');
 
-		if ((DS === '\\' && !(bool)env('ANSICON') && env('ConEmuANSI') !== 'ON') ||
+		if ((DS === '\\' && !(bool)cakeEnv('ANSICON') && cakeEnv('ConEmuANSI') !== 'ON') ||
 			$stream === 'php://output' ||
 			(function_exists('posix_isatty') && !posix_isatty($this->_output))
 		) {

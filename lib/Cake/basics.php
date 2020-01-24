@@ -309,7 +309,7 @@ if (!function_exists('am')) {
 
 }
 
-if (!function_exists('env')) {
+if (!function_exists('cakeEnv')) {
 
 /**
  * Gets an environment variable from available sources, and provides emulation
@@ -321,16 +321,16 @@ if (!function_exists('env')) {
  * @return string|bool|null Environment variable setting.
  * @link https://book.cakephp.org/2.0/en/core-libraries/global-constants-and-functions.html#env
  */
-	function env($key) {
+	function cakeEnv($key) {
 		if ($key === 'HTTPS') {
 			if (isset($_SERVER['HTTPS'])) {
 				return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
 			}
-			return (strpos(env('SCRIPT_URI'), 'https://') === 0);
+			return (strpos(cakeEnv('SCRIPT_URI'), 'https://') === 0);
 		}
 
 		if ($key === 'SCRIPT_NAME') {
-			if (env('CGI_MODE') && isset($_ENV['SCRIPT_URL'])) {
+			if (cakeEnv('CGI_MODE') && isset($_ENV['SCRIPT_URL'])) {
 				$key = 'SCRIPT_URL';
 			}
 		}
@@ -344,8 +344,8 @@ if (!function_exists('env')) {
 			$val = getenv($key);
 		}
 
-		if ($key === 'REMOTE_ADDR' && $val === env('SERVER_ADDR')) {
-			$addr = env('HTTP_PC_REMOTE_ADDR');
+		if ($key === 'REMOTE_ADDR' && $val === cakeEnv('SERVER_ADDR')) {
+			$addr = cakeEnv('HTTP_PC_REMOTE_ADDR');
 			if ($addr !== null) {
 				$val = $addr;
 			}
@@ -357,19 +357,19 @@ if (!function_exists('env')) {
 
 		switch ($key) {
 			case 'DOCUMENT_ROOT':
-				$name = env('SCRIPT_NAME');
-				$filename = env('SCRIPT_FILENAME');
+				$name = cakeEnv('SCRIPT_NAME');
+				$filename = cakeEnv('SCRIPT_FILENAME');
 				$offset = 0;
 				if (!strpos($name, '.php')) {
 					$offset = 4;
 				}
 				return substr($filename, 0, -(strlen($name) + $offset));
 			case 'PHP_SELF':
-				return str_replace(env('DOCUMENT_ROOT'), '', env('SCRIPT_FILENAME'));
+				return str_replace(cakeEnv('DOCUMENT_ROOT'), '', cakeEnv('SCRIPT_FILENAME'));
 			case 'CGI_MODE':
 				return (PHP_SAPI === 'cgi');
 			case 'HTTP_BASE':
-				$host = env('HTTP_HOST');
+				$host = cakeEnv('HTTP_HOST');
 				$parts = explode('.', $host);
 				$count = count($parts);
 

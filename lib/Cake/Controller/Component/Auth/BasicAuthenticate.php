@@ -61,7 +61,7 @@ class BasicAuthenticate extends BaseAuthenticate {
 	public function __construct(ComponentCollection $collection, $settings) {
 		parent::__construct($collection, $settings);
 		if (empty($this->settings['realm'])) {
-			$this->settings['realm'] = env('SERVER_NAME');
+			$this->settings['realm'] = cakeEnv('SERVER_NAME');
 		}
 	}
 
@@ -84,8 +84,8 @@ class BasicAuthenticate extends BaseAuthenticate {
  * @return mixed Either false or an array of user information
  */
 	public function getUser(CakeRequest $request) {
-		$username = env('PHP_AUTH_USER');
-		$pass = env('PHP_AUTH_PW');
+		$username = cakeEnv('PHP_AUTH_USER');
+		$pass = cakeEnv('PHP_AUTH_PW');
 		if (!strlen($username)) {
 			$httpAuthorization = $request->header('Authorization');
 			if (strlen($httpAuthorization) > 0 && strpos($httpAuthorization, 'Basic') !== false) {

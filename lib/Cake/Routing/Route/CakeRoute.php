@@ -212,7 +212,7 @@ class CakeRoute {
 				$h = false;
 
 				foreach ($val as $v) {
-					if (env($header) === $v) {
+					if (cakeEnv($header) === $v) {
 						$h = true;
 					}
 				}

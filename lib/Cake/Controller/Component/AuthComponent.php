@@ -358,7 +358,7 @@ class AuthComponent extends Component {
 
 		if ($this->_isLoginAction($controller)) {
 			if (empty($controller->request->data)) {
-				if (!$this->Session->check('Auth.redirect') && env('HTTP_REFERER')) {
+				if (!$this->Session->check('Auth.redirect') && cakeEnv('HTTP_REFERER')) {
 					$this->Session->write('Auth.redirect', $controller->referer(null, true));
 				}
 			}
