@@ -971,7 +971,8 @@ class Controller extends CakeObject implements CakeEventListener {
 				$className = get_class($currentObject);
 				list($plugin) = pluginSplit(App::location($className));
 				$this->request->params['models'][$currentObject->alias] = compact('plugin', 'className');
-				$this->View->validationErrors[$currentObject->alias] =& $currentObject->validationErrors;
+				// Invityou : Comment this because it overwrites validationErrors after render
+				//$this->View->validationErrors[$currentObject->alias] =& $currentObject->validationErrors;
 			}
 		}
 
