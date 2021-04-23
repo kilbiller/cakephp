@@ -23,6 +23,7 @@ use Cake\View\View;
 use Cake\Model\Model;
 use Cake\Core\Configure;
 use Cake\Cache\Cache;
+use Cake\Model\CakeSchema;
 use Cake\Model\ConnectionManager;
 use Cake\Utility\Hash;
 use Cake\Utility\ClassRegistry;

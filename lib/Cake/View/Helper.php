@@ -21,6 +21,7 @@ use Cake\Utility\Inflector;
 use Cake\Core\CakeObject;
 use Cake\Core\Configure;
 use Cake\Core\App;
+use Cake\Core\CakePlugin;
 use Cake\Utility\ObjectCollection;
 use Cake\Utility\ClassRegistry;
 

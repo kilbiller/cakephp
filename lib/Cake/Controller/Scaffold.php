@@ -31,7 +31,10 @@
  */
 namespace Cake\Controller;
 
+use Cake\Core\Configure;
+use Cake\Model\ConnectionManager;
 use Cake\Network\CakeRequest;
+use Cake\Utility\Inflector;
 
 class Scaffold {
 

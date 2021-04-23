@@ -20,6 +20,7 @@ use Cake\Routing\Dispatcher;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Network\CakeResponse;
+use Cake\Network\CakeRequest;
 
 /**
  * CakeObject class provides a few generic methods used in several subclasses.

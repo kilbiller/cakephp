@@ -18,6 +18,9 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Utility;
+
+use CakeException;
+
 /**
  * Number helper library.
  *

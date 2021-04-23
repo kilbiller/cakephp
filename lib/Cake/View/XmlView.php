@@ -13,6 +13,9 @@
  */
 namespace Cake\View;
 
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\Network\CakeResponse;
 use Cake\Utility\Hash;
 use Cake\Utility\Xml;
 

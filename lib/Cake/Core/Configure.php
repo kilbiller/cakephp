@@ -15,6 +15,7 @@
  */
 namespace Cake\Core;
 
+use Cake\Cache\Cache;
 use Cake\Utility\Hash;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Configure\ConfigReaderInterface;

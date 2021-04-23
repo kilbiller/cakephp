@@ -17,6 +17,9 @@
  */
 namespace Cake\Model;
 
+use Cake\Core\CakeObject;
+use Cake\Core\Configure;
+use Cake\Utility\ClassRegistry;
 use Cake\Utility\File;
 use Cake\Utility\Inflector;
 

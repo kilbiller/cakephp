@@ -17,6 +17,7 @@
  */
 namespace Cake\Model\Datasource\Session;
 
+use Cake\Core\Configure;
 use Cake\Utility\ClassRegistry;
 
 /**

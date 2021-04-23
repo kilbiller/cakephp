@@ -18,6 +18,7 @@
 namespace Cake\Cache\Engine;
 
 use Cake\Cache\CacheEngine;
+use Cake\Utility\Inflector;
 
 /**
  * Memcache storage engine for cache. Memcache has some limitations in the amount of

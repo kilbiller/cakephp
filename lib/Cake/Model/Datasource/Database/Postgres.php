@@ -17,6 +17,7 @@ namespace Cake\Model\Datasource\Database;
 
 use Cake\Model\Datasource\DboSource;
 use Cake\Model\Model;
+use Cake\Utility\Hash;
 
 /**
  * PostgreSQL layer for DBO.

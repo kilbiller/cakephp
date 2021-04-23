@@ -32,6 +32,9 @@ use Cake\Event\CakeEventManager;
 use Cake\Core\CakeObject;
 use Cake\Utility\Inflector;
 use Cake\Core\Configure;
+use Cake\Utility\Set;
+use DOMNode;
+use SimpleXMLElement;
 
 /**
  * Object-relational mapper.

@@ -19,6 +19,8 @@ namespace Cake\Model\Datasource\Database;
 
 use Cake\Model\Datasource\DboSource;
 use Cake\Model\Model;
+use InvalidArgumentException;
+use PDO;
 
 /**
  * Dbo layer for Microsoft's official SQLServer driver

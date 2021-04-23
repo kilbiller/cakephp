@@ -29,6 +29,8 @@ use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\Network\CakeRequest;
 use Cake\Network\CakeResponse;
+use Cake\Utility\Inflector;
+use XmlException;
 
 /**
  * Request object for handling alternative HTTP requests

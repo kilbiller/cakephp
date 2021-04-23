@@ -18,6 +18,9 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Core\Configure;
+use Cake\Model\ConnectionManager;
+
 App::uses('ConnectionManager', 'Model');
 
 /**

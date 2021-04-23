@@ -18,6 +18,7 @@
 namespace Cake\Model\Datasource\Session;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 
 /**
  * CacheSession provides method for saving sessions into a Cache engine. Used with CakeSession

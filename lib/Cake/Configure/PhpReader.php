@@ -17,6 +17,7 @@
 namespace Cake\Configure;
 
 use Cake\Configure\ConfigReaderInterface;
+use Cake\Core\CakePlugin;
 
 /**
  * PHP Reader allows Configure to load configuration values from

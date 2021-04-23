@@ -14,6 +14,9 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Utility;
+
+use InvalidArgumentException;
+
 /**
  * Folder structure browser, lists folders and files.
  * Provides an Object interface for Common directory related tasks.

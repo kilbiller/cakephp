@@ -20,6 +20,7 @@ namespace Cake\Utility;
 
 use Cake\I18n\Multibyte;
 use Cake\Core\Configure;
+use DateTime;
 
 /**
  * Time Helper class for easy use of time data.

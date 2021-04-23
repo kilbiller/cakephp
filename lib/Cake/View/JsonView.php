@@ -16,6 +16,7 @@ namespace Cake\View;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Network\CakeResponse;
 
 /**
  * A view class that is used for JSON responses.

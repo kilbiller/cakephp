@@ -20,6 +20,7 @@ namespace Cake\Model\Datasource\Database;
 use Cake\Model\Datasource\DboSource;
 use Cake\Utility\CakeText;
 use Cake\Model\Model;
+use PDO;
 
 /**
  * DBO implementation for the SQLite3 DBMS.

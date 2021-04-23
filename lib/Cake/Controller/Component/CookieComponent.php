@@ -23,6 +23,7 @@ use Cake\Utility\Security;
 use Cake\Controller\ComponentCollection;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Network\CakeResponse;
 
 /**
  * Cookie Component.

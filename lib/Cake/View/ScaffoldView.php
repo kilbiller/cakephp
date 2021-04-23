@@ -20,6 +20,9 @@
 
 namespace Cake\View;
 
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+
 /**
  * ScaffoldView provides specific view file loading features for scaffolded views.
  *

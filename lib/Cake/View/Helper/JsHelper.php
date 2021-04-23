@@ -18,6 +18,7 @@
 
 namespace Cake\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\I18n\Multibyte;
 use Invityou\View\Helper\AppHelper;
 use Cake\View\View;
