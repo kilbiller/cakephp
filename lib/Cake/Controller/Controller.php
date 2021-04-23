@@ -18,6 +18,7 @@ namespace Cake\Controller;
 use Cake\Core\CakeObject;
 use Cake\Utility\ClassRegistry;
 use Cake\Controller\ComponentCollection;
+use Cake\Core\App;
 use Cake\View\View;
 use Cake\Event\CakeEvent;
 use Cake\Event\CakeEventListener;
