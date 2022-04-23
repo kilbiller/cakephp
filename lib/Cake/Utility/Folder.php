@@ -229,10 +229,10 @@ class Folder {
 		}
 
 		if ($dirs) {
-			$dirs = array_merge(...$dirs);
+			$dirs = array_merge(...array_values($dirs));
 		}
 		if ($files) {
-			$files = array_merge(...$files);
+			$files = array_merge(...array_values($files));
 		}
 		return array($dirs, $files);
 	}
