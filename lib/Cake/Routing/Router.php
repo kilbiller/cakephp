@@ -376,7 +376,7 @@ class Router {
 			$routeClass = static::_validateRouteClass($routeClass);
 			unset($options['routeClass']);
 		}
-		if ($routeClass === '\\Cake\\Routing\\Route\\RedirectRoute' && isset($defaults['redirect'])) {
+		if ($routeClass === RedirectRoute::class && isset($defaults['redirect'])) {
 			$defaults = $defaults['redirect'];
 		}
 		static::$routes[] = new $routeClass($route, $defaults, $options);
@@ -416,7 +416,7 @@ class Router {
  * @return array Array of routes
  */
 	public static function redirect($route, $url, $options = array()) {
-		$options['routeClass'] = '\\Cake\\Routing\\Route\\RedirectRoute';
+		$options['routeClass'] = RedirectRoute::class;
 		if (is_string($url)) {
 			$url = array('redirect' => $url);
 		}
@@ -769,7 +769,7 @@ class Router {
  */
 	public static function reload() {
 		if (empty(static::$_initialState)) {
-			static::$_initialState = get_class_vars('Router');
+			static::$_initialState = get_class_vars(Router::class);
 			static::_setPrefixes();
 			return;
 		}
