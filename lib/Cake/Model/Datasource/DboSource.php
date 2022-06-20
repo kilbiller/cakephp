@@ -2669,7 +2669,7 @@ class DboSource extends DataSource {
 		}
 		$allFields = empty($fields);
 		if ($allFields) {
-			$fields = array_keys($Model->schema());
+			$fields = array_keys($Model->schema() ?? []);
 		} elseif (!is_array($fields)) {
 			$fields = CakeText::tokenize($fields);
 		}
