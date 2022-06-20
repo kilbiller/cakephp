@@ -194,6 +194,126 @@ class Postgres extends DboSource {
 	}
 
 /**
+ * Returns an array of the fields in given table name.
+ *
+ * @param Model|string $model Name of database table to inspect
+ * @return array Fields in table. Keys are name and type
+ */
+	public function describe($model) {
+		$table = $this->fullTableName($model, false, false);
+		$fields = parent::describe($table);
+		$this->_sequenceMap[$table] = array();
+		$cols = null;
+		$hasPrimary = false;
+
+		if ($fields === null) {
+			$cols = $this->_execute(
+				'SELECT DISTINCT table_schema AS schema,
+					column_name AS name,
+					data_type AS type,
+					is_nullable AS null,
+					column_default AS default,
+					ordinal_position AS position,
+					character_maximum_length AS char_length,
+					character_octet_length AS oct_length,
+					pg_get_serial_sequence(attr.attrelid::regclass::text, attr.attname) IS NOT NULL AS has_serial
+				FROM information_schema.columns c
+				INNER JOIN pg_catalog.pg_namespace ns ON (ns.nspname = table_schema)
+				INNER JOIN pg_catalog.pg_class cl ON (cl.relnamespace = ns.oid AND cl.relname = table_name)
+				LEFT JOIN pg_catalog.pg_attribute attr ON (cl.oid = attr.attrelid AND column_name = attr.attname)
+				WHERE table_name = ? AND table_schema = ? AND table_catalog = ?
+				ORDER BY ordinal_position',
+				array($table, $this->config['schema'], $this->config['database'])
+			);
+
+			// @codingStandardsIgnoreStart
+			// Postgres columns don't match the coding standards.
+			foreach ($cols as $c) {
+				$type = $c->type;
+				if (!empty($c->oct_length) && $c->char_length === null) {
+					if ($c->type === 'character varying') {
+						$length = null;
+						$type = 'text';
+					} elseif ($c->type === 'uuid') {
+						$type = 'uuid';
+						$length = 36;
+					} else {
+						$length = (int)$c->oct_length;
+					}
+				} elseif (!empty($c->char_length)) {
+					$length = (int)$c->char_length;
+				} else {
+					$length = $this->length($c->type);
+				}
+				if (empty($length)) {
+					$length = null;
+				}
+				$fields[$c->name] = array(
+					'type' => $this->column($type),
+					'null' => ($c->null === 'NO' ? false : true),
+					'default' => preg_replace(
+						"/^'(.*)'$/",
+						"$1",
+						preg_replace('/::[\w\s]+/', '', $c->default)
+					),
+					'length' => $length,
+				);
+
+				// Serial columns are primary integer keys
+				if ($c->has_serial) {
+					$fields[$c->name]['key'] = 'primary';
+					$fields[$c->name]['length'] = 11;
+					$hasPrimary = true;
+				}
+				if ($hasPrimary === false &&
+					$model instanceof Model &&
+					$c->name === $model->primaryKey
+				) {
+					$fields[$c->name]['key'] = 'primary';
+					if (
+						$fields[$c->name]['type'] !== 'string' &&
+						$fields[$c->name]['type'] !== 'uuid'
+					) {
+						$fields[$c->name]['length'] = 11;
+					}
+				}
+				if (
+					$fields[$c->name]['default'] === 'NULL' ||
+					$c->default === null ||
+					preg_match('/nextval\([\'"]?([\w.]+)/', $c->default, $seq)
+				) {
+					$fields[$c->name]['default'] = null;
+					if (!empty($seq) && isset($seq[1])) {
+						if (strpos($seq[1], '.') === false) {
+							$sequenceName = $c->schema . '.' . $seq[1];
+						} else {
+							$sequenceName = $seq[1];
+						}
+						$this->_sequenceMap[$table][$c->name] = $sequenceName;
+					}
+				}
+				if ($fields[$c->name]['type'] === 'timestamp' && $fields[$c->name]['default'] === '') {
+					$fields[$c->name]['default'] = null;
+				}
+				if ($fields[$c->name]['type'] === 'boolean' && !empty($fields[$c->name]['default'])) {
+					$fields[$c->name]['default'] = constant($fields[$c->name]['default']);
+				}
+			}
+			$this->_cacheDescription($table, $fields);
+		}
+		// @codingStandardsIgnoreEnd
+
+		if (isset($model->sequence)) {
+			$this->_sequenceMap[$table][$model->primaryKey] = $model->sequence;
+		}
+
+		if ($cols) {
+			$cols->closeCursor();
+		}
+		return $fields;
+	}
+
+/**
  * Returns the ID generated from the previous INSERT operation.
  *
  * @param string $source Name of the database table
@@ -216,7 +336,7 @@ class Postgres extends DboSource {
 		if (is_object($table)) {
 			$table = $this->fullTableName($table, false, false);
 		}
-		if (!isset($this->_sequenceMap[$table]) && method_exists($this, 'describe')) {
+		if (!isset($this->_sequenceMap[$table])) {
 			$this->describe($table);
 		}
 		if (isset($this->_sequenceMap[$table][$field])) {
@@ -257,9 +377,7 @@ class Postgres extends DboSource {
 		if (!isset($this->_sequenceMap[$table])) {
 			$cache = $this->cacheSources;
 			$this->cacheSources = false;
-			if (method_exists($this, 'describe')) {
-				$this->describe($table);
-			}
+			$this->describe($table);
 			$this->cacheSources = $cache;
 		}
 		if ($this->execute('DELETE FROM ' . $this->fullTableName($table))) {
