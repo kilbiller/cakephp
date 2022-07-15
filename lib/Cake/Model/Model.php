@@ -1162,26 +1162,6 @@ class Model extends CakeObject implements CakeEventListener {
  */
 	public function setSource($tableName) {
 		$this->setDataSource($this->useDbConfig);
-		$db = ConnectionManager::getDataSource($this->useDbConfig);
-
-		if (method_exists($db, 'listSources')) {
-			$restore = $db->cacheSources;
-			$db->cacheSources = ($restore && $this->cacheSources);
-			$sources = $db->listSources();
-			$db->cacheSources = $restore;
-
-			if (is_array($sources) && !in_array(strtolower($this->tablePrefix . $tableName), array_map('strtolower', $sources))) {
-				throw new \MissingTableException(array(
-					'table' => $this->tablePrefix . $tableName,
-					'class' => $this->alias,
-					'ds' => $this->useDbConfig,
-				));
-			}
-
-			if ($sources) {
-				$this->_schema = null;
-			}
-		}
 
 		$this->table = $this->useTable = $tableName;
 		$this->tableToModel[$this->table] = $this->alias;
