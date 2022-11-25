@@ -1104,7 +1104,8 @@ class CakeResponse {
  * @return bool
  */
 	public function outputCompressed() {
-		return strpos(cakeEnv('HTTP_ACCEPT_ENCODING'), 'gzip') !== false
+		$acceptEncoding = cakeEnv('HTTP_ACCEPT_ENCODING');
+		return $acceptEncoding !== null && strpos($acceptEncoding, 'gzip') !== false
 			&& (ini_get("zlib.output_compression") === '1' || in_array('ob_gzhandler', ob_list_handlers()));
 	}
 
