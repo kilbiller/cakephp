@@ -236,7 +236,10 @@ class I18n {
 		$_this->domain = $domain . '_' . $_this->l10n->lang;
 
 		if (!isset($_this->_domains[$domain][$_this->_lang])) {
-			$_this->_domains[$domain][$_this->_lang] = Cache::read($_this->domain, '_cake_core_');
+			$value = Cache::read($_this->domain, '_cake_core_');
+			if ($value) {
+				$_this->_domains[$domain][$_this->_lang] = $value;
+			}
 		}
 
 		if (!isset($_this->_domains[$domain][$_this->_lang][$_this->category])) {
@@ -449,10 +452,6 @@ class I18n {
 		}
 
 		if (empty($this->_domains[$domain][$this->_lang][$this->category])) {
-			debug($domain);
-			debug($this->_lang);
-			debug($this->category);
-			debug($this->_domains);
 			$this->_domains[$domain][$this->_lang][$this->category] = array();
 			return $domain;
 		}
