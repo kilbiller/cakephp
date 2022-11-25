@@ -1117,7 +1117,7 @@ class CakeRequest implements \ArrayAccess {
  * @param string $name Name of the key being accessed.
  * @return mixed
  */
-	public function offsetGet($name) {
+	public function offsetGet($name): mixed {
 		if (isset($this->params[$name])) {
 			return $this->params[$name];
 		}

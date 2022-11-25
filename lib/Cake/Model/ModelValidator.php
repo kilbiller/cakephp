@@ -479,7 +479,7 @@ class ModelValidator implements \ArrayAccess, \IteratorAggregate, \Countable {
  * @param string $field name of the field to check
  * @return CakeValidationSet
  */
-	public function offsetGet($field) {
+	public function offsetGet($field): mixed {
 		$this->_parseRules();
 		return $this->_fields[$field];
 	}

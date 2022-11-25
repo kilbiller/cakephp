@@ -402,7 +402,7 @@ class HttpSocketResponse implements \ArrayAccess {
  * @param string $offset Offset to get.
  * @return mixed
  */
-	public function offsetGet($offset) {
+	public function offsetGet($offset): mixed {
 		switch ($offset) {
 			case 'raw':
 				$firstLineLength = strpos($this->raw, "\r\n") + 2;

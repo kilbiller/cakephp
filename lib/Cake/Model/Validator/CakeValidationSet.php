@@ -322,7 +322,7 @@ class CakeValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable 
  * @param string $index name of the rule
  * @return CakeValidationRule
  */
-	public function offsetGet($index) {
+	public function offsetGet($index): mixed {
 		return $this->_rules[$index];
 	}
 
