@@ -20,6 +20,7 @@
 
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\I18n\Multibyte;
 
 define('TIME_START', microtime(true));
 

@@ -126,7 +126,7 @@ class CookieComponent extends Component {
  * Accessed in the controller using $this->Cookie->read('Name.key');
  *
  * @see CookieComponent::read();
- * @var string
+ * @var array
  */
 	protected $_values = array();
 

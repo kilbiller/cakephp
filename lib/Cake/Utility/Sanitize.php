@@ -21,8 +21,6 @@
 use Cake\Core\Configure;
 use Cake\Model\ConnectionManager;
 
-App::uses('ConnectionManager', 'Model');
-
 /**
  * Data Sanitization.
  *

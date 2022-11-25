@@ -20,12 +20,6 @@ use Cake\Utility\CakeText;
 use Cake\Utility\File;
 use Cake\Utility\Hash;
 
-App::uses('Multibyte', 'I18n');
-App::uses('AbstractTransport', 'Network/Email');
-App::uses('File', 'Utility');
-App::uses('CakeText', 'Utility');
-App::uses('View', 'View');
-
 /**
  * CakePHP email class.
  *

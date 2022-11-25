@@ -18,6 +18,11 @@
 
 namespace Cake\Utility;
 
+use ArrayAccess;
+use SimpleXMLElement;
+use stdClass;
+use Traversable;
+
 /**
  * Class used for manipulation of arrays.
  *

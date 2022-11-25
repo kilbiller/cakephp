@@ -18,9 +18,6 @@
 
 use Cake\Network\CakeSocket;
 
-App::uses('AbstractTransport', 'Network/Email');
-App::uses('CakeSocket', 'Network');
-
 /**
  * Send mail using SMTP protocol
  *

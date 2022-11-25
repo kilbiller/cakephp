@@ -751,7 +751,7 @@ class CakeRequest implements \ArrayAccess {
 	public function here($base = true) {
 		$url = $this->here;
 		if (!empty($this->query)) {
-			$url .= '?' . http_build_query($this->query, null, '&');
+			$url .= '?' . http_build_query($this->query, '', '&');
 		}
 		if (!$base) {
 			$url = preg_replace('/^' . preg_quote($this->base, '/') . '/', '', $url, 1);
@@ -1137,7 +1137,7 @@ class CakeRequest implements \ArrayAccess {
  * @param mixed $value The value being written.
  * @return void
  */
-	public function offsetSet($name, $value) {
+	public function offsetSet($name, $value): void {
 		$this->params[$name] = $value;
 	}
 
@@ -1147,7 +1147,7 @@ class CakeRequest implements \ArrayAccess {
  * @param string $name thing to check.
  * @return bool
  */
-	public function offsetExists($name) {
+	public function offsetExists($name): bool {
 		if ($name === 'url' || $name === 'data') {
 			return true;
 		}
@@ -1160,7 +1160,7 @@ class CakeRequest implements \ArrayAccess {
  * @param string $name Name to unset.
  * @return void
  */
-	public function offsetUnset($name) {
+	public function offsetUnset($name): void {
 		unset($this->params[$name]);
 	}
 

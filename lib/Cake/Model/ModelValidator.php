@@ -23,6 +23,7 @@ namespace Cake\Model;
 use Cake\Utility\Hash;
 use Cake\Model\Validator\CakeValidationSet;
 use Cake\Event\CakeEvent;
+use Traversable;
 
 /**
  * ModelValidator object encapsulates all methods related to data validations for a model
@@ -467,7 +468,7 @@ class ModelValidator implements \ArrayAccess, \IteratorAggregate, \Countable {
  * @param string $field name of the field to check
  * @return bool
  */
-	public function offsetExists($field) {
+	public function offsetExists($field): bool {
 		$this->_parseRules();
 		return isset($this->_fields[$field]);
 	}
@@ -490,7 +491,7 @@ class ModelValidator implements \ArrayAccess, \IteratorAggregate, \Countable {
  * @param array|CakeValidationSet $rules set of rules to apply to field
  * @return void
  */
-	public function offsetSet($field, $rules) {
+	public function offsetSet($field, $rules): void {
 		$this->_parseRules();
 		if (!$rules instanceof CakeValidationSet) {
 			$rules = new CakeValidationSet($field, $rules);
@@ -506,7 +507,7 @@ class ModelValidator implements \ArrayAccess, \IteratorAggregate, \Countable {
  * @param string $field name of the field to unset
  * @return void
  */
-	public function offsetUnset($field) {
+	public function offsetUnset($field): void {
 		$this->_parseRules();
 		unset($this->_fields[$field]);
 	}
@@ -516,7 +517,7 @@ class ModelValidator implements \ArrayAccess, \IteratorAggregate, \Countable {
  *
  * @return ArrayIterator
  */
-	public function getIterator() {
+	public function getIterator(): Traversable {
 		$this->_parseRules();
 		return new \ArrayIterator($this->_fields);
 	}
@@ -526,7 +527,7 @@ class ModelValidator implements \ArrayAccess, \IteratorAggregate, \Countable {
  *
  * @return int
  */
-	public function count() {
+	public function count(): int {
 		$this->_parseRules();
 		return count($this->_fields);
 	}

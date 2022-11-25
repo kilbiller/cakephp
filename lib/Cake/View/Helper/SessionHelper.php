@@ -18,7 +18,6 @@
 namespace Cake\View\Helper;
 
 use Invityou\View\Helper\AppHelper;
-use Cake\View\Helper;
 use Cake\Model\Datasource\CakeSession;
 
 /**

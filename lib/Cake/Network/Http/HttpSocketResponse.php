@@ -16,6 +16,8 @@
  */
 namespace Cake\Network\Http;
 
+use Cake\Utility\Inflector;
+
 /**
  * HTTP Response from HttpSocket.
  *
@@ -390,7 +392,7 @@ class HttpSocketResponse implements \ArrayAccess {
  * @param string $offset Offset to check.
  * @return bool
  */
-	public function offsetExists($offset) {
+	public function offsetExists($offset): bool {
 		return in_array($offset, array('raw', 'status', 'header', 'body', 'cookies'));
 	}
 
@@ -438,7 +440,7 @@ class HttpSocketResponse implements \ArrayAccess {
  * @param mixed $value Value.
  * @return void
  */
-	public function offsetSet($offset, $value) {
+	public function offsetSet($offset, $value): void {
 	}
 
 /**
@@ -447,7 +449,7 @@ class HttpSocketResponse implements \ArrayAccess {
  * @param string $offset Offset to unset.
  * @return void
  */
-	public function offsetUnset($offset) {
+	public function offsetUnset($offset): void {
 	}
 
 /**

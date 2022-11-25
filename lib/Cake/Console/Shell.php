@@ -18,6 +18,7 @@
 namespace Cake\Console;
 
 use Cake\Core\CakeObject;
+use Cake\Core\CakePlugin;
 use Cake\Utility\ClassRegistry;
 use Cake\Utility\File;
 use Cake\Utility\Inflector;

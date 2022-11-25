@@ -37,7 +37,7 @@ class ExtractTask extends AppShell {
 /**
  * Paths to use when looking for strings
  *
- * @var string
+ * @var array
  */
 	protected $_paths = array();
 
@@ -65,7 +65,7 @@ class ExtractTask extends AppShell {
 /**
  * Contains all content waiting to be write
  *
- * @var string
+ * @var array
  */
 	protected $_storage = array();
 

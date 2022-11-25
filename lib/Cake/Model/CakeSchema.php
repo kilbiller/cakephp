@@ -18,6 +18,7 @@
 namespace Cake\Model;
 
 use Cake\Core\CakeObject;
+use Cake\Core\CakePlugin;
 use Cake\Core\Configure;
 use Cake\Utility\ClassRegistry;
 use Cake\Utility\File;

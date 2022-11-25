@@ -24,7 +24,6 @@
 
 namespace Cake\View\Helper;
 
-use Invityou\View\Helper\AppHelper;
 use Cake\Core\Configure;
 
 /**

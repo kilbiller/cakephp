@@ -21,8 +21,6 @@ namespace Cake\View\Helper;
 use Invityou\View\Helper\AppHelper;
 use Cake\Utility\CakeTime;
 use Cake\Utility\Hash;
-use Cake\Utility\Inflector;
-use Cake\I18n\Multibyte;
 use Cake\View\View;
 
 /**

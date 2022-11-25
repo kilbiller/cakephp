@@ -20,6 +20,8 @@
 
 namespace Cake\Model\Validator;
 
+use Traversable;
+
 /**
  * CakeValidationSet object. Holds all validation rules for a field and exposes
  * methods to dynamically add or remove validation rules
@@ -310,7 +312,7 @@ class CakeValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable 
  * @param string $index name of the rule
  * @return bool
  */
-	public function offsetExists($index) {
+	public function offsetExists($index): bool {
 		return isset($this->_rules[$index]);
 	}
 
@@ -335,7 +337,7 @@ class CakeValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable 
  * @return void
  * @see http://www.php.net/manual/en/arrayobject.offsetset.php
  */
-	public function offsetSet($index, $rule) {
+	public function offsetSet($index, $rule): void {
 		$this->setRule($index, $rule);
 	}
 
@@ -345,7 +347,7 @@ class CakeValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable 
  * @param string $index name of the rule
  * @return void
  */
-	public function offsetUnset($index) {
+	public function offsetUnset($index): void {
 		unset($this->_rules[$index]);
 	}
 
@@ -354,7 +356,7 @@ class CakeValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable 
  *
  * @return ArrayIterator
  */
-	public function getIterator() {
+	public function getIterator(): Traversable {
 		return new \ArrayIterator($this->_rules);
 	}
 
@@ -363,7 +365,7 @@ class CakeValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable 
  *
  * @return int
  */
-	public function count() {
+	public function count(): int {
 		return count($this->_rules);
 	}
 

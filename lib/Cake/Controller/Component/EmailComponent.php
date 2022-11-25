@@ -20,6 +20,7 @@ namespace Cake\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Network\Email\CakeEmail;
 use Cake\Controller\ComponentCollection;
+use Cake\Core\Configure;
 
 /**
  * EmailComponent

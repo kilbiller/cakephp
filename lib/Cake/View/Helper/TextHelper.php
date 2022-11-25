@@ -21,9 +21,7 @@
 namespace Cake\View\Helper;
 
 use Invityou\View\Helper\AppHelper;
-use Cake\Utility\ClassRegistry;
 use Cake\Utility\Hash;
-use Cake\Utility\Inflector;
 use Cake\View\View;
 
 /**
