@@ -580,7 +580,7 @@ class Helper extends CakeObject {
 		if ($setScope === true) {
 			$this->_modelScope = $entity;
 		}
-		$parts = array_values(Hash::filter(explode('.', $entity)));
+		$parts = $entity !== null ? array_values(Hash::filter(explode('.', $entity))) : [];
 		if (empty($parts)) {
 			return;
 		}
