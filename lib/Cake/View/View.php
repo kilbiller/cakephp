@@ -55,10 +55,8 @@ use Cake\Cache\Cache;
  * @property      JsHelper $Js
  * @property      NumberHelper $Number
  * @property      PaginatorHelper $Paginator
- * @property      RssHelper $Rss
  * @property      SessionHelper $Session
  * @property      TextHelper $Text
- * @property      TimeHelper $Time
  * @property      ViewBlock $Blocks
  */
 class View extends CakeObject {
