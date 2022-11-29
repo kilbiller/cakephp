@@ -499,7 +499,7 @@ class CakeRoute {
 		}
 
 		if (is_array($params['pass'])) {
-			$params['pass'] = implode('/', array_map('rawurlencode', $params['pass']));
+			$params['pass'] = implode('/', array_map('rawurlencode', $params['pass'] ?? ''));
 		}
 
 		$namedConfig = Router::namedConfig();
