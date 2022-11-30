@@ -171,7 +171,7 @@ class CakeRequest implements \ArrayAccess {
 		if ($_POST) {
 			$this->data = $_POST;
 		} elseif (($this->is('put') || $this->is('delete')) &&
-			strpos($this->contentType(), 'application/x-www-form-urlencoded') === 0
+			strpos($this->contentType() ?? '', 'application/x-www-form-urlencoded') === 0
 		) {
 				$data = $this->_readInput();
 				parse_str($data, $this->data);
