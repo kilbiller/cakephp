@@ -41,6 +41,7 @@ use Cake\Core\CakeObject;
  * @link          https://book.cakephp.org/2.0/en/controllers/components.html
  * @see Controller::$components
  */
+#[\AllowDynamicProperties]
 class Component extends CakeObject {
 
 /**
