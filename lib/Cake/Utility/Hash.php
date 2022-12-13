@@ -560,12 +560,17 @@ class Hash {
  * @return array Filtered array
  * @link https://book.cakephp.org/2.0/en/core-utility-libraries/hash.html#Hash::filter
  */
-	public static function filter(array $data, $callback = array('self', '_filter')) {
+	public static function filter(array $data, $callback = null) {
 		foreach ($data as $k => $v) {
 			if (is_array($v)) {
 				$data[$k] = static::filter($v, $callback);
 			}
 		}
+
+		if ($callback === null) {
+			return array_filter($data, Hash::_filter(...));
+		}
+
 		return array_filter($data, $callback);
 	}
 
