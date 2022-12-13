@@ -70,6 +70,7 @@ use RuntimeException;
  * @property      string $webroot Webroot path segment for the request.
  * @link          https://book.cakephp.org/2.0/en/controllers.html
  */
+#[\AllowDynamicProperties]
 class Controller extends CakeObject implements CakeEventListener {
 
 /**
@@ -149,8 +150,6 @@ class Controller extends CakeObject implements CakeEventListener {
  * @var string
  */
 	public $layoutPath = null;
-
-	public $subDir = null;
 
 /**
  * Contains variables to be handed to the view.

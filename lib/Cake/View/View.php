@@ -59,6 +59,7 @@ use Cake\Cache\Cache;
  * @property      TextHelper $Text
  * @property      ViewBlock $Blocks
  */
+#[\AllowDynamicProperties]
 class View extends CakeObject {
 
 /**
