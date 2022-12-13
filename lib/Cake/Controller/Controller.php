@@ -150,6 +150,8 @@ class Controller extends CakeObject implements CakeEventListener {
  */
 	public $layoutPath = null;
 
+	public $subDir = null;
+
 /**
  * Contains variables to be handed to the view.
  *
