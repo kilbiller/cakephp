@@ -31,6 +31,7 @@ use Cake\Utility\ClassRegistry;
  *
  * @package       Cake.View
  */
+#[\AllowDynamicProperties]
 class Helper extends CakeObject {
 
 /**
