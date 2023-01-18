@@ -504,30 +504,21 @@ class DboSource extends DataSource {
 				return array_search(false, $result) === false;
 			}
 		}
-
-		try {
-			$query = $this->_connection->prepare($sql, $prepareOptions);
-			$query->setFetchMode(\PDO::FETCH_LAZY);
-			if (!$query->execute($params)) {
-				$this->_result = $query;
-				$query->closeCursor();
-				return false;
-			}
-			if (!$query->columnCount()) {
-				$query->closeCursor();
-				if (!$query->rowCount()) {
-					return true;
-				}
-			}
-			return $query;
-		} catch (\PDOException $e) {
-			if (isset($query->queryString)) {
-				$e->queryString = $query->queryString;
-			} else {
-				$e->queryString = $sql;
-			}
-			throw $e;
+		
+		$query = $this->_connection->prepare($sql, $prepareOptions);
+		$query->setFetchMode(\PDO::FETCH_LAZY);
+		if (!$query->execute($params)) {
+			$this->_result = $query;
+			$query->closeCursor();
+			return false;
 		}
+		if (!$query->columnCount()) {
+			$query->closeCursor();
+			if (!$query->rowCount()) {
+				return true;
+			}
+		}
+		return $query;
 	}
 
 /**
