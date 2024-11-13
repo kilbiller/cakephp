@@ -50,9 +50,7 @@ class ConsoleLog extends BaseLog {
  */
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		if ((DS === '\\' && !(bool)cakeEnv('ANSICON') && cakeEnv('ConEmuANSI') !== 'ON') ||
-			(function_exists('posix_isatty') && !posix_isatty($this->_output))
-		) {
+		if ((DS === '\\' && !(bool)cakeEnv('ANSICON') && cakeEnv('ConEmuANSI') !== 'ON')) {
 			$outputAs = ConsoleOutput::PLAIN;
 		} else {
 			$outputAs = ConsoleOutput::COLOR;
