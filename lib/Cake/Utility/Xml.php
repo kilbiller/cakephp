@@ -19,7 +19,11 @@
  */
 namespace Cake\Utility;
 
+use Cake\Core\Configure;
 use Cake\Network\Http\HttpSocket;
+use DOMDocument;
+use DOMText;
+use SimpleXMLElement;
 
 /**
  * XML handling for CakePHP.

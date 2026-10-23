@@ -15,6 +15,7 @@
  */
 namespace Cake\Routing\Filter;
 
+use Cake\Core\App;
 use Cake\Routing\DispatcherFilter;
 use Cake\Event\CakeEvent;
 use Cake\Core\Configure;
